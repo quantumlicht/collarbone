@@ -2,7 +2,7 @@
 
 define(["jquery", "backbone", "models/BlogPostModel","views/IndexView", "views/BlogPostContainerView", "collections/BlogPostCollection"],
 
-    function($, Backbone, Model, indexView, blogView, Collection) {
+    function($, Backbone, Model, indexView, blogPostCreationView, Collection) {
 
         var Router = Backbone.Router.extend({
 
@@ -17,7 +17,8 @@ define(["jquery", "backbone", "models/BlogPostModel","views/IndexView", "views/B
             routes: {
                 // When there is no hash on the url, the home method is called
                 "": "index",
-                "blog": "blog"
+                "blog": "blog",
+                "admin": "admin"
 
             },  
 
@@ -26,7 +27,10 @@ define(["jquery", "backbone", "models/BlogPostModel","views/IndexView", "views/B
                 new indexView();
             },
             blog: function(){
-                new blogView();
+                new blogPostCreationView();
+            },
+            admin: function(){    
+                new blogPostCreationView();
             }
 
         });

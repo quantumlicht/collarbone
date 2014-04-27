@@ -16,17 +16,18 @@ define([
 
             // The DOM Element associated with this view
             el: "#blogPosts",
+
             template: Handlebars.compile(template),
 
             // View constructor
             initialize: function() {
                 // Calls the view's render method
-                this.collection = new BlogPostCollection();
-                this.collection.fetch({reset: true});
+                // this.collection = new BlogPostCollection();
+                // this.collection.fetch({reset: true});
                 this.render();
                 
-                this.listenTo(this.collection, 'add', this.renderPost);
-                this.listenTo(this.collection, 'reset', this.render);
+                // this.listenTo(this.collection, 'add', this.renderPost);
+                // this.listenTo(this.collection, 'reset', this.render);
             },
 
             // View Event Handlers
@@ -36,11 +37,12 @@ define([
 
             // Renders the view's template to the UI
             render: function() {
-                this.$el.html( this.template());
+                this.template = Handlebars.compile(template);
+                this.$el.html(this.template);
                 // Setting the view's template property using the Underscore template method
-                this.collection.each(function(item) {
-                    this.renderPost(item);
-                }, this);
+                // this.collection.each(function(item) {
+                //     this.renderPost(item);
+                // }, this);
 
                 // Dynamically updates the UI with the view's template
                 // this.$el.html(this.template);
