@@ -12,7 +12,7 @@ define([
 
     function($, Backbone, Handlebars, BlogPostView, BlogPostModel, BlogPostCollection, template){
 
-        var BlogPostContainerView = Backbone.View.extend({
+        var BlogAdminView = Backbone.View.extend({
 
             // The DOM Element associated with this view
             el: "#blogPosts",
@@ -37,9 +37,8 @@ define([
 
             // Renders the view's template to the UI
             render: function() {
-                this.$el.empty();
                 // this.template = Handlebars.compile(template);
-                // this.$el.html(this.template);
+                this.$el.html(this.template);
                 // Setting the view's template property using the Underscore template method
                 this.collection.each(function(item) {
                     this.renderPost(item);
@@ -53,17 +52,17 @@ define([
 
             },
 
-            // addBlogPost: function(e) {
-            //     e.preventDefault();
-            //     var formData = {};
+            addBlogPost: function(e) {
+                e.preventDefault();
+                var formData = {};
 
-            //     $('#addBlogPost div').children('input,textarea').each(function(i, el) {
-            //         if ($(el).val() !== '') {
-            //             formData[el.id] = $(el).val();
-            //         }
-            //     });
-            //     this.collection.create(formData);
-            // },
+                $('#addBlogPost div').children('input,textarea').each(function(i, el) {
+                    if ($(el).val() !== '') {
+                        formData[el.id] = $(el).val();
+                    }
+                });
+                this.collection.create(formData);
+            },
 
             renderPost: function(post) {
                 var postView = new BlogPostView({
@@ -77,7 +76,7 @@ define([
 
         // Returns the View class
         
-        return BlogPostContainerView;
+        return BlogAdminView;
 
     }
 

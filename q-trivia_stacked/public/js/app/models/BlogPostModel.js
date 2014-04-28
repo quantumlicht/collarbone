@@ -11,7 +11,7 @@ define(["jquery", "backbone"],
             initialize: function() {
 
             },
-
+            
             // Default values for all of the Model attributes
             defaults: {
                 title: "",

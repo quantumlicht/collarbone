@@ -1,8 +1,8 @@
 // Router.js
 
-define(["jquery", "backbone", "models/BlogPostModel","views/IndexView", "views/BlogPostContainerView", "collections/BlogPostCollection"],
+define(["jquery", "backbone", "models/BlogPostModel","views/IndexView","views/BlogPostContainerView", "views/BlogAdminView", "collections/BlogPostCollection"],
 
-    function($, Backbone, Model, indexView, blogPostCreationView, Collection) {
+    function($, Backbone, Model, indexView, blogPostContainerView, blogAdminView, Collection) {
 
         var Router = Backbone.Router.extend({
 
@@ -27,10 +27,10 @@ define(["jquery", "backbone", "models/BlogPostModel","views/IndexView", "views/B
                 new indexView();
             },
             blog: function(){
-                new blogPostCreationView();
+                new blogPostContainerView();
             },
             admin: function(){    
-                new blogPostCreationView();
+                new blogAdminView();
             }
 
         });

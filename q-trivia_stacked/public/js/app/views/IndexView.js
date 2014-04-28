@@ -1,13 +1,13 @@
 // IndexView.js
 
-define(["jquery", "backbone", "handlebars", "text!templates/Index.html"],
+define(["jquery", "backbone", "handlebars",  "text!templates/Index.html"],
 
     function($, Backbone, Handlebars, IndexTemplate){
 
         var IndexView = Backbone.View.extend({
 
             // The DOM Element associated with this view
-            el: ".test",
+            el: ".index",
 
             // View constructor
             initialize: function() {

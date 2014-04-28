@@ -6,10 +6,10 @@ define(["jquery", "backbone", "handlebars", "models/BlogPostModel", "text!templa
 
         var BlogPostView = Backbone.View.extend({
 
-            template: Handlebars.compile(BlogPostTemplate),
             // The DOM Element associated with this view
             tagName: 'div',
             className: 'blogPostContainer',
+            template: Handlebars.compile(BlogPostTemplate),
             
 
             // View constructor

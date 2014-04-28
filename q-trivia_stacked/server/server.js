@@ -40,7 +40,6 @@ server.configure(function() {
     layoutsDir: server.get('views') + '/layouts'
   }));
   server.set('view engine', 'handlebars');
-  server.use(server.router);
   
   server.use('/', express.static(path.join(__dirname + "./../public")));
 

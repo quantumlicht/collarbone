@@ -13,10 +13,10 @@ module.exports.api = function(server) {
 			else {
 				return console.log(err);
 			}
-		});
+		});	
 	});
 
-	server.post( '/api/blogposts', function(req, res) {
+	server.post('/api/blogposts', function(req, res) {
 		var blogPost = new BlogPostModel({
 			title: req.body.title,
 			author: req.body.author,

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var BlogPostSchema = require('../schemas/blog_post');
 
-var BlogPost = mongoose.model('BlogPost', BlogPostSchema);
+var BlogPost = mongoose.model('BlogPostModel', BlogPostSchema);
 
 module.exports = BlogPost;
 
