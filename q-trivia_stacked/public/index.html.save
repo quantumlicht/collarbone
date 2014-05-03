@@ -148,7 +148,7 @@
     <header data-role="header">
     <div class="test"></div>
     </header> <!-- /header -->
-    
+    <div class="magic"></div>
     <div id="blogPosts"></div>
     <div class="blogPostContainer"></div>
     

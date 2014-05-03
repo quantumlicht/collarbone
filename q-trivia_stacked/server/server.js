@@ -69,6 +69,7 @@ server.configure(function() {
 API.api(server);
 require('./routes/index')(server);
 require('./routes/blog_admin')(server);
+require('./routes/users')(server);
 
 // Start Node.js Server
 http.createServer(server).listen(port);

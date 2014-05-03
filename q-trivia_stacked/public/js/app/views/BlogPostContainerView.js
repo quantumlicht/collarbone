@@ -15,7 +15,7 @@ define([
         var BlogPostContainerView = Backbone.View.extend({
 
             // The DOM Element associated with this view
-            el: "#blogPosts",
+            el: ".magic",
 
             template: Handlebars.compile(template),
 

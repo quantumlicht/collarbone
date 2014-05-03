@@ -1,8 +1,17 @@
 // Router.js
 
-define(["jquery", "backbone", "models/BlogPostModel","views/IndexView","views/BlogPostContainerView", "views/BlogAdminView", "collections/BlogPostCollection"],
+define(["jquery",
+        "backbone",
+        "models/BlogPostModel",
+        "views/UserView",
+        "views/LoginView",
+        "views/RegisterView",
+        "views/IndexView",
+        "views/BlogPostContainerView",
+        "views/BlogAdminView",
+        "collections/BlogPostCollection"],
 
-    function($, Backbone, Model, indexView, blogPostContainerView, blogAdminView, Collection) {
+    function($, Backbone, BlogPostModel, userView, loginView, RegisterView, indexView, blogPostContainerView, blogAdminView, Collection) {
 
         var Router = Backbone.Router.extend({
 
@@ -18,19 +27,40 @@ define(["jquery", "backbone", "models/BlogPostModel","views/IndexView","views/Bl
                 // When there is no hash on the url, the home method is called
                 "": "index",
                 "blog": "blog",
-                "admin": "admin"
+                "admin": "admin",
+                "login": "login",
+                "register": "register",
 
             },  
 
             index: function() {
                 // Instantiates a new view which will render the header text to the page
-                new indexView();
+                this.loadView(new indexView());
             },
+
             blog: function(){
-                new blogPostContainerView();
+                this.loadView(new blogPostContainerView());
             },
+
             admin: function(){    
-                new blogAdminView();
+                this.loadView(new blogAdminView());
+            },
+
+            new_users: function() {
+                this.loadView(new userView());
+            },
+
+            login: function() {
+                this.loadView(new loginView());
+            },
+
+            register: function() {
+                this.loadView(new RegisterView());
+            },
+
+            loadView: function(view) {
+                // this.view && this.view.remove();
+                this.view = view;
             }
 
         });

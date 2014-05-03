@@ -1,10 +1,10 @@
 // IndexView.js
 
-define(["jquery", "backbone", "handlebars",  "text!templates/Index.html"],
+define(["jquery", "backbone", "models/UserModel", "text!templates/User.html"],
 
-    function($, Backbone, Handlebars, IndexTemplate){
+    function($, Backbone, Model, template){
 
-        var IndexView = Backbone.View.extend({
+        var UserView = Backbone.View.extend({
 
             // The DOM Element associated with this view
             el: ".magic",
@@ -19,24 +19,17 @@ define(["jquery", "backbone", "handlebars",  "text!templates/Index.html"],
 
             // View Event Handlers
             events: {
-                
+
             },
 
             // Renders the view's template to the UI
             render: function() {
 
                 // Setting the view's template property using the Underscore template method
-                this.template = Handlebars.compile(IndexTemplate, {logged_in:false});
+                this.template = Handlebars.compile(template, {logged_in : true});
 
                 // Dynamically updates the UI with the view's template
-                if (this.$el) {
-
-                    this.$el.html(this.template);
-                }
-                else {
-                    this.append(this.template);
-
-                }
+                this.$el.html(this.template);
 
                 // Maintains chainability
                 return this;
@@ -46,7 +39,7 @@ define(["jquery", "backbone", "handlebars",  "text!templates/Index.html"],
         });
 
         // Returns the View class
-        return IndexView;
+        return UserView;
 
     }
 
