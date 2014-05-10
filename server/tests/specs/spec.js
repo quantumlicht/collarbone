@@ -17,7 +17,7 @@ after(function(done){
 // TEST SUITES
 describe('API: GET /hello', function() {
 	it('Should Return 200', function(done) {
-		request.get('localhost:3000/hello').end(function(res) {
+		request.get('localhost:2000/hello').end(function(res) {
 			expect(res).to.exist;
 			expect(res.status).to.equal(200);
 			done();

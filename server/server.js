@@ -1,15 +1,17 @@
 // DEPENDENCIES
 // ============
 
-var Config =  global.Config = require('./config/config.js').config;
+var Config =  global.Config = require('./config/config.js').config,
     express = require("express"),
+    bcrypt = require("bcrypt-nodejs"),
+    _ = require("underscore"),
     http =    require("http"),
     exphbs = require('express3-handlebars'),
     path = require('path'),
     port =    ( process.env.PORT || Config.listenPort ),
-    server =  module.exports = express(),
     mongoose =     require('mongoose'),
-    API =     require('./routes/API');
+    server =  module.exports = express();
+    // API =     require('./routes/API');
 
 // DATABASE CONFIGURATION
 // ======================
@@ -31,6 +33,18 @@ db.once('open', function callback () {
 // SERVER CONFIGURATION
 // ====================
 
+server.enable('trust proxy');
+
+server.configure('local', function(){
+    server.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+server.configure('development', function(){
+    server.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+server.configure('production', function(){
+    server.use(express.errorHandler());
+});
+
 server.configure(function() {
   
   server.set('views', path.join(__dirname, '/views'));
@@ -39,9 +53,11 @@ server.configure(function() {
     defaultLayout:'main',
     layoutsDir: server.get('views') + '/layouts'
   }));
+
   server.set('view engine', 'handlebars');
   
   server.use('/', express.static(path.join(__dirname + "./../public")));
+  server.use('/register', express.static(path.join(__dirname + "./../public")));
 
   server.use(express.errorHandler({
 
@@ -51,13 +67,25 @@ server.configure(function() {
 
   }));
 
+
+  server.use( express.compress() );
+  
+  server.use( express.urlencoded() );            // Needed to parse POST data sent as JSON payload
+  
+  server.use( express.json() );
+  
   server.use(express.bodyParser());
 
   server.use(express.methodOverride());
 
-  server.use(express.cookieParser());
+  // server.use(express.cookieParser());
 
-  server.use(express.session({ secret: Config.sessionSecret }));
+  // server.use(express.session({ secret: Config.sessionSecret }));
+  
+  
+  server.use( express.cookieParser( Config.cookieSecret ) );           // populates req.signedCookies
+  server.use( express.cookieSession( Config.sessionSecret ) );  
+
 
   server.use(server.router);
 
@@ -66,7 +94,9 @@ server.configure(function() {
 // API
 // ===
 
-API.api(server);
+// API.api(server);
+require('./routes/api')(server);
+require('./routes/blog')(server);
 require('./routes/index')(server);
 require('./routes/blog_admin')(server);
 require('./routes/users')(server);

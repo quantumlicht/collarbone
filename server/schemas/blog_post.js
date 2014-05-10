@@ -3,7 +3,9 @@
 
 var mongoose =     require('mongoose'),
     Schema =     mongoose.Schema,
+   	CommentSchema = require('./comment');
     objectID =     Schema.ObjectID;
+
 
 // USER ACCOUNT SCHEMA
 // ===================

@@ -12,9 +12,11 @@ require.config({
       // Core Libraries
       // ==============
 
-      "jquery": "libs/jquery/jquery",
+      "jquery": "libs/jquery/dist/jquery",
+      
+      "underscore": "libs/lodash/dist/lodash",
 
-      "lodash": "libs/lodash/lodash",
+      "lodash": "libs/lodash/dist/lodash",
 
       "backbone": "libs/backbone/backbone",
 
