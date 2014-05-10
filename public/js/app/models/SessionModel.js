@@ -29,6 +29,11 @@ define(["jquery",
             return '/api/auth';
         },
 
+        parse: function( response) {
+            response.id = response._id;
+            return response;
+        },
+
         // Fxn to update user attributes after recieving API response
         updateSessionUser: function( userData ){
             this.user.set( _.pick( userData, _.keys(this.user.defaults) ) );
@@ -43,6 +48,7 @@ define(["jquery",
          */
         checkAuth: function(callback, args) {
             var self = this;
+            console.log('SessionModel', 'checkAuth', 'args', args);
             this.fetch({                                                                          // Check if there are tokens in localstorage
                 success: function(mod, res){
                     if(!res.error && res.user){

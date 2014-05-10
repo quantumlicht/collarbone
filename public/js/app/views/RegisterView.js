@@ -1,8 +1,8 @@
 // IndexView.js
 
-define(["app", "handlebars", "collections/UserCollection", "text!templates/Register.html", "text!templates/LoggedIn.html"],
+define(["app", "collections/UserCollection", "text!templates/Register.html", "text!templates/LoggedIn.html"],
 
-    function(app, Handlebars, userCollection, template, LoggedInTemplate){
+    function(app, userCollection, template, LoggedInTemplate){
 
         var LoginView = Backbone.View.extend({
 

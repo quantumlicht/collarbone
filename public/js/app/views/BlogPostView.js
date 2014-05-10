@@ -73,7 +73,7 @@ define(["jquery",
             renderComment: function(comment) {
                 var comment = new commentView({
                     model: comment,
-                    admin: false
+                    admin: this.admin
                 });
                 this.$el.find('#commentContainer').append(comment.render().el);
             }

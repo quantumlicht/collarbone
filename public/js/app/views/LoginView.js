@@ -2,7 +2,7 @@
 
 define(["app","text!templates/Login.html", "text!templates/LoggedIn.html"],
 
-    function(app, template, loggedInTemplate){
+    function(app, template, LoggedInTemplate){
 
         var LoginView = Backbone.View.extend({
 
@@ -62,7 +62,7 @@ define(["app","text!templates/Login.html", "text!templates/LoggedIn.html"],
             // Renders the view's template to the UI
             render: function() {
                 console.log('LoginView', 'render', app.session);
-                if(app.session.get('logged_in')) this.template = Handlebars.compile(loggedInTemplate);
+                if(app.session.get('logged_in')) this.template = Handlebars.compile(LoggedInTemplate);
                 else this.template = Handlebars.compile(template);
 
                 // Setting the view's template property using the Underscore template method

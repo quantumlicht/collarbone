@@ -13,7 +13,7 @@ define([
     "views/TriviaView",
     "collections/BlogPostCollection"],
 
-    function(app, BlogPostModel, HeaderView, userView, LoginView, RegisterView, indexView, blogPostContainerView, blogAdminView, triviaView, Collection) {
+    function(app, BlogPostModel, HeaderView, userView, LoginView, RegisterView, IndexView, blogPostContainerView, blogAdminView, triviaView, Collection) {
 
         var Router = Backbone.Router.extend({
 
@@ -33,7 +33,7 @@ define([
                 "blog": "blog",
                 "trivia": "trivia", 
                 "admin": "admin",
-                "login": "login"
+                "login": "login"    
             },  
 
             index: function() {
@@ -43,7 +43,7 @@ define([
                 if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
                 else {
                     console.log('Router','index','has push state');
-                    this.show( new LoginView({}) );
+                    this.show( new IndexView({}) );
                     //if(app.session.get('logged_in')) this.show( new LoginPageView({}) );
                     //else this.show( new LoggedInPageView({}) );
                 }        
@@ -53,7 +53,8 @@ define([
                 this.show(new blogPostContainerView());
             },
 
-            admin: function(){    
+            admin: function(){
+                console.log('Router','admin');
                 this.show(new blogAdminView());
             },
 

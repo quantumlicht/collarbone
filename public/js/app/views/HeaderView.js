@@ -2,9 +2,8 @@
 
 define([
     "app",
-    "handlebars",
     "text!templates/Header.html"
-],  function(app, Handlebars, template){
+],  function(app, template){
 
         var HeaderView = Backbone.View.extend({
 

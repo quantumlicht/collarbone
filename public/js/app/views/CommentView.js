@@ -12,8 +12,8 @@ define(["jquery", "backbone","handlebars", "models/CommentModel", "text!template
             className: 'comment',
             template: Handlebars.compile(template),
             // View constructor
-            initialize: function() {
-
+            initialize: function(options) {
+                this.admin = options.admin;
                 // Calls the view's render method
                 this.render();
 
@@ -31,7 +31,7 @@ define(["jquery", "backbone","handlebars", "models/CommentModel", "text!template
                 // this.template = _.template(template, {});
 
                 // Dynamically updates the UI with the view's template
-                this.$el.html(this.template(this.model.toJSON()));
+                this.$el.html(this.template($.extend(this.model.toJSON(), {admin: this.admin})));
 
                 // Maintains chainability
                 return this;

@@ -1,7 +1,7 @@
 // DEPENDENCIES
 // ============
 
-var Config =  global.Config = require('./config/config.js').config,
+var Config =  global.Config = require('./config/config').config,
     express = require("express"),
     bcrypt = require("bcrypt-nodejs"),
     _ = require("underscore"),
@@ -57,7 +57,7 @@ server.configure(function() {
   server.set('view engine', 'handlebars');
   
   server.use('/', express.static(path.join(__dirname + "./../public")));
-  server.use('/register', express.static(path.join(__dirname + "./../public")));
+  // server.use('/register', express.static(path.join(__dirname + "./../public")));
 
   server.use(express.errorHandler({
 

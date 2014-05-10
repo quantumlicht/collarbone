@@ -1,2 +1,9 @@
 <!-- HTML Template -->
-<div><small>{{username}} - {{commentDate}}</small><br/>{{content}}</div>
+<div>
+<small>{{username}} - {{commentDate}}</small><br/>{{content}}
+{{#if admin}}
+	<button class="delete">Delete</button>
+	<button class="edit">Edit</button>
+{{/if}}
+</div>
+

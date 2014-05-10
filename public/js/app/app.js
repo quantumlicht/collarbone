@@ -5,11 +5,12 @@ define([
     "jquery",
     "underscore",
     "backbone",
+    "handlebars",
     "events",
     "app",
     "utils"
 ],
-function($, _, Backbone, notifier) {
+function($, _, Backbone, Handlebars, notifier) {
 
     var app = {
         root : "/",                     // The root path to run the application through.

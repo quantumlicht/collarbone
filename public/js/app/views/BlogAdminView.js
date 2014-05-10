@@ -1,21 +1,16 @@
 // IndexView.js
 
 define([
-    "jquery",
-    "backbone",
-    "handlebars",
+    "app",
     "views/BlogPostView",
     "models/BlogPostModel",
     "collections/BlogPostCollection",
     "text!templates/BlogPostContainer.html"
     ],
 
-    function($, Backbone, Handlebars, BlogPostView, BlogPostModel, BlogPostCollection, template){
+    function(app, BlogPostView, BlogPostModel, BlogPostCollection, template){
 
         var BlogAdminView = Backbone.View.extend({
-
-            // The DOM Element associated with this view
-            el: ".magic",
 
             template: Handlebars.compile(template),
             admin :true,

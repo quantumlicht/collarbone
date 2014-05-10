@@ -1,30 +1,27 @@
 // IndexView.js
 
 define([
-    "jquery",
-    "backbone",
-    "handlebars",
+    "app",
     "views/BlogPostView",
     "models/BlogPostModel",
     "collections/BlogPostCollection",
     "text!templates/BlogPostContainer.html"
     ],
 
-    function($, Backbone, Handlebars, BlogPostView, BlogPostModel, BlogPostCollection, template){
+    function(app, BlogPostView, BlogPostModel, BlogPostCollection, template){
 
         var BlogPostContainerView = Backbone.View.extend({
-
-            // The DOM Element associated with this view
-            el: ".magic",
 
             template: Handlebars.compile(template),
 
             // View constructor
             initialize: function() {
                 // Calls the view's render method
+                console.log('BlogPostContainerView', 'initialize');
+                _.bindAll(this);
                 this.collection = new BlogPostCollection();
                 this.collection.fetch({reset: true});
-                this.render();
+                // this.render();
                 
                 this.listenTo(this.collection, 'add', this.renderPost);
                 this.listenTo(this.collection, 'reset', this.render);
@@ -37,7 +34,7 @@ define([
 
             // Renders the view's template to the UI
             render: function() {
-                this.$el.empty();
+                // this.$el.empty();
                 // this.template = Handlebars.compile(template);
                 // this.$el.html(this.template);
                 // Setting the view's template property using the Underscore template method
@@ -66,11 +63,13 @@ define([
             // },
 
             renderPost: function(post) {
+                console.log('BlogPostContainerView','renderPost','post', post);
+                console.log('BlogPostContainerView','renderPost','this.$el', this.$el);
                 var postView = new BlogPostView({
                     model: post,
                     admin: false
                 });
-                this.$el.append(postView.render().el);
+                $('#BlogPostContainer').append(postView.render().el);
                 
             }
 
