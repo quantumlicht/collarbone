@@ -57,7 +57,7 @@ server.configure(function() {
   server.set('view engine', 'handlebars');
   
   server.use('/', express.static(path.join(__dirname + "./../public")));
-  // server.use('/register', express.static(path.join(__dirname + "./../public")));
+  server.use('/tests', express.static(path.join(__dirname + "./../public")));
 
   server.use(express.errorHandler({
 
@@ -100,6 +100,7 @@ require('./routes/blog')(server);
 require('./routes/index')(server);
 require('./routes/blog_admin')(server);
 require('./routes/users')(server);
+require('./routes/tests')(server);
 
 // Start Node.js Server
 http.createServer(server).listen(port);

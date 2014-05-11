@@ -8,6 +8,8 @@ module.exports = function(app) {
 
 	app.get("/api/auth", function(req, res){
 		console.log('/api/auth', 'req.signedCookies', req.signedCookies);
+		console.log('/api/auth', 'user_id', req.signedCookies.user_id);
+
 	    User.findOne({_id:req.signedCookies.user_id, auth_token: req.signedCookies.auth_token}, function(err, user){
 	        if(user){
 	        	console.log('/api/auth','found user: ', user);
@@ -25,7 +27,7 @@ module.exports = function(app) {
 
 	            // Compare the POSTed password with the encrypted db password
 	            if( bcrypt.compareSync( req.body.password, user.password)){
-	                res.cookie('_id', user.id, { signed: true, maxAge: Config.cookieMaxAge  });
+	                res.cookie('user_id', user._id, { signed: true, maxAge: Config.cookieMaxAge  });
 	                res.cookie('auth_token', user.auth_token, { signed: true, maxAge: Config.cookieMaxAge  });
 
 	                // Correct credentials, return the user object
