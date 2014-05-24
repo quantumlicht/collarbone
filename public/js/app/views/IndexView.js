@@ -1,14 +1,16 @@
 // IndexView.js
 
-define(["app", "views/BlogPostContainerView",  "text!templates/Index.html", "text!templates/LoggedIn.html"],
+define(["app",
+        "views/BlogPostContainerView",
+        "text!templates/Index.html", "text!templates/LoggedIn.html"],
 
-    function(app, BlogPostContainerView, IndexTemplate, LoggedInTemplate, BlogPostContainer){
+    function(app, BlogPostContainerView, IndexTemplate, LoggedInTemplate){
 
         var IndexView = Backbone.View.extend({
 
             // The DOM Element associated with this view
             // el: ".magic",
-
+            template: Handlebars.compile(IndexTemplate),
             // View constructor
             initialize: function() {
 
@@ -45,22 +47,16 @@ define(["app", "views/BlogPostContainerView",  "text!templates/Index.html", "tex
                 // Setting the view's template property using the Underscore template method
 
                 // Dynamically updates the UI with the view's template
+                console.log('IndexView','render','app.session.user', app.session.user);
+                console.log('IndexView','render','app.session.user.toJSON', app.session.toJSON());
                 this.$el.html(this.template({
                     user: app.session.user.toJSON()
                 }));
 
-                this.$el.append(this.blogView.render());
 
-                // Dynamically updates the UI with the view's template
-                if (this.$el) {
-
-                    this.$el.html(this.template);
-                }
-                else {
-                    this.append(this.template);
-
-                }
-
+                console.log('IndexView', 'render', 'adding blogview');
+                this.$el.append(this.blogView.$el);
+                this.blogView.render();
                 // Maintains chainability
                 return this;
 

@@ -3,10 +3,22 @@
  *              ex/ cookie helpers, alerting utils, localStorage support, etc
  */
 
-require(['Init'], function(app){
+define(["app"], function(app){
 
-    var utils = utils || {
-        
+    var utils = utils || {  
+        /*
+        * JAVASCRIPT TEXT UTILS
+        */
+
+        getNumberPositionString: function(number) {
+            var mod = number % 10;
+            if (mod == 1) return 'st';
+            else if (mod == 2) return 'nd';
+            else if (mod === 3) return 'rd';
+            else return 'th';
+        },
+
+
         /*
          * ERRORS and ALERT HANDLING
          */ 
@@ -53,7 +65,7 @@ require(['Init'], function(app){
         },
 
         getQueryParam : function(name, queryStr){
-            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regexS = "[\\?&]" + name + "=([^&#]*)";
             var regex = new RegExp(regexS);
             var results = regex.exec(queryStr || window.location.search);

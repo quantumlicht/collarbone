@@ -4,16 +4,24 @@ define([
     "app",
     "models/BlogPostModel",
     "views/HeaderView",
-    "views/UserView",
     "views/LoginView",
     "views/RegisterView",
     "views/IndexView",
     "views/BlogPostContainerView",
     "views/BlogAdminView",
+    "views/TriviaContainerView",
     "views/TriviaView",
-    "collections/BlogPostCollection"],
+    "collections/BlogPostCollection",
+    "collections/TriviaCollection",
 
-    function(app, BlogPostModel, HeaderView, userView, LoginView, RegisterView, IndexView, blogPostContainerView, blogAdminView, triviaView, Collection) {
+    ],
+
+    function(app, BlogPostModel, HeaderView, LoginView, RegisterView, IndexView, blogPostContainerView, blogAdminView, TriviaContainerView, TriviaView, Collection, TriviaCollection) {
+
+        Backbone.View.prototype.close = function () {
+            this.$el.empty();
+            this.unbind();
+        };
 
         var Router = Backbone.Router.extend({
 
@@ -31,7 +39,8 @@ define([
                 "": "index",
                 "register": "register",
                 "blog": "blog",
-                "trivia": "trivia", 
+                "trivia": "triviaList",
+                "trivia/:id" : "trivia",
                 "admin": "admin",
                 "login": "login"    
             },  
@@ -77,8 +86,16 @@ define([
                 }
             },
 
-            trivia: function(){
-                this.show(new triviaView());
+            triviaList: function(){
+                this.show(new TriviaContainerView());
+            },
+
+            trivia: function(id) {
+                var collection = new TriviaCollection();
+                collection.fetch({reset:true, async:false});
+                
+                var model = collection.get(id);
+                this.show(new TriviaView({model: model}));
             },
 
             loadView: function(view) {
@@ -93,8 +110,8 @@ define([
                     this.headerView.setElement($("header")).render();
                 }
 
-                // console.log('Router', 'show', 'this.currentView', this.currentView);
-                // if (this.currentView) this.currentView.close();
+                console.log('Router', 'show', 'this.currentView', this.currentView);
+                if (this.currentView) this.currentView.close();
                 this.currentView = view;
                 console.log('Router','show', 'this.currentView', this.currentView);
 

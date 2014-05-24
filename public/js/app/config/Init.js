@@ -69,6 +69,7 @@ require.config({
         "exports": "Backbone"
 
       },
+      
       'handlebars': {
         exports: 'Handlebars'
       },

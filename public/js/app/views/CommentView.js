@@ -1,8 +1,8 @@
 // IndexView.js
 
-define(["jquery", "backbone","handlebars", "models/CommentModel", "text!templates/Comment.html"],
+define(["app", "models/CommentModel", "text!templates/Comment.html"],
 
-    function($, Backbone, Handlebars, Model, template){
+    function(app, Model, template){
 
         var CommentView = Backbone.View.extend({
 

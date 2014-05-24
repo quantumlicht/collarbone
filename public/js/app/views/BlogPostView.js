@@ -1,15 +1,13 @@
 // IndexView.js
 
-define(["jquery",
-        "backbone",
-        "handlebars",
+define(["app",
         "views/CommentView",
         "models/BlogPostModel",
         "models/CommentModel",
         "collections/CommentCollection",
         "text!templates/BlogPost.html"],
 
-    function($, Backbone, Handlebars, commentView, Model, commentModel, commentCollection, BlogPostTemplate){
+    function(app, CommentView, Model, commentModel, commentCollection, BlogPostTemplate){
 
         var BlogPostView = Backbone.View.extend({
 
@@ -26,23 +24,24 @@ define(["jquery",
 
                 this.id = this.model.get('id');
                 this.comments = new commentCollection();
-                this.comments.url = '/blogposts/' + this.id + '/comments'
+                this.comments.url = '/blogposts/' + this.id + '/comments';
                 this.comments.fetch({async: false, reset:true});
                 this.render();
             },
 
             // View Event Handlers
             events: {
-                'click .delete': 'deleteBlogPost',
+                'click .delete-post': 'deleteBlogPost',
                 'click #commentSubmit': "commentSubmit"
             },
 
             commentSubmit: function(e) {
                 e.preventDefault();
+                console.log('BlogPostView', 'commentSubmit', 'author', app.session.get('user').username)
                 var data = new commentModel({
-                    content: this.$el.find('textarea').val()
+                    content: this.$el.find('textarea').val(),
+                    username: app.session.get('user').username
                 });
-
                 this.comments.create(data);
                 this.render();
             },
@@ -64,18 +63,17 @@ define(["jquery",
                         this.renderComment(item);
                         }, this);
                 }
-
-            //     // Maintains chainability
+                // Maintains chainability
                 return this;
 
             },
 
             renderComment: function(comment) {
-                var comment = new commentView({
+                var commentView = new CommentView({
                     model: comment,
                     admin: this.admin
                 });
-                this.$el.find('#commentContainer').append(comment.render().el);
+                this.$el.find('#commentContainer').append(commentView.render().el);
             }
 
 

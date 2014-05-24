@@ -7,7 +7,6 @@ define([
     "backbone",
     "handlebars",
     "events",
-    "app",
     "utils"
 ],
 function($, _, Backbone, Handlebars, notifier) {
@@ -29,6 +28,9 @@ function($, _, Backbone, Handlebars, notifier) {
         }
     };
 
+    Handlebars.registerHelper('parseDate', function(date){
+        return new Date(String(date)).toLocaleDateString();
+    });
     $.ajaxSetup({ cache: false });          // force ajax call on all browsers
 
 

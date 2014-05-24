@@ -1,16 +1,12 @@
 // DEPENDENCIES
 // ============
 
-var mongoose =     require('mongoose'),
-    Schema =     mongoose.Schema,
-   	CommentSchema = require('./comment');
-    objectID =     Schema.ObjectID;
-
+var mongoose = require('mongoose');
 
 // USER ACCOUNT SCHEMA
 // ===================
 
-var BlogPostSchema = new Schema({
+var BlogPostSchema = new mongoose.Schema({
   key: {type: String, default: null},
   title: String,
   author: String,

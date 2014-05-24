@@ -20,11 +20,16 @@ require.config({
 
       "backbone": "libs/backbone/backbone",
 
+      "handlebars": "libs/handlebars/handlebars",
+
       "bootstrap": "libs/bootstrap/dist/js/bootstrap",
 
       "jasmine": "libs/jasmine/lib/jasmine-core/jasmine",
 
       "jasmine-html": "libs/jasmine/lib/jasmine-core/jasmine-html",
+      
+      "boot": "libs/jasmine/lib/jasmine-core/boot",
+
 
       // Plugins
       // =======
@@ -34,6 +39,9 @@ require.config({
       "text": "libs/text/text",
 
       "jasmine-jquery": "libs/jasmine-jquery/lib/jasmine-jquery",
+      
+      "app": "app/app",
+
 
       // Application Folders
       // ===================
@@ -46,7 +54,9 @@ require.config({
 
       "templates": "app/templates",
 
-      "views": "app/views"
+      "views": "app/views",
+
+      "events": "app/events/Notifier"
 
   },
 
@@ -60,7 +70,7 @@ require.config({
       "backbone": {
 
           // Lists jQuery and Underscore as dependencies
-          "deps": ["lodash", "jquery"],
+          "deps": ["underscore", "jquery"],
 
           // Exports the global 'window.Backbone' object
           "exports": "Backbone"
@@ -76,46 +86,49 @@ require.config({
       "jasmine": {
 
         // Exports the global 'window.jasmine' object
-        "exports": "jasmine"
+        exports: "window.jasmineRequire"
 
       },
 
       // Jasmine Unit Testing helper
       "jasmine-html": {
 
-        "deps": ["jasmine"],
+        deps: ["jasmine"],
 
-        "exports": "jasmine"
+        exports: "window.jasmineRequire"
 
+      },
+
+      "boot": {
+        deps: ['jasmine', 'jasmine-html'],
+        exports: 'window.jasmineRequire'
       }
 
   }
 
 });
 
+var specs = [];
+
+specs.push('tests/specs/spec');
 // Include JavaScript files here (or inside of your router)
-require(["jquery", "backbone", "jasmine-html", "backbone.validateAll"],
+require(["handlebars",
+         "underscore",
+         "backbone",
+         "app",
+         "boot",
+         "events"],
 
-  function($, Backbone, jasmine) {
+  function(Init, Handlebars, _, backbone, app, boot) {
 
-    specs = [];
- 
-    specs.push('tests/specs/spec');
- 
- 
-    $(function() {
-    
-      require(specs, function() {
 
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    require(specs, function() {
+      window.onload();  
+      // jasmine_html.getEnv().addReporter(new jasmine_html.TrivialReporter());
 
-        jasmine.getEnv().execute();
-
-    
-      });
+      // jasmine_html.getEnv().execute();
 
     });
-
   }
 
 );

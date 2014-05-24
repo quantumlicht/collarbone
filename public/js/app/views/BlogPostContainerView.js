@@ -21,7 +21,7 @@ define([
                 _.bindAll(this);
                 this.collection = new BlogPostCollection();
                 this.collection.fetch({reset: true});
-                // this.render();
+                this.render();
                 
                 this.listenTo(this.collection, 'add', this.renderPost);
                 this.listenTo(this.collection, 'reset', this.render);
@@ -35,7 +35,6 @@ define([
             // Renders the view's template to the UI
             render: function() {
                 // this.$el.empty();
-                // this.template = Handlebars.compile(template);
                 // this.$el.html(this.template);
                 // Setting the view's template property using the Underscore template method
                 this.collection.each(function(item) {
@@ -69,7 +68,7 @@ define([
                     model: post,
                     admin: false
                 });
-                $('#BlogPostContainer').append(postView.render().el);
+                this.$el.append(postView.render().el);
                 
             }
 

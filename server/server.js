@@ -99,6 +99,7 @@ require('./routes/api')(server);
 require('./routes/blog')(server);
 require('./routes/index')(server);
 require('./routes/blog_admin')(server);
+require('./routes/trivia')(server);
 require('./routes/users')(server);
 require('./routes/tests')(server);
 

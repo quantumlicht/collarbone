@@ -97,7 +97,7 @@ define(["jquery",
                         if(_.indexOf(['login', 'signup'], opts.method) !== -1){
 
                             self.updateSessionUser( res.user || {} );
-                            self.set({ user_id: res.user.id, logged_in: true });
+                            self.set({ user_id: res.user._id, logged_in: true });
                         } else {
 
                             self.set({ logged_in: false });

@@ -13,7 +13,7 @@ define(["jquery","underscore", "backbone"],
             },
 
             url: function(){
-                return '/api/user'
+                return '/api/user';
             },
 
             // Default values for all of the Model attributes

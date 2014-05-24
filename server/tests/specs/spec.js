@@ -2,7 +2,7 @@
 var request = require('superagent'),
 	expect = require('expect.js'),
 	app = require('../../server.js');
-
+	http = require('http');
 
 // BEFORE HOOK
 before(function(){
@@ -16,10 +16,10 @@ after(function(done){
 
 // TEST SUITES
 describe('API: GET /hello', function() {
-	it('Should Return 200', function(done) {
+	it('Should Return 404', function(done) {
 		request.get('localhost:2000/hello').end(function(res) {
 			expect(res).to.exist;
-			expect(res.status).to.equal(200);
+			expect(res.status).to.equal(404);
 			done();
 		});
 	});

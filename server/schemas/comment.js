@@ -4,7 +4,7 @@ var CommentSchema = new mongoose.Schema({
     username: String,
     content: String,
     commentDate: Date,
-    blogPostId: String
+    modelId: String
 });
 
 module.exports = CommentSchema;

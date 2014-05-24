@@ -1,124 +1,105 @@
 // Jasmine Unit Testing Suite
 // ==========================
 
-define(["jquery", "backbone", "text!templates/Index.html", "views/IndexView", "models/IndexModel", "collections/IndexCollection", "routers/Router", "jasmine-jquery"],
+define(["jquery", "backbone", "text!templates/BlogPost.html", "views/BlogPostView", "models/BlogPostModel", "collections/BlogPostCollection", "routers/Router", "jasmine-jquery"],
 
     function($, Backbone, template, View, Model, Collection, Router) {
 
         // Test suite that includes all of the Jasmine unit tests   
-        describe("The Stack", function() {
-
-            // Backbone View Suite: contains all tests related to views
-            describe("Backbone views", function() {
-
-                // Runs before every View spec
-                beforeEach(function() {
-
-                    // Instantiates a new View instance
-                    this.view = new View();
-
-                });
-
-                it("should contain the correct view element", function() {
-
-                    this.router = new Router();
-
-                    expect(this.view.$el.selector).toEqual(".magic");
-
-                });
-
-                it("should contain the appropriate template", function() {
-
-                    expect(this.view.template).toEqual(template);
-
-                });
-
-            }); // End of the View test suite
-
-            // Backbone Model Suite: contains all tests related to models
-            describe("Backbone models", function() {
-
-                // Runs before every Model spec
-                beforeEach(function() {
-
-                    // Instantiates a new Model instance
-                    this.model = new Model();
-
-                    // We are spying on the _validate method to see if it gets called
-                    spyOn(IndexModel.prototype, "validate").andCallThrough();
-
-                });
-
-                it("should be in a valid state", function() {
-
-                    expect(this.model.isValid()).toBe(true);
-
-                });
-
-                it("should call the validate method when setting a property", function() {
-
-                    this.model.set({ example: "test" }, { validate: true });
-
-                    expect(IndexModel.prototype.validate).toHaveBeenCalled();
-
-                });
-
-            }); // End of the Model test suite
-
-        // Backbone Collection Suite: contains all tests related to collections
-        describe("Backbone collections", function() {
-
-            // Runs before every Collection spec
-            beforeEach(function() {
-
-                // Instantiates a new Collection instance
-                this.collection = new Collection();
-
+        describe("Tests for BlogPostModel", function() {
+            it("Can be created with default values", function(){
+                var post = new Model();
+                expect(post.get('author')).toBe('Philippe Guay');
+                expect(post.get('title')).toBe('');
+                expect(post.get('content')).toBe('');
             });
 
-            it("should contain the correct number of models", function() {
+        }); // End of the View test suite
 
-                expect(this.collection.length).toEqual(0);
+        //     // Backbone Model Suite: contains all tests related to models
+        //     describe("Backbone models", function() {
 
-            });
+        //         // Runs before every Model spec
+        //         beforeEach(function() {
 
-        }); // End of the Collection test suite
+        //             // Instantiates a new Model instance
+        //             this.model = new Model();
+
+        //             // We are spying on the _validate method to see if it gets called
+        //             spyOn(CommentModel.prototype, "validate").andCallThrough();
+
+        //         });
+
+        //         it("should be in a valid state", function() {
+
+        //             expect(this.model.isValid()).toBe(true);
+
+        //         });
+
+        //         it("should call the validate method when setting a property", function() {
+
+        //             this.model.set({ example: "test" }, { validate: true });
+
+        //             expect(CommentModel.prototype.validate).toHaveBeenCalled();
+
+        //         });
+
+        //     }); // End of the Model test suite
+
+        // // Backbone Collection Suite: contains all tests related to collections
+        // describe("Backbone collections", function() {
+
+        //     // Runs before every Collection spec
+        //     beforeEach(function() {
+
+        //         // Instantiates a new Collection instance
+        //         this.collection = new Collection();
+
+        //     });
+
+        //     it("should contain the correct number of models", function() {
+
+        //         expect(this.collection.length).toEqual(0);
+
+        //     });
+
+        // }); // End of the Collection test suite
 
         // Backbone Router Suite: contains all tests related to routers
-        describe("Backbone routers", function () {
+        // describe("Backbone routers", function () {
 
-            // Runs before every Router spec
-            beforeEach(function () {
+        //     // Runs before every Router spec
+        //     beforeEach(function () {
 
-                // Stops the router from listening to hashchange events (Required because Backbone will only allow you to run Backbone.history.start() once for each page load.)
-                Backbone.history.stop();
+        //         // Stops the router from listening to hashchange events (Required because Backbone will only allow you to run Backbone.history.start() once for each page load.)
+        //         Backbone.history.stop();
 
-                // Instantiates a new Router instance
-                this.router = new Router();
+        //         // Instantiates a new Router instance
+        //         this.router = new Router();
 
-                // Creates a Jasmine spy
-                this.routeSpy = jasmine.createSpy("home");
+        //         // Creates a Jasmine spy
+        //         this.routeSpy = jasmine.createSpy("index");
 
-                // When the route index method is called, the Jasmine spy is also called
-                this.router.on("route:index", this.routeSpy);
+        //         // When the route index method is called, the Jasmine spy is also called
+        //         this.router.on("route:index", this.routeSpy);
 
-            });
+        //     });
 
-            it("should call the router home method when there is no hash on the url", function() {
+        //     it("should call the router index method when there is no hash on the url", function() {
 
-                // Navigates to a different route
-                this.router.navigate("elsewhere");
+        //         // Navigates to a different route
+        //         this.router.navigate("elsewhere");
 
-                // Navigates to the default route
-                this.router.navigate("", { trigger: true });
+        //         // Navigates to the default route
+        //         this.router.navigate("", { trigger: true });
     
-                // Expects the Jasmine spy to have been called
-                expect(this.routeSpy).toHaveBeenCalled();
+        //         // Expects the Jasmine spy to have been called
+        //         expect(this.routeSpy).toHaveBeenCalled();
 
-            });
+        //     });
 
-        }); // End of the Router test suite
+        // }); // End of the Router test suite
 
-    }); // End of the Jasmine test suite
+    // }); // End of the Jasmine test suite
 
 });

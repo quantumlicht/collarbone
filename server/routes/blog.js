@@ -74,7 +74,7 @@ module.exports = function(server) {
 	// COMMENTS
 
 	server.get('/blogposts/:id/comments', function(req, res) {
-		return CommentModel.find({blogPostId: req.params.id},function(err, comments) {
+		return CommentModel.find({modelId: req.params.id},function(err, comments) {
 			if (!err) {
 				return res.send(comments);
 			}
@@ -89,7 +89,7 @@ module.exports = function(server) {
 			username: req.body.username,
 			content: req.body.content,
 			commentDate: req.body.commentDate,
-			blogPostId: req.params.id
+			modelId: req.params.id
 		});
 
 		return comment.save(function(err){
