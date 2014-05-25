@@ -1,8 +1,8 @@
 // IndexView.js
 
-define(["app", "collections/UserCollection", "text!templates/Register.html", "text!templates/LoggedIn.html"],
+define(["app", "utils", "collections/UserCollection", "text!templates/Register.html", "text!templates/LoggedIn.html"],
 
-    function(app, userCollection, template, LoggedInTemplate){
+    function(app, utils, userCollection, template, LoggedInTemplate){
 
         var LoginView = Backbone.View.extend({
 
@@ -26,14 +26,14 @@ define(["app", "collections/UserCollection", "text!templates/Register.html", "te
             // View Event Handlers
             events: {
                 "click #register": "onRegisterAttempt",
-                "keyup #password": "onPasswordKeyup",
+                // "keyup #password": "onPasswordKeyup",
                 "keyup #password-confirm": "onConfirmPasswordKeyup",
                 "focus #registerForm": "cleanErrors"
             },
 
             // Renders the view's template to the UI
             render: function() {
-                console.log('RegisterView', 'render');
+                console.log('RegisterView', 'render','logged_in?', app.session.get('logged_in'));
                 if(app.session.get('logged_in')) this.template = Handlebars.compile(LoggedInTemplate);
                 else this.template = Handlebars.compile(template);
                 // Setting the view's template property using the Underscore template method
@@ -69,7 +69,7 @@ define(["app", "collections/UserCollection", "text!templates/Register.html", "te
                     evt.preventDefault();   // prevent enter-press submit when input is empty
                 } else if(k == 13){
                     evt.preventDefault();
-                    this.onSignupAttempt();
+                    this.onRegisterAttempt();
                     return false;
                 }
             },
@@ -81,7 +81,7 @@ define(["app", "collections/UserCollection", "text!templates/Register.html", "te
                     evt.preventDefault();    // prevent enter-press submit when input is empty
                 } else if(k == 13){
                     evt.preventDefault();
-                    this.onLoginAttempt();
+                    this.onRegisterAttempt();
                     return false;
                 }
             },
@@ -107,12 +107,15 @@ define(["app", "collections/UserCollection", "text!templates/Register.html", "te
                 app.session.signup({
                     username: this.$("#username").val(),
                     password: this.$("#password").val()
-                }, {
+                }, {    
                     success: function(mod, res) {
+                        console.log('RegisterView','onRegisterAttempt','success callback');
+                        utils.showAlert('test','text','alert-success'); 
                         if (DEBUG) console.log(mod, res);
                     },
 
                     error: function(mod, res) {
+                        console.log('RegisterView','onRegisterAttempt', 'error callback');
                         if (DEBUG) console.log("ERROR", mod, res);
                     }
                 });

@@ -1,18 +1,28 @@
 var User = require('../models/user');
+var Comment = require('../models/comment');
+var Trivia = require('../models/trivia');
 var notLoggedIn = require('./middleware/not_logged_in');
+var _ = require('underscore');
 var loadUser = require('./middleware/load_users');
 var restrictUserToSelf = require('./middleware/restrict_user_to_self');
 var async = require('async');
 
-module.exports = function(app) {
+module.exports = function(server) {
 
 	// var maxUsersPerPage = 5;
-	app.get('/users', function(req, res, next) {
+	server.get('/users', function(req, res, next) {
 		return User.find(function(err, users) {
 			if(!err) {
-				res.send(users);
+
+				filtered_users = _.map(users, function(user) {
+					return _.pick(user, 'username', '_id');
+
+				});
+
+				console.log('GET /users', filtered_users);
+				res.json({users: filtered_users});
 			}
-			else{
+			else {
 				console.log(err);
 			}
 		});
@@ -50,15 +60,46 @@ module.exports = function(app) {
 		// );
 	});
 
-	app.get('/users/new', notLoggedIn, function(req, res) {
-		res.render('users/new', {title: "New User"});
+	server.get('/users/:username', function(req, res, next) {
+		async.parallel(
+			{
+				user: function(next) {
+					User.findOne({username: req.params.username}).exec(next);
+				},
+				comments: function(next) {
+					Comment.find({userId: req.params.username}).exec(next);
+				},
+				trivias: function(next) {
+					Trivia.find({userId: req.params.username}).exec(next);
+				}	
+			},
+			function(err, results) {
+				if(err){
+					return next(err);
+				}
+				var data = {
+					user: results.user,
+					comments: results.comments,
+					trivias: results.trivias
+				}
+				console.log('GET /users/:username','username:', req.params.username,'data', data);
+				res.json(data);
+			}
+		);
+		User.findOne({username: req.params.name}, function(err, user) {
+			if (! user) {
+				res.send('Not found', 404);
+			}
+			else if (!err) {
+				res.send(user);
+			}
+			else {
+				console.log(err);
+			}
+		});
 	});
 
-	app.get('/users/:name', loadUser, function(req, res, next) {
-		res.render('users/profile', {title: 'Users', user: req.user});
-	});
-
-	app.post('/users', function(req, res) {
+	server.post('/users', function(req, res) {
 		var user = new User({
 			username: req.body.username,
 			password: req.body.password
@@ -99,7 +140,7 @@ module.exports = function(app) {
 	});
 
 
-	app.del('/users/:name', loadUser, restrictUserToSelf, function(req, res, next) {
+	server.del('/users/:name', loadUser, restrictUserToSelf, function(req, res, next) {
 		req.user.remove(function(err) {
 			if (err) { return next(err); }
 			res.redirect('/users');

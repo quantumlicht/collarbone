@@ -14,23 +14,25 @@ module.exports = function(server) {
 	});
 
 	server.post('/trivia', function(req, res) {
-			var trivia = new TriviaModel({
-				title: req.body.title,
-				author: req.body.author,
-				triviaDate: new Date(),
-				hints: req.body.hints
-			});
-			console.log('/trivia', 'req.body.hints', req.body.hints);
-			return trivia.save(function(err){
-				if (!err) {
-					console.log('trivia created');
-					return res.send(trivia);
-				}
-				else {
-					console.log(err);
-				}
-			});
+		console.log('POST /trivia', 'req.body', req.body);
+		var trivia = new TriviaModel({
+			title: req.body.title,
+			userId: req.body.userId,
+			author: req.body.author,
+			triviaDate: new Date(),
+			hints: req.body.hints
 		});
+		console.log('/trivia', 'req.body.hints', req.body.hints);
+		return trivia.save(function(err){
+			if (!err) {
+				console.log('trivia created');
+				return res.send(trivia);
+			}
+			else {
+				console.log(err);
+			}
+		});
+	});
 
 	server.get('/trivia/:id', function(req, res) {
 		console.log('/trivia:id','id', req.params.id );
@@ -60,6 +62,7 @@ module.exports = function(server) {
 		var comment = new CommentModel({
 			username: req.body.username,
 			content: req.body.content,
+			userId: req.body.userId,
 			commentDate: req.body.commentDate,
 			modelId: req.params.id
 		});

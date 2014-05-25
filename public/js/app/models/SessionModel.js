@@ -95,7 +95,7 @@ define(["jquery",
 
                     if( !res.error ){
                         if(_.indexOf(['login', 'signup'], opts.method) !== -1){
-
+                            console.log('SessionModel','postAuth','user', res.user, 'logged_in');
                             self.updateSessionUser( res.user || {} );
                             self.set({ user_id: res.user._id, logged_in: true });
                         } else {
@@ -109,6 +109,7 @@ define(["jquery",
                     }
                 },
                 error: function(mod, res){
+                    console.log('SessionModel','postAuth','error callback');
                     if(callback && 'error' in callback ) callback.error(res);
                 }
             }).complete( function(){
@@ -126,6 +127,7 @@ define(["jquery",
         },
 
         signup: function(opts, callback, args){
+            console.log('SessionModel','signup');
             this.postAuth(_.extend(opts, { method: 'signup' }), callback);
         },
 

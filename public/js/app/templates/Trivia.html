@@ -1,25 +1,9 @@
 {{#if partialRender}}
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h1 class="panel-title">
-		<small>{{author}}</small> - <small>{{parseDate triviaDate}}</small>	
-		</h1>
-    	
-	</div>
-  	<div class="panel-body">
-  		<a href="#trivia/{{id}}">{{title}}</a>
-  	</div>
-<!--   		{{#each hints}}
-			{{hint}}
-		{{/each}}  -->
-  <!-- 	<div class="panel-footer">
-  		<div id="comment">
-  			<textarea placeholder="Comment" style="resize:none; width:100%;"></textarea>
-  		</div>
-      <button id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
-      <div id="commentContainer"></div>
-    </div> -->
-</div>
+	<h3>
+		<a href="#trivia/{{id}}">{{title}}</a>
+	</h3>
+	<small>Submitted by <a href="#users/{{author}}">{{author}}</a> on {{parseDate triviaDate}}</small>	
+
 {{else}}
 
 <div class="panel panel-default">

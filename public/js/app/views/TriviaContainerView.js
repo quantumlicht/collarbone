@@ -26,64 +26,67 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
 
             // View Event Handlers
             events: {
-                "click #trivia-btn": "showTriviaForm",
+                "click #trivia-btn": "triviaFormAction",
                 "click #trivia-hide-btn": "hideTriviaForm",
                 "click #add-hints": "addHints"
             },
 
             addHints: function(evt) {
-              var nb_hints = $('textarea.hints').length;
-              var strPosition = utils.getNumberPositionString(nb_hints + 1);
+                var nb_hints = $('textarea.hints').length;
+                var strPosition = utils.getNumberPositionString(nb_hints + 1);
 
-              $('#add-trivia-form').append(this.hintTemplate({
-                hint_id: (nb_hints + 1),
-                hint_num_label: strPosition
-              }));
+                $('#add-trivia-form').append(this.hintTemplate({
+                    hint_id: (nb_hints + 1),
+                    hint_num_label: strPosition
+                }));
             },
 
-            showTriviaForm: function(evt){
-              evt.preventDefault();
-              var formData = {};
-              var form_el = $('form, #add-trivia-form'); 
-              var isFormVisible = form_el.is(':visible');
+            triviaFormAction: function(evt){
+                evt.preventDefault();
+                var formData = {};
+                var form_el = $('form, #add-trivia-form'); 
+                var isFormVisible = form_el.is(':visible');
 
-              $('#trivia-hide-btn').css('display','block');
-              $('#add-hints').css('display','block');
+                $('#trivia-hide-btn').css('display','block');
+                $('#add-hints').css('display','block');
               
-              if (!isFormVisible){
-                buttonText = this.arrButtonText[1];
-                form_el.show(750);
-              }
-              else {
-                  formData['hints'] = [];
-                  $('#add-trivia-form div').children('input, textarea').each(function(i, el) {
+                if (!isFormVisible){
+                    buttonText = this.arrButtonText[1];
+                    form_el.show(750);
+                }
+                else {
+                   formData['hints'] = [];
+                   $('#add-trivia-form div').children('input, textarea').each(function(i, el) {
 
-                    var isHint = $.inArray('hints', $(this).attr('class').split(' ')) > - 1;
-                    if (isHint) {
-                        formData['hints'].push({hint: $(el).val() });
-                        // for each hints append it to the hints property of formData
-                    }
-                    else if ($(el).val() !== '') {
-                      formData[el.id] = $(el).val();
-                    }
-                    $(el).val('');
-                  });
-                  formData['author'] = app.session.get('user').username;
-               this.triviaCollection.create(formData);
-              }
-              $('button#trivia-btn').text(buttonText);
+                        var isHint = $.inArray('hints', $(this).attr('class').split(' ')) > - 1;
+                        if (isHint) {
+                            formData['hints'].push({hint: $(el).val() });
+                            // for each hints append it to the hints property of formData
+                        }
+                        else if ($(el).val() !== '') {
+                          formData[el.id] = $(el).val();
+                        }
+                        $(el).val('');
+                    });
 
-
+                    console.log('TriviaContainerView', 'user session', app.session.get('user'));
+                    formData['author'] = app.session.get('user').username;
+                    formData['userId'] = app.session.get('user')._id;
+                    this.triviaCollection.create(formData);
+                    utils.showAlert('Trivia question added!', 'Thanks', 'alert-success');
+                }
+                $('button#trivia-btn').text(buttonText);
             },
 
             hideTriviaForm: function(evt) {
-              var form_el = $('form, #add-trivia-form'); 
-              form_el.hide(750);
-              $('#trivia-hide-btn').css('display','none');
-              $('#add-hints').css('display','none');
+                var form_el = $('form, #add-trivia-form'); 
+                form_el.hide(750);
+                $('#trivia-hide-btn').css('display','none');
+                $('#add-hints').css('display','none');
             },
 
             // Renders the view's template to the UI
+
             render: function() {
                 this.$el.html(this.template);
                 console.log('TriviaContainerView','render','this.triviaCollection',this.triviaCollection);
@@ -96,18 +99,16 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
             },
 
             renderTrivia: function(trivia) {
-              console.log('TriviaContainerView', 'renderTrivia','trivia', trivia);
+                console.log('TriviaContainerView', 'renderTrivia','trivia', trivia);
                 var triviaView = new TriviaView({
-                  model:trivia,
-                  partialRender: true
+                    model:trivia,
+                    partialRender: true
                 });
                 this.$el.find('#triviaContainer').append(triviaView.render().el);
 
                 // Maintains chainability
                 return this;
-
             }
-
         });
 
         // Returns the View class

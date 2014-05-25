@@ -5,6 +5,7 @@ var TriviaSchema = new mongoose.Schema({
     title: String,
     hints: [HintSchema],
     author: String,
+    userId: String,
     triviaDate: Date
 });
 

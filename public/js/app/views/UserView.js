@@ -6,14 +6,13 @@ define(["jquery", "backbone", "models/UserModel", "text!templates/User.html"],
 
         var UserView = Backbone.View.extend({
 
-            // The DOM Element associated with this view
-            el: ".magic",
-
+            template: Handlebars.compile(template),
             // View constructor
             initialize: function() {
 
                 // Calls the view's render method
-                this.render();
+                // this.render();
+                _.bindAll(this);
 
             },
 
@@ -26,10 +25,10 @@ define(["jquery", "backbone", "models/UserModel", "text!templates/User.html"],
             render: function() {
 
                 // Setting the view's template property using the Underscore template method
-                this.template = Handlebars.compile(template, {logged_in : true});
 
                 // Dynamically updates the UI with the view's template
-                this.$el.html(this.template);
+                console.log('UserView', 'render', 'model data', this.model.toJSON());
+                this.$el.html( this.template(this.model.toJSON()));
 
                 // Maintains chainability
                 return this;

@@ -1,8 +1,8 @@
 // IndexModel.js
 
-define(["jquery","underscore", "backbone"],
+define(["app", "utils"],
 
-    function($,_, Backbone) {
+    function(app, utils) {
 
         // Creates a new Backbone Model class object
         var UserModel = Backbone.Model.extend({
@@ -12,9 +12,10 @@ define(["jquery","underscore", "backbone"],
                 _.bindAll(this);
             },
 
-            url: function(){
-                return '/api/user';
+            url : function() {                   
+                return '/users/test';
             },
+
 
             // Default values for all of the Model attributes
             defaults: {

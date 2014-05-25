@@ -3,6 +3,7 @@
 define([
     "app",
     "models/BlogPostModel",
+    "models/UserModel",
     "views/HeaderView",
     "views/LoginView",
     "views/RegisterView",
@@ -11,12 +12,28 @@ define([
     "views/BlogAdminView",
     "views/TriviaContainerView",
     "views/TriviaView",
+    "views/UserView",
     "collections/BlogPostCollection",
     "collections/TriviaCollection",
+    "collections/UserCollection",
 
     ],
 
-    function(app, BlogPostModel, HeaderView, LoginView, RegisterView, IndexView, blogPostContainerView, blogAdminView, TriviaContainerView, TriviaView, Collection, TriviaCollection) {
+    function(app,
+             BlogPostModel,
+             UserModel,
+             HeaderView,
+             LoginView,
+             RegisterView,
+             IndexView,
+             blogPostContainerView,
+             blogAdminView,
+             TriviaContainerView,
+             TriviaView,
+             UserView,
+             Collection,
+             TriviaCollection,
+             UserCollection) {
 
         Backbone.View.prototype.close = function () {
             this.$el.empty();
@@ -41,6 +58,7 @@ define([
                 "blog": "blog",
                 "trivia": "triviaList",
                 "trivia/:id" : "trivia",
+                "users/:username": "userprofile",
                 "admin": "admin",
                 "login": "login"    
             },  
@@ -96,6 +114,18 @@ define([
                 
                 var model = collection.get(id);
                 this.show(new TriviaView({model: model}));
+            },
+
+            userprofile: function(username) {
+                // var model = new UserModel({username: username});
+                var collection = new UserCollection();
+                collection.fetch({reset:true, async:false});
+                console.log('collection', collection);
+                model = collection.where({username: username});
+                var view = new UserView({model: model});
+                console.log(model);
+                this.show(view);
+                // console.log('Router', 'userprofile', 'test', test);
             },
 
             loadView: function(view) {

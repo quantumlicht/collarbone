@@ -2,8 +2,9 @@
 
 define([
     "app",
+    "utils",
     "text!templates/Header.html"
-],  function(app, template){
+],  function(app, utils, template){
 
         var HeaderView = Backbone.View.extend({
 
@@ -29,8 +30,8 @@ define([
 
             onLoginStatusChange: function(evt){
                 this.render();
-                if(app.session.get("logged_in")) app.showAlert("Success!", "Logged in as "+app.session.user.get("username"), "alert-success");
-                else app.showAlert("See ya!", "Logged out successfully", "alert-success");
+                if(app.session.get("logged_in")) utils.showAlert("Success!", "Logged in as "+app.session.user.get("username"), "alert-success");
+                else utils.showAlert("See ya!", "Logged out successfully", "alert-success");
             },
 
             onLogoutClick: function(evt) {
