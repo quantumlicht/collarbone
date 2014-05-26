@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h1 class="panel-title">
+		<small>{{author}}</small> - <small>{{parseDate postDate}}</small>	
+		{{title}}</h1>
+    	
+	</div>
+  	<div class="panel-body">
+  		{{content}}
+  	</div>
+  	<div class="panel-footer">
+  		<div id="comment">
+  			<textarea placeholder="Comment" style="resize:none; width:100%;"></textarea>
+  		</div>
+      <button id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
+      <div id="commentContainer"></div>
+    </div>
+	{{#if admin}}
+	<button class="delete-post">Delete</button>
+	<button class="edit-post">Edit</button>
+	{{/if}}
+</div>

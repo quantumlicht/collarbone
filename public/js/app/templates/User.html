@@ -1,0 +1,20 @@
+<!-- HTML Template -->
+<h3>{{username}}</h3>
+
+<h3>Comments</h3>
+{{#each comments}}
+	{{content}}
+	{{commentDate}}
+{{/each}}
+
+
+<h3>Trivia</h3>
+{{#each trivias}}
+
+	{{title}}
+	{{triviaDate}}
+	{{#each hints}}
+			{{hint}}
+	{{/each}}
+{{/each}}
+
