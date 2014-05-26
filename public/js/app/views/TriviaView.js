@@ -64,7 +64,7 @@ define(["app",
 
             commentSubmit: function(e) {
                 e.preventDefault();
-                console.log('TriviaView', 'commentSubmit', 'author', app.session.get('user').username)
+                console.log('TriviaView', 'commentSubmit', 'author', app.session.get('user').username);
                 if( this.$el.find('textarea').val() !== '') {
                     var data = new CommentModel({
                         content: this.$el.find('textarea').val(),

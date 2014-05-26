@@ -15,7 +15,7 @@ define([
     "views/UserView",
     "collections/BlogPostCollection",
     "collections/TriviaCollection",
-    "collections/UserCollection",
+    "collections/UserCollection"
 
     ],
 
@@ -117,15 +117,15 @@ define([
             },
 
             userprofile: function(username) {
-                // var model = new UserModel({username: username});
+                var self = this;
                 var collection = new UserCollection();
-                collection.fetch({reset:true, async:false});
-                console.log('collection', collection);
-                model = collection.where({username: username});
-                var view = new UserView({model: model});
-                console.log(model);
-                this.show(view);
-                // console.log('Router', 'userprofile', 'test', test);
+
+                collection.bind('reset', function () { 
+                    var model = collection.findWhere({username: username});
+                    var view = new UserView({model: model});
+                    self.show(view);
+                });
+                collection.fetch({reset:true});
             },
 
             loadView: function(view) {

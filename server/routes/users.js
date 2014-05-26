@@ -20,7 +20,7 @@ module.exports = function(server) {
 				});
 
 				console.log('GET /users', filtered_users);
-				res.json({users: filtered_users});
+				res.send(filtered_users);
 			}
 			else {
 				console.log(err);
@@ -61,42 +61,34 @@ module.exports = function(server) {
 	});
 
 	server.get('/users/:username', function(req, res, next) {
+		console.log('GET /users/:username', req.params);
 		async.parallel(
 			{
 				user: function(next) {
 					User.findOne({username: req.params.username}).exec(next);
 				},
 				comments: function(next) {
-					Comment.find({userId: req.params.username}).exec(next);
+					Comment.find({username: req.params.username}).exec(next);
 				},
 				trivias: function(next) {
-					Trivia.find({userId: req.params.username}).exec(next);
+					Trivia.find({author: req.params.username}).exec(next);
 				}	
 			},
 			function(err, results) {
 				if(err){
 					return next(err);
 				}
+				console.log('/users/:username', 'results', results);
+
 				var data = {
-					user: results.user,
+					users: results.user,
 					comments: results.comments,
 					trivias: results.trivias
 				}
-				console.log('GET /users/:username','username:', req.params.username,'data', data);
-				res.json(data);
+				// console.log('GET /users/:username','username:', req.params.username,'data', data);
+				res.send(data);
 			}
 		);
-		User.findOne({username: req.params.name}, function(err, user) {
-			if (! user) {
-				res.send('Not found', 404);
-			}
-			else if (!err) {
-				res.send(user);
-			}
-			else {
-				console.log(err);
-			}
-		});
 	});
 
 	server.post('/users', function(req, res) {

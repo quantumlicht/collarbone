@@ -13,7 +13,10 @@ define(["jquery", "backbone", "models/UserModel", "text!templates/User.html"],
                 // Calls the view's render method
                 // this.render();
                 _.bindAll(this);
+                this.model.fetch();
 
+                this.listenTo(this.model, 'change', this.render);
+            
             },
 
             // View Event Handlers
@@ -27,8 +30,9 @@ define(["jquery", "backbone", "models/UserModel", "text!templates/User.html"],
                 // Setting the view's template property using the Underscore template method
 
                 // Dynamically updates the UI with the view's template
-                console.log('UserView', 'render', 'model data', this.model.toJSON());
-                this.$el.html( this.template(this.model.toJSON()));
+                // console.log('UserView', 'render', 'model data', Model.toJSON());
+                console.log('UserView','render','model.toJSON   ', this.model.toJSON());
+                this.$el.html(this.template(this.model.toJSON()));
 
                 // Maintains chainability
                 return this;

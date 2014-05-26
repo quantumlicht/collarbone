@@ -12,8 +12,9 @@ define(["app", "utils"],
                 _.bindAll(this);
             },
 
-            url : function() {                   
-                return '/users/test';
+            url : function() {
+                console.log('UserModel','url','this', this);                   
+                return '/users/' + this.get('username');
             },
 
 

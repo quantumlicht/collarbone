@@ -20,7 +20,7 @@ define(["app"], function(app){
 
         // Show alert classes and hide after specified timeout
         showAlert: function(title, text, klass) {
-            $("#header-alert").removeClass("alert-error alert-warning alert-success alert-info");
+            $("#header-alert").removeClass("alert-danger alert-warning alert-success alert-info");
             $("#header-alert").addClass(klass);
             $("#header-alert").html('<button class="close" data-dismiss="alert">×</button><strong>' + title + '</strong> ' + text);
             $("#header-alert").show('fast');
