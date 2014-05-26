@@ -1,19 +1,16 @@
 {{#if partialRender}}
 	<h3>
-		<a href="#trivia/{{id}}">{{title}}</a>
+		<a href="#trivia/{{id}}">{{normalizeLength title}}</a>
 	</h3>
 	<small>Submitted by <a href="#users/{{author}}">{{author}}</a> on {{parseDate triviaDate}}</small>	
 
 {{else}}
 
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h1 class="panel-title">
-		<small>{{author}}</small> - <small>{{parseDate triviaDate}}</small>	
-  		{{title}}
-		</h1>
-    	
-	</div>
+<h3>
+	<small>{{author}}</small> - <small>{{parseDate triviaDate}}</small>	
+	{{normalizeLength title}}
+</h3>
+<div class="panel panel-default">	
   	<div class="panel-body">
   		{{#each hints}}
   		<button type="button" id="tooltip-btn" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="{{hint}}">

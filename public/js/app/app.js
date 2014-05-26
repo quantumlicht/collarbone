@@ -15,11 +15,9 @@ function($, _, Backbone, Handlebars, notifier) {
         root : "/",                     // The root path to run the application through.
         URL : "/",                      // Base application URL
         API : "/api",                   // Base API URL (used by models & collections)
+        maxTextLength: 100
     };
 
-    Handlebars.registerHelper('parseDate', function(date){
-        return new Date(String(date)).toLocaleDateString();
-    });
 
     $.ajaxSetup({ cache: false });          // force ajax call on all browsers
 

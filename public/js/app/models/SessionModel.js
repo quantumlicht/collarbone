@@ -1,11 +1,10 @@
 /**
  * @desc		stores the POST state and response state of authentication for user
  */
-define(["jquery",
-    "backbone",
-    "models/UserModel",
-    "utils"
-], function($, Backbone, UserModel){
+define(["app",
+        "models/UserModel",
+        "utils"
+], function(app, UserModel){
 
     var SessionModel = Backbone.Model.extend({
 
@@ -123,6 +122,7 @@ define(["jquery",
         },
 
         logout: function(opts, callback, args){
+            console.log('SessionModel','logout');
             this.postAuth(_.extend(opts, { method: 'logout' }), callback);
         },
 

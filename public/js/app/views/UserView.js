@@ -1,8 +1,8 @@
 // IndexView.js
 
-define(["jquery", "backbone", "models/UserModel", "text!templates/User.html"],
+define(["app", "models/UserModel", "text!templates/User.html"],
 
-    function($, Backbone, Model, template){
+    function(app, Model, template){
 
         var UserView = Backbone.View.extend({
 

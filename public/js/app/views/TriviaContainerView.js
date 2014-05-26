@@ -2,7 +2,7 @@
 
 define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "views/TriviaView", "text!templates/TriviaContainer.html", "text!templates/Hint.html"],
 
-    function(app, utils, Model, TriviaCollection, TriviaView, template, HintTemplate){
+    function(app, utils,  Model, TriviaCollection, TriviaView, template, HintTemplate){
 
         var TriviaContainerView = Backbone.View.extend({
 
@@ -28,7 +28,8 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
             events: {
                 "click #trivia-btn": "triviaFormAction",
                 "click #trivia-hide-btn": "hideTriviaForm",
-                "click #add-hints": "addHints"
+                "click #add-hints": "addHints",
+                "click .remove-hint": "removeHint"
             },
 
             addHints: function(evt) {
@@ -39,6 +40,22 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
                     hint_id: (nb_hints + 1),
                     hint_num_label: strPosition
                 }));
+            },
+
+            removeHint: function(evt){
+                evt.preventDefault();
+                console.log('TriviaContainerView', 'removeHint', 'evt', evt);
+                $(evt.target).closest('.form-group').remove();
+                var hints = $('textarea.hints');
+                $.each(hints, function(i, e){
+                    i = i + 1;
+                    // utils.getNumberPosition  String(i + 1);
+                    $(e).siblings('label').attr('for', 'hint-' + (i));
+                    $(e).siblings('label').html((i) + utils.getNumberPositionString(i) + '  hint <a class="remove-hint" id="'+ i +'">remove</a>');
+                    $(e).attr('id', 'hint-' + (i));
+                });
+
+
             },
 
             triviaFormAction: function(evt){
@@ -78,6 +95,7 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
                         console.log('TriviaContainerView', 'user session', app.session.get('user'));
                         formData['author'] = app.session.get('user').username;
                         formData['userId'] = app.session.get('user')._id;
+                        $("#add-trivia-form")[0].reset();   
                         this.triviaCollection.create(formData);
                         utils.showAlert('Trivia question added!', 'Thanks', 'alert-success');
                     }

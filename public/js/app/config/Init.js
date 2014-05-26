@@ -28,7 +28,9 @@ require.config({
 
       "app": "app/app",
 
-      "utils": "app/config/utils",
+      "utils": "app/utils",
+
+      "hbar_helpers": "app/hbar_helpers",
       // Plugins
       // =======
 
@@ -81,9 +83,9 @@ require.config({
 });
 
 // Includes Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(["app", "handlebars", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll"],
+require(["app", "utils", "hbar_helpers", "handlebars", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll"],
 
-   function(app, Handlebars, Router, sessionModel) {
+   function(app, utils, hbar_helpers, Handlebars, Router, sessionModel) {
     
       // Main
       // Backbone.emulateHTTP = true;

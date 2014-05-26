@@ -10,7 +10,6 @@ define([
 
             // The DOM Element associated with this view
             template: Handlebars.compile(template),
-            // el: ".magic",
             // View constructor,
             initialize: function() {
 
@@ -31,7 +30,11 @@ define([
             onLoginStatusChange: function(evt){
                 this.render();
                 if(app.session.get("logged_in")) utils.showAlert("Success!", "Logged in as "+app.session.user.get("username"), "alert-success");
-                else utils.showAlert("See ya!", "Logged out successfully", "alert-success");
+                else {
+                    utils.showAlert("See ya!", "Logged out successfully", "alert-success");
+                    app.router.navigate('/', {trigger:true});
+                }
+                    
             },
 
             onLogoutClick: function(evt) {
