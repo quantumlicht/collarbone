@@ -2,19 +2,27 @@
 <h3>{{username}}</h3>
 
 <h3>Comments</h3>
+<ul class="list-group">
+	
 {{#each comments}}
-	{{content}}
-	{{commentDate}}
+<li class="list-group-item">	
+	<small>{{formatDate commentDate}}</small>
+	<a href="#/trivia/{{modelId}}">{{normL content 15}}</a>
+</li>
 {{/each}}
+</ul>
 
 
 <h3>Trivia</h3>
+<ul class="nav nav-pills nav-stacked">
 {{#each trivias}}
-
-	{{title}}
-	{{triviaDate}}
-	{{#each hints}}
-			{{hint}}
-	{{/each}}
+	<li>
+		<a href="#/trivia/{{_id}}">
+		<small>{{formatDate triviaDate}}</small>
+		{{normL title}}
+			
+		</a>
+	</li>
 {{/each}}
+</ul>
 

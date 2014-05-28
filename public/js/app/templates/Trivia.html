@@ -1,14 +1,14 @@
 {{#if partialRender}}
 	<h3>
-		<a href="#trivia/{{id}}">{{normalizeLength title}}</a>
+		<a href="#trivia/{{id}}">{{normL title}}</a>
 	</h3>
-	<small>Submitted by <a href="#users/{{author}}">{{author}}</a> on {{parseDate triviaDate}}</small>	
+	<small>Submitted by <a href="#users/{{author}}">{{author}}</a> on {{formatDate triviaDate}}</small>	
 
 {{else}}
 
 <h3>
-	<small>{{author}}</small> - <small>{{parseDate triviaDate}}</small>	
-	{{normalizeLength title}}
+	<small><a href="#/users/{{author}}">{{author}}</a></small> - <small>{{formatDate triviaDate}}</small>	
+	{{normL title}}
 </h3>
 <div class="panel panel-default">	
   	<div class="panel-body">

@@ -1,18 +1,25 @@
 var User = require('../models/user');
 var _ = require('underscore');
+var winston = require('winston');
 var bcrypt = require("bcrypt-nodejs");
 var Config = require('../config/config').config;
 
+var logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.Console)(),
+      new (winston.transports.File)({ filename: 'somefile.log' }, {colorize:true})
+    ]
+});
 
 module.exports = function(app) {
 
 	app.get("/api/auth", function(req, res){
-		console.log('GET /api/auth', 'req.signedCookies', req.signedCookies);
-		console.log('GET /api/auth', 'user_id', req.signedCookies.user_id);
+		logger.info('GET /api/auth', 'req.signedCookies', req.signedCookies);
+		logger.info('GET /api/auth', 'user_id', req.signedCookies.user_id);
 
 	    User.findOne({_id:req.signedCookies.user_id, auth_token: req.signedCookies.auth_token}, function(err, user){
 	        if(user){
-	        	console.log('GET /api/auth','found user: ', user);
+	        	logger.info('GET /api/auth','found user: ', user);
 	            res.json({ user: _.pick(user, ['username', '_id']) });   
 	        } else {  
 	            res.json({ error: "Client has no valid login cookies."  });   
@@ -47,7 +54,7 @@ module.exports = function(app) {
 	// POST /api/auth/signup
 	// @desc: creates a user
 	app.post("/api/auth/signup", function(req, res){
-		console.log('POST api/auth/signup', 'req.body', req.body);
+		logger.info('POST api/auth/signup', 'req.body', req.body);
 		var user = {
 			username: req.body.username,
 			password: bcrypt.hashSync(req.body.password),
@@ -56,12 +63,12 @@ module.exports = function(app) {
 		User.create(user, function(err, user){
 			if (err) {
 				if (err.code === 11000) {
-					console.log('POST /api/auth/signup', 'Conflict', 409);
+					logger.info('POST /api/auth/signup', 'Conflict', 409);
 					res.send('Conflict', 409);
 				}
 				else {
 					if (err.name === 'ValidationError') {
-						console.log('POST /api/auth/signup', 'ValidationError');
+						logger.info('POST /api/auth/signup', 'ValidationError');
 						return res.send(Object.keys(err.errors).map(function(errField) {
 							return err.errors[errField].message;
 						}).join('. '), 406);
@@ -70,7 +77,7 @@ module.exports = function(app) {
 				return;
 			}
 			else {
-				console.log('POST /api/auth/signup', 'User created');
+				logger.info('POST /api/auth/signup', 'User created');
 				res.cookie('user_id', user.id, { signed: true, maxAge: Config.cookieMaxAge  });
             	res.cookie('auth_token', user.auth_token, { signed: true, maxAge: Config.cookieMaxAge  });
             	res.json({ user: _.omit(user, ['password', 'auth_token']) });   

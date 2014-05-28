@@ -131,7 +131,6 @@ module.exports = function(server) {
 		// });
 	});
 
-
 	server.del('/users/:name', loadUser, restrictUserToSelf, function(req, res, next) {
 		req.user.remove(function(err) {
 			if (err) { return next(err); }

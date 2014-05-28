@@ -20,13 +20,15 @@ define(["app",
                 if (typeof options.partialRender === 'boolean' ) {
                     this.partialRender = options.partialRender;
                 }
+                _.bindAll(this);
+                this.model.fetch();
+                this.listenTo(this.model, 'change', this.render);
                 this.admin = options.admin || false;
                 this.id = this.model.get('id');
                 this.comments = new CommentCollection();
                 this.comments.url = '/trivia/' + this.id + '/comments';
                 this.comments.fetch({async: false, reset:true});
                 // Calls the view's render method
-                _.bindAll(this);
                 // this.render();
 
             },

@@ -109,11 +109,18 @@ define([
             },
 
             trivia: function(id) {
+                var self = this;
                 var collection = new TriviaCollection();
+
+                console.log('Router','trivia','id', id);
+                collection.bind('reset', function(){
+                    var model = collection.findWhere({id:id});
+                    console.log('Router','trivia','collection', collection);
+                    console.log('Router','trivia','model', model);
+                    self.show(new TriviaView({model: model}));
+                });
                 collection.fetch({reset:true, async:false});
-                
-                var model = collection.get(id);
-                this.show(new TriviaView({model: model}));
+                // var model = collection.get(id);
             },
 
             userprofile: function(username) {
