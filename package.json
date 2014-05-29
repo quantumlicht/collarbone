@@ -1,22 +1,22 @@
 {
-  "name": "movie-trivia",
+  "name": "collarbone",
   "description": "Built with theStack!",
   "version": "0.0.1",
-  "homepage": "https://github.com/quantumlicht/movie-trivia",
+  "homepage": "https://github.com/quantumlicht/collarbone",
   "author": {
     "name": "Philippe",
     "url": "https://github.com/quantumlicht"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:quantumlicht/movie-trivia.git"
+    "url": "git@github.com:quantumlicht/collarbone.git"
   },
-  "homepage": "https://quantumlicht.github.io/movie-trivia",
+  "homepage": "https://quantumlicht.github.io/collarbone",
   "keywords": [
     "generator-thestack"
   ],
   "bugs": {
-    "url": "https://github.com/quantumlicht/movie-trivia/issues"
+    "url": "https://github.com/quantumlicht/collarbone/issues"
   },
   "main": "./server/server",
   "dependencies": {
@@ -34,5 +34,8 @@
     "superagent": "~0.15.4",
     "expect.js": "~0.2.0",
     "uglify-js": "~2.2.5"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
