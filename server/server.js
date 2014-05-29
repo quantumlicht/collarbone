@@ -12,6 +12,7 @@ var Config =  global.Config = require('./config/config').config,
     mongoose =     require('mongoose'),
     server =  module.exports = express();
     // API =     require('./routes/API');
+    // API =     require('./routes/API');
 
 // DATABASE CONFIGURATION
 // ======================
