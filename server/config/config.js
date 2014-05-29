@@ -10,6 +10,6 @@ exports.config = {
     IP: "localhost",
     name: "defaultDB",
     port: "27017"
-  	MONGOHQ_URL:'mongodb://heroku:i05PaQ5XwgYcIHogtOWTdvsah4Z6Si6dV7CuMGLE1orno6EpFwqoo1-VqayM0uat48WKeVcXvgW39kfzBQfGnw@kahana.mongohq.com:10017/app25772746'
+  	mongohq_url:'mongodb://heroku:i05PaQ5XwgYcIHogtOWTdvsah4Z6Si6dV7CuMGLE1orno6EpFwqoo1-VqayM0uat48WKeVcXvgW39kfzBQfGnw@kahana.mongohq.com:10017/app25772746'
   },
 };
