@@ -18,7 +18,7 @@ var Config =  global.Config = require('./config/config').config,
 // ======================
 
 // Connect to Database
-mongoose.connect('mongodb://' + Config.database.IP + ':' +Config.database.port + '/' + Config.database.name);
+mongoose.connect(Config.database.mongohq_url);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB connection error:'));
