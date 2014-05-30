@@ -8,7 +8,7 @@ define(["app", "utils", "text!templates/Login.html", "text!templates/LoggedIn.ht
 
             // The DOM Element associated with this view
             // el: ".magic",
-            template: Handlebars.compile(template),
+            template: Handlebars.compile(template), 
             // View constructor
             initialize: function() {
 

@@ -62,8 +62,6 @@ define([
             // },
 
             renderPost: function(post) {
-                console.log('BlogPostContainerView','renderPost','post', post);
-                console.log('BlogPostContainerView','renderPost','this.$el', this.$el);
                 var postView = new BlogPostView({
                     model: post,
                     admin: false

@@ -21,7 +21,7 @@ module.exports = function(server) {
 		var blogPost = new BlogPostModel({
 			title: req.body.title,
 			author: req.body.author,
-			postDate: req.body.postDate,
+			postDate: new Date(),
 			content: req.body.content
 		});
 
@@ -88,7 +88,7 @@ module.exports = function(server) {
 		var comment = new CommentModel({
 			username: req.body.username,
 			content: req.body.content,
-			commentDate: req.body.commentDate,
+			commentDate: new Date(),
 			modelId: req.params.id
 		});
 

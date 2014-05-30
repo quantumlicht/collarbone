@@ -66,14 +66,20 @@ define(["app",
 
             commentSubmit: function(e) {
                 e.preventDefault();
-                console.log('TriviaView', 'commentSubmit', 'author', app.session.get('user').username);
-                if( this.$el.find('textarea').val() !== '') {
-                    var data = new CommentModel({
-                        content: this.$el.find('textarea').val(),
-                        username: app.session.get('user').username
-                    });
-                    this.comments.create(data);
-                    this.render();
+                if (app.session.get('user') !== undefined) {
+                    console.log('TriviaView', 'commentSubmit', 'author', app.session.get('user').username);
+                    if( this.$el.find('textarea').val() !== '') {
+                        var data = new CommentModel({
+                            content: this.$el.find('textarea').val(),
+                            username: app.session.get('user').username
+                        });
+                        this.comments.create(data);
+                        this.render();
+                    }
+                }
+                else {
+                    utils.showAlert("Error", "You need to be logged in to comment.", "alert-warning");
+                    app.router.navigate('#/login',{trigger:true});
                 }
             },
 

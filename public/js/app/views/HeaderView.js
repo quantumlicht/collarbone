@@ -27,6 +27,10 @@ define([
                 "click #remove-account-link": "onRemoveAccountClick"
             },
 
+            onProfileClick: function(evt) {
+
+            },
+
             onLoginStatusChange: function(evt){
                 this.render();
                 if(app.session.get("logged_in")) utils.showAlert("Success!", "Logged in as "+app.session.user.get("username"), "alert-success");
