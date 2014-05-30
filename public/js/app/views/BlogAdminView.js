@@ -2,13 +2,14 @@
 
 define([
     "app",
+    "utils",
     "views/BlogPostView",
     "models/BlogPostModel",
     "collections/BlogPostCollection",
     "text!templates/BlogPostContainer.html"
     ],
 
-    function(app, BlogPostView, BlogPostModel, BlogPostCollection, template){
+    function(app, utils, BlogPostView, BlogPostModel, BlogPostCollection, template){
 
         var BlogAdminView = Backbone.View.extend({
 
@@ -51,15 +52,20 @@ define([
             addBlogPost: function(e) {
                 e.preventDefault();
                 var formData = {};
-
-                $('#addBlogPost div').children('input, textarea').each(function(i, el) {
-                    if ($(el).val() !== '') {
-                        formData[el.id] = $(el).val();
-                    }
-                    $(el).val('');
-                });
-                formData['author'] = app.session.get('user').username;
-                this.collection.create(formData);
+                if (app.session.get('user') !== undefined) {
+                    $('#addBlogPost div').children('input, textarea').each(function(i, el) {
+                        if ($(el).val() !== '') {
+                            formData[el.id] = $(el).val();
+                        }
+                        $(el).val('');
+                    });
+                    formData['author'] = app.session.get('user').username;
+                    this.collection.create(formData);
+                }
+                else {
+                    utils.showAlert("Error", "You need to be logged in to add a blog post.", "alert-warning");
+                    app.router.navigate('#/login',{trigger:true});
+                }
             },
 
             renderPost: function(post) {

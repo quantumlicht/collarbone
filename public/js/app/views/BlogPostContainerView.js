@@ -21,8 +21,8 @@ define([
                 _.bindAll(this);
                 this.collection = new BlogPostCollection();
                 this.collection.fetch({reset: true});
+
                 this.render();
-                
                 this.listenTo(this.collection, 'add', this.renderPost);
                 this.listenTo(this.collection, 'reset', this.render);
             },

@@ -7,9 +7,10 @@ define(["jquery", "backbone"],
         // Creates a new Backbone Model class object
         var BlogPostModel = Backbone.Model.extend({
 
-            // Model Constructor
-            initialize: function() {
 
+            // Model Constructor
+
+            initialize: function() {
             },
             
             // Default values for all of the Model attributes

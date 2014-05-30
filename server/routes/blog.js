@@ -41,7 +41,7 @@ module.exports = function(server) {
 		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
 			blogPost.title = req.body.title;
 			blogPost.author = req.body.author;
-			blogPost.postDate = req.body.postDate;
+			blogPost.postDate = new Date(req.body.postDate);
 			blogPost.content = req.body.content;
 			return blogPost.save(function(err) {
 				if (!err) {
