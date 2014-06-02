@@ -41,19 +41,14 @@ define(["app",
             render: function() {
 
                 // Setting the view's template property using the Underscore template method
-                if(app.session.get('logged_in')){
-                    console.log('IndexView','render', 'logged_in');
-
-                    app.router.navigate('/users/' + app.session.user.get('username') , {trigger:true});
-                    return this;
-                } 
-                else this.template = Handlebars.compile(IndexTemplate);
-
-                // Setting the view's template property using the Underscore template method
-
                 // Dynamically updates the UI with the view's template
+                if(app.session.get('logged_in')){
+                    app.router.navigate('', {trigger:true});
+                }
+
                 console.log('IndexView','render','app.session.user.toJSON', app.session.toJSON());
                 this.$el.html(this.template({
+                    logged_in: app.session.get('logged_in'),
                     user: app.session.user.toJSON()
                 }));
 

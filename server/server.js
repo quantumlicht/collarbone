@@ -18,8 +18,8 @@ var Config =  global.Config = require('./config/config').config,
 // ======================
 
 // Connect to Database
-mongoose.connect(Config.database.mongohq_url);
-// mongoose.connect('mongodb://' + Config.database.IP + ':' + Config.database.port + '/' + Config.database.name);
+// mongoose.connect(Config.database.mongohq_url);
+mongoose.connect('mongodb://' + Config.database.IP + ':' + Config.database.port + '/' + Config.database.name);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB connection error:'));
@@ -99,11 +99,12 @@ server.configure(function() {
 // API.api(server);
 require('./routes/api')(server);
 require('./routes/blog')(server);
-require('./routes/index')(server);
 require('./routes/blog_admin')(server);
+require('./routes/comments')(server);
+require('./routes/index')(server);
+require('./routes/tests')(server);
 require('./routes/trivia')(server);
 require('./routes/users')(server);
-require('./routes/tests')(server);
 
 // Start Node.js Server
 http.createServer(server).listen(port);

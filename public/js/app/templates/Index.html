@@ -1,4 +1,5 @@
 <!-- HTML Template -->
+{{#unless logged_in}}
 <div class="jumbotron">
   <h1>Movie Trivia</h1>
   <p>Il s'agit d'un site pour essayer de deviner un film à partir d'une brève description d'une scène du film</p>
@@ -10,4 +11,5 @@
     	<div id="blogPosts"></div>        
     </div>
 	<div class="col-md-2"></div>
-</div>  
+</div>
+{{/unless}}

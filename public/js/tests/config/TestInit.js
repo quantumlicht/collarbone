@@ -42,6 +42,8 @@ require.config({
       
       "app": "app/app",
 
+      "utils": "app/utils",
+
 
       // Application Folders
       // ===================
@@ -116,10 +118,11 @@ require(["handlebars",
          "underscore",
          "backbone",
          "app",
+         "utils",
          "boot",
          "events"],
 
-  function(Init, Handlebars, _, backbone, app, boot) {
+  function(Init, Handlebars, _, backbone, app, utils, boot) {
 
 
     require(specs, function() {
