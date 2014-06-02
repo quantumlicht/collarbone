@@ -16,8 +16,8 @@ mongod --dbpath "E:\My Documents"
 
 Once the DB is started, you can user mongo.exe to use command prompt
 
-show dbs
-use defaultDB
-show collections
-db.users.find()
-db.users.remove({}) // removes all
+- show dbs
+- use defaultDB
+- show collections
+- db.users.find()
+- db.users.remove({}) // removes all
