@@ -19,7 +19,6 @@ module.exports = function(app) {
 
 	    User.findOne({_id:req.signedCookies.user_id, auth_token: req.signedCookies.auth_token}, function(err, user){
 	        if(user){
-	        	logger.info('GET /api/auth','found user: ', user);
 	            res.json({ user: _.pick(user, ['username', '_id']) });   
 	        } else {  
 	            res.json({ error: "Client has no valid login cookies."  });   

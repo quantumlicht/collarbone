@@ -73,35 +73,39 @@ module.exports = function(server) {
 
 	// COMMENTS
 
-	server.get('/blogposts/:id/comments', function(req, res) {
-		return CommentModel.find({modelId: req.params.id},function(err, comments) {
-			if (!err) {
-				return res.send(comments);
-			}
-			else {
-				console.log(err);
-			}
-		});
-	});
+	// server.get('/blogposts/:id/comments', function(req, res) {
+	// 	return CommentModel.find({modelId: req.params.id},function(err, comments) {
+	// 		if (!err) {
+	// 			return res.send(comments);
+	// 		}
+	// 		else {
+	// 			console.log(err);
+	// 		}
+	// 	});
+	// });
 
-	server.post('/blogposts/:id/comments', function(req, res) {
-		var comment = new CommentModel({
-			username: req.body.username,
-			content: req.body.content,
-			commentDate: new Date(),
-			modelId: req.params.id
-		});
+	// server.post('/blogposts/:id/comments', function(req, res) {
+	// 	var comment = new CommentModel({
+	// 		username: req.body.username,
+	// 		content: req.body.content,
+	// 		commentDate: new Date(),
+	// 		modelId: req.params.id
+	// 	});
 
-		return comment.save(function(err){
-			if (!err) {
-				console.log('comment created', comment);
-				return res.send(comment);
-			}
-			else {
-				console.log(err);
-			}
-		});
-	});
+	// 	return comment.save(function(err){
+	// 		if (!err) {
+	// 			console.log('comment created', comment);
+	// 			return res.send(comment);
+	// 		}
+	// 		else {
+	// 			console.log(err);
+	// 		}
+	// 	});
+	// });
+
+	// server.delete('/blogposts/:id/comments/:commentId', function(req, res) {
+	// 	console.log('Deleting BlogPost with id', req.params.id, req.params.commentId);
+	// });
 
 }
 

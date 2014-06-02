@@ -12,6 +12,10 @@ define(["jquery", "backbone"],
 
             },
 
+            // url: function(){
+            //     // console.log('CommentView', 'url', '/blogposts/' + this.model.modelId + '/comments/' + this.model._id);
+            //     return '/blogposts/' + this.get('modelId') + '/comments/' + this.get('_id');
+            // },
             // Default values for all of the Model attributes
             defaults: {
                 username: "Unknown",
