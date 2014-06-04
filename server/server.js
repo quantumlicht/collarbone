@@ -1,9 +1,9 @@
 // DEPENDENCIES
 // ============
 
+require('./newrelic');
 var Config =  global.Config = require('./config/config').config,
     express = require("express"),
-    require('./newrelic');
     bcrypt = require("bcrypt-nodejs"),
     _ = require("underscore"),
     http =    require("http"),
