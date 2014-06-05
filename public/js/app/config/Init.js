@@ -81,7 +81,7 @@ require.config({
    }
 
 });
-require('newrelic');
+require(['newrelic']);
 // Includes Desktop Specific JavaScript files here (or inside of your Desktop router)
 require(["app", "utils", "hbar_helpers", "handlebars", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll"],
 
