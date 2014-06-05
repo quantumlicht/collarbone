@@ -12,8 +12,6 @@ var Config =  global.Config = require('./config/config').config,
     port =    ( process.env.PORT || Config.listenPort ),
     mongoose =     require('mongoose'),
     server =  module.exports = express();
-    // API =     require('./routes/API');
-    // API =     require('./routes/API');
 
 // DATABASE CONFIGURATION
 // ======================
@@ -28,10 +26,6 @@ db.once('open', function callback () {
   console.log('Connected to ' + Config.database.name);
 });
 
-// // DATABASE SCHEMAS
-// // ================
-
-// var schema = require('./schemas/schema');
 
 // SERVER CONFIGURATION
 // ====================
@@ -47,6 +41,7 @@ server.configure('development', function(){
 server.configure('production', function(){
     server.use(express.errorHandler());
 });
+
 
 server.configure(function() {
   
@@ -81,14 +76,9 @@ server.configure(function() {
 
   server.use(express.methodOverride());
 
-  // server.use(express.cookieParser());
-
-  // server.use(express.session({ secret: Config.sessionSecret }));
-  
-  
   server.use( express.cookieParser( Config.cookieSecret ) );           // populates req.signedCookies
+  
   server.use( express.cookieSession( Config.sessionSecret ) );  
-
 
   server.use(server.router);
 
@@ -97,7 +87,6 @@ server.configure(function() {
 // API
 // ===
 
-// API.api(server);
 require('./routes/api')(server);
 require('./routes/blog')(server);
 require('./routes/blog_admin')(server);
