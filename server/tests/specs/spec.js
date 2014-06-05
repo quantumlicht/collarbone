@@ -24,3 +24,14 @@ describe('API: GET /hello', function() {
 		});
 	});
 });
+
+describe('API: GET /blogposts', function(){
+	it('Should Return 202', function(done) {
+		request.get('localhost:2000/blogposts').end(function(res){
+			expect(res).to.exist;
+			expect(res.status).to.equal(200);
+			expect(res.body.length).to.be.above(0);
+			done();
+		});
+	});
+});

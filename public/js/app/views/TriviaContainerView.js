@@ -73,7 +73,7 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
                     form_el.show(750);
                 }
                 else {
-                    formData['hints'] = [];
+                    formData.hints = [];
                     $('#add-trivia-form div').children('input, textarea').each(function(i, el) {
                         if($(el).val()==='') {
                             utils.showAlert('Error!', 'Cannot Add with empty fields','alert-danger');
@@ -82,7 +82,7 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
                         else {
                             var isHint = $.inArray('hints', $(this).attr('class').split(' ')) > - 1;
                             if (isHint) {
-                                formData['hints'].push({hint: $(el).val() });
+                                formData.hints.push({hint: $(el).val() });
                                 // for each hints append it to the hints property of formData
                             }
                             else {
@@ -93,8 +93,8 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
 
                     if (!hasErrors) {
                         console.log('TriviaContainerView', 'user session', app.session.get('user'));
-                        formData['author'] = app.session.get('user').username;
-                        formData['userId'] = app.session.get('user')._id;
+                        formData.author = app.session.get('user').username;
+                        formData.userId = app.session.get('user')._id;
                         $("#add-trivia-form")[0].reset();   
                         this.triviaCollection.create(formData);
                         utils.showAlert('Trivia question added!', 'Thanks', 'alert-success');

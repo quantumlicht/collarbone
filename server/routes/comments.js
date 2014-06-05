@@ -4,6 +4,7 @@ module.exports = function(server){
 	
 	server.get('/comments', function(req, res) {
 		return CommentModel.find(function(err, comments) {
+			console.log(err);
 			if (!err) {
 				return res.send(comments);
 			}
@@ -34,6 +35,17 @@ module.exports = function(server){
 	});
 
 	server.delete('/comments/:id', function(req, res) {
-		console.log('Deleting BlogPost with id', req.params.id, req.params.commentId);
+		return CommentModel.findById(req.params.id, function(err, comment){
+			comment.remove(function(err){
+				if (!err) {
+					console.log ('DELETE /comments/:id', 'comment deleted');
+					return res.send('');
+				}
+				else {
+					console.log(err);
+				}
+			});
+		});
+		console.log('DELETE /comments/:id', 'Deleting BlogPost with id', req.params.id, req.params.commentId);
 	});
 }

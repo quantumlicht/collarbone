@@ -39,11 +39,16 @@ define(["app", "utils", "models/CommentModel","collections/CommentCollection", "
             deleteComment: function(evt){
                 console.log('CommentView','deleteComment','model', this.model);
                 console.log('CommentView','deleteComment','model is new ?', this.model.isNew());
+                this.remove();
                 this.model.destroy({
-                    success:function () {
+                    success: function () {
                         utils.showAlert('Success', 'Comment deleted successfully' ,'alert-info');
                         // window.history.back();
+                    },
+                    error: function(err){
+                        console.error(err);
                     }
+
                 });
                 return false;
             },

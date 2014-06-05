@@ -26,7 +26,8 @@ define(["app",
                 this.commentCollection = new CommentCollection();
                 this.commentCollection.fetch({async:false, reset:true});
                 this.comments = this.commentCollection.where({modelId:this.model.id});
-
+                console.log('comments', this.comments);
+                console.log('CommentCollection', this.commentCollection);
                 this.listenTo(this.commentCollection, 'reset', this.render);
                 this.listenTo(this.commentCollection, 'add', this.render);
                 this.render();
@@ -40,7 +41,7 @@ define(["app",
 
             commentSubmit: function(e) {
                 e.preventDefault();
-                console.log('BlogPostView', 'commentSubmit', 'author', app.session.get('user').username)
+                console.log('BlogPostView', 'commentSubmit', 'author', app.session.get('user').username);
                 var data = new commentModel({
                     content: this.$el.find('textarea').val(),
                     username: app.session.get('user').username,
@@ -56,9 +57,9 @@ define(["app",
                 * TODO: Delete comments linked to the blogpost
                 * BUG: it is probably not how its done right now.
                 */
-                this.model.destroy();
                 this.comments.remove();
                 this.remove();
+                this.model.destroy();
             },
 
             // Renders the view's template to the UI
@@ -67,7 +68,7 @@ define(["app",
                 this.$el.html( this.template( this.model.toJSON() ));
 
 
-                if(this.comments) {
+                if(this.commentCollection) {
                     this.commentCollection.each(function(item) {
                         this.renderComment(item);
                     }, this);

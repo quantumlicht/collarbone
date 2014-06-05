@@ -59,7 +59,7 @@ define([
                         }
                         $(el).val('');
                     });
-                    formData['author'] = app.session.get('user').username;
+                    formData.author = app.session.get('user').username;
                     this.collection.create(formData);
                 }
                 else {

@@ -22,6 +22,12 @@ define(["jquery", "backbone"],
                 commentDate: new Date()
             },
 
+            parse: function(response) {
+                response.id = response._id;
+                return response;
+            },
+
+
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
             validate: function(attrs) {
 
