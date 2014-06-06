@@ -1,5 +1,3 @@
-// IndexView.js
-
 define([
     "app",
     "utils",
@@ -22,7 +20,7 @@ define([
                 this.collection = new BlogPostCollection();
                 this.collection.fetch({reset: true});
                 this.render();
-                this.listenTo(this.collection, 'add', this.renderPost);
+                this.listenTo(this.collection, 'add', this.render);
                 this.listenTo(this.collection, 'reset', this.render);
             },
 
@@ -33,16 +31,12 @@ define([
 
             // Renders the view's template to the UI
             render: function() {
-                console.log(this.model);
-                // this.template = Handlebars.compile(template);
                 this.$el.html(this.template);
                 // Setting the view's template property using the Underscore template method
                 this.collection.each(function(item) {
                     this.renderPost(item);
                 }, this);
 
-                // Dynamically updates the UI with the view's template
-                // this.$el.html(this.template);
 
                 // Maintains chainability
                 return this;
@@ -52,14 +46,14 @@ define([
             addBlogPost: function(e) {
                 e.preventDefault();
                 var formData = {};
-                if (app.session.get('user') !== undefined) {
+                if (app.session.user.get('username') !== undefined) {
                     $('#addBlogPost div').children('input, textarea').each(function(i, el) {
                         if ($(el).val() !== '') {
                             formData[el.id] = $(el).val();
                         }
                         $(el).val('');
                     });
-                    formData.author = app.session.get('user').username;
+                    formData.author = app.session.user.get('username');
                     this.collection.create(formData);
                 }
                 else {

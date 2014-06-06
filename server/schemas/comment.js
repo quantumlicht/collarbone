@@ -5,6 +5,7 @@ var CommentSchema = new mongoose.Schema({
     userId: String,
     content: {type: String, required: true},
     commentDate: Date,
+    modelUrl: String,
     modelId: String
 });
 

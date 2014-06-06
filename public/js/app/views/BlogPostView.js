@@ -22,15 +22,12 @@ define(["app",
                 // Calls the view's render method
                 this.admin = options.admin;
                 _.bindAll(this);
-
                 this.commentCollection = new CommentCollection();
                 this.commentCollection.fetch({async:false, reset:true});
                 this.comments = this.commentCollection.where({modelId:this.model.id});
-                console.log('comments', this.comments);
-                console.log('CommentCollection', this.commentCollection);
+
                 this.listenTo(this.commentCollection, 'reset', this.render);
-                this.listenTo(this.commentCollection, 'add', this.render);
-                this.render();
+                this.listenTo(this.commentCollection, 'add', this.renderComment);
             },
 
             // View Event Handlers
@@ -40,16 +37,20 @@ define(["app",
             },
 
             commentSubmit: function(e) {
-                e.preventDefault();
                 console.log('BlogPostView', 'commentSubmit', 'author', app.session.get('user').username);
-                var data = new commentModel({
-                    content: this.$el.find('textarea').val(),
-                    username: app.session.get('user').username,
-                    modelId: this.model.id
-                });
-                console.log(this.comments);
-                this.commentCollection.create(data);
-                this.render();
+                var $comment = this.$el.find('textarea');
+                if( $comment.val() !=='') {
+
+                    var data = new commentModel({
+                        content: this.$el.find('textarea').val(),
+                        username: app.session.get('user').username,
+                        modelId: this.model.id,
+                        modelUrl: this.model.url()
+                    });
+                    console.log(this.comments);
+                    this.commentCollection.create(data);
+                    $comment.val('');
+                }
             },
 
             deleteBlogPost: function(){
@@ -64,12 +65,13 @@ define(["app",
 
             // Renders the view's template to the UI
             render: function() {
+                console.log('BlogPostView','render');
                 this.model.set({admin:this.admin});
                 this.$el.html( this.template( this.model.toJSON() ));
 
 
-                if(this.commentCollection) {
-                    this.commentCollection.each(function(item) {
+                if(this.comments) {
+                    _.each(this.comments, function(item) {
                         this.renderComment(item);
                     }, this);
                 }
@@ -79,7 +81,6 @@ define(["app",
             },
 
             renderComment: function(comment) {
-                console.log('comment', comment);    
                 var commentView = new CommentView({
                     model: comment,
                     admin: this.admin

@@ -24,13 +24,13 @@ define(["app",
                 this.model.fetch();
                 this.listenTo(this.model, 'change', this.render);
                 this.admin = options.admin || false;
-                this.id = this.model.get('id');
-                this.comments = new CommentCollection();
-                this.comments.url = '/trivia/' + this.id + '/comments';
-                this.comments.fetch({async: false, reset:true});
-                // Calls the view's render method
-                // this.render();
 
+                this.commentCollection = new CommentCollection();
+                this.commentCollection.fetch({async:false, reset:true});
+                this.comments = this.commentCollection.where({modelId:this.model.id});
+            
+                this.listenTo(this.commentCollection, 'reset', this.render);
+                this.listenTo(this.commentCollection, 'add', this.renderComment);
             },
 
             // View Event Handlers
@@ -46,7 +46,7 @@ define(["app",
                 this.$el.html( this.template(this.model.toJSON()));
                 this.$el.find('#tooltip-btn').popover();
                 if(this.comments) {
-                    this.comments.each(function(item) {
+                    _.each(this.comments, function(item) {
                         this.renderComment(item);
                         }, this);
                 }
@@ -68,13 +68,16 @@ define(["app",
                 e.preventDefault();
                 if (app.session.get('user') !== undefined) {
                     console.log('TriviaView', 'commentSubmit', 'author', app.session.get('user').username);
-                    if( this.$el.find('textarea').val() !== '') {
+                    var $comment = this.$el.find('textarea')
+                    if( $comment.val() !== '') {
                         var data = new CommentModel({
                             content: this.$el.find('textarea').val(),
-                            username: app.session.get('user').username
+                            username: app.session.get('user').username,
+                            modelId: this.model.id,
+                            modelUrl: this.model.url()
                         });
-                        this.comments.create(data);
-                        this.render();
+                        this.commentCollection.create(data);
+                        $comment.val('');
                     }
                 }
                 else {

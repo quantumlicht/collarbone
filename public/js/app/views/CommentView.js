@@ -1,44 +1,35 @@
-// IndexView.js
 
-define(["app", "utils", "models/CommentModel","collections/CommentCollection", "text!templates/Comment.html"],
+define(["app",
+        "utils",
+        "models/CommentModel",
+        "views/CommentEditView",
+        "collections/CommentCollection",
+        "text!templates/Comment.html"],
 
-    function(app, utils, Model, CommentCollection, template){
+    function(app, utils, Model, CommentEditView, CommentCollection, CommentTemplate){
 
         var CommentView = Backbone.View.extend({
 
-            // The DOM Element associated with this view
-            // el: '#commentContainer',
             tagName: 'div',
             className: 'comment',
-            template: Handlebars.compile(template),
-
+            template: Handlebars.compile(CommentTemplate),
           
             // View constructor
             initialize: function(options) {
                 this.admin = options.admin;
                 this.render();
                 _.bindAll(this);
-                // this.collection = new CommentCollection();
-                // this.collection.fetch({reset:true});
-
-                // this.listenTo(this.collection,'reset', this.render);
-                // this.collection.remove(this.model);
-                // this.listenTo(this.model, 'destroy', this.render);
-                // this.model.bind('remove', function(){
-                //     console.log('destroying model');
-                //     self.destroy();
-                // });
-
+                this.listenTo(this.model, 'comment-edit', this.render);
             },
 
             // View Event Handlers
             events: {
-                "click .delete-comment": "deleteComment"
+                "click .delete-comment": "deleteComment",
+                "click .edit-comment": "editComment"
             },
 
+
             deleteComment: function(evt){
-                console.log('CommentView','deleteComment','model', this.model);
-                console.log('CommentView','deleteComment','model is new ?', this.model.isNew());
                 this.remove();
                 this.model.destroy({
                     success: function () {
@@ -52,13 +43,18 @@ define(["app", "utils", "models/CommentModel","collections/CommentCollection", "
                 });
                 return false;
             },
+
+            editComment: function(evt){
+                console.log('CommentView', 'editComment', 'content', this.model.get('content'));
+                var commentEditView = new CommentEditView({
+                    model: this.model
+                });
+                this.$el.find('#comment-container').html(commentEditView.render().el);
+
+            },
             // Renders the view's template to the UI
             render: function() {
-                // Setting the view's template property using the Underscore template method
-                // this.template = _.template(template, {});
-
-                // Dynamically updates the UI with the view's template
-                this.$el.html(this.template($.extend(this.model.toJSON(), {admin: this.admin})));
+                this.$el.html(this.template($.extend(this.model.toJSON(), {admin: this.admin, can_alter: app.session.user.get('username')==this.model.get('username')})));
 
                 // Maintains chainability
                 return this;

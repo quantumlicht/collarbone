@@ -1,10 +1,22 @@
 <!-- HTML Template -->
 <div>
-<small><a href="#users/{{username}}">{{username}}</a> - {{formatDate commentDate}}</small><br/>{{content}}
-{{#if admin}}
-	<button class="btn btn-primary btn-xs edit-comment">Edit</button>
-	<button class="btn btn-danger btn-xs delete-comment">Delete</button>
-{{/if}}
+<small><a href="#users/{{username}}">{{username}}</a> - {{formatDate commentDate}}</small><br/>
+<div id="comment-container">
+	{{content}}
+	{{#if admin}}
+		<button class="btn btn-primary btn-xs edit-comment">edit</button>
+		<button class="btn btn-danger btn-xs delete-comment">delete</button>
+	{{/if}}
+	{{#unless admin}}
+	{{#if can_alter}}
+		<a  class="edit-comment">edit</a>
+	{{/if}}
+	{{/unless}}
+</div>
+
+
+
+
 </div>
 
 	
