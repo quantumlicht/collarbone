@@ -1,4 +1,4 @@
-{{#if partialRender}}
+{{#if renderForListView}}
 	<h3>
 		<a href="#trivia/{{id}}">{{normL title}}</a>
 	</h3>
@@ -20,10 +20,10 @@
 		{{/each}} 
   	</div>
   	<div class="panel-footer">
-  		<div id="comment">
-  			<textarea placeholder="Comment" style="resize:none; width:100%;"></textarea>
-  		</div>
-      <button id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
       <div id="commentContainer"></div>
+      <div id="comment">
+        <textarea placeholder="Comment" style="resize:none; width:100%;"></textarea>
+      </div>
+      <button id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
     </div>
 {{/if}}

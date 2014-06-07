@@ -1,22 +1,36 @@
+{{#if renderForListView}}
+  <div class="well well-sm">
+    <small>Submitted by <a href="#users/{{author}}">{{author}}</a> {{formatDate postDate}}</small> 
+    <h3>
+      <a href="#blogposts/{{id}}">{{normL title}}</a>
+    </h3>
+    {{normL content}}
+  </div>
+{{else}}
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h1 class="panel-title">
-		<small><a href="#users/{{author}}">{{author}}</a></small> - <small>{{formatDate postDate}}</small>	
-		{{title}}</h1>
+    <h4>
+      <strong>{{title}}</strong>
+    </h4>
+    <h6>
+      <a href="#users/{{author}}">{{author}}</a> - {{formatDate postDate}}
+    </h6>
     	
 	</div>
   	<div class="panel-body">
   		{{content}}
   	</div>
   	<div class="panel-footer">
-  		<div id="comment">
-  			<textarea placeholder="Comment" style="resize:none; width:100%;"></textarea>
-  		</div>
-      <button id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
       <div id="commentContainer"></div>
+      <div class="form-group"id="comment">
+        <textarea  class="form-control" type="text" placeholder="Comment"></textarea>
+      </div>
+        <button type="submit" id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
+      
     </div>
 	{{#if admin}}
 	<button class="btn btn-xs btn-primary edit-post">Edit</button>
   <button class="btn btn-xs btn-danger delete-post">Delete</button>
 	{{/if}}
 </div>
+{{/if}}

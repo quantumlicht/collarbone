@@ -9,6 +9,7 @@ define([
     "views/RegisterView",
     "views/IndexView",
     "views/BlogPostContainerView",
+    "views/BlogPostView",
     "views/BlogAdminView",
     "views/TriviaContainerView",
     "views/TriviaView",
@@ -26,12 +27,13 @@ define([
              LoginView,
              RegisterView,
              IndexView,
-             blogPostContainerView,
+             BlogPostContainerView,
+             BlogPostView,
              blogAdminView,
              TriviaContainerView,
              TriviaView,
              UserView,
-             Collection,
+             BlogPostCollection,
              TriviaCollection,
              UserCollection) {
 
@@ -55,7 +57,7 @@ define([
                 // When there is no hash on the url, the home method is called
                 "": "index",
                 "register": "register",
-                "blog": "blog",
+                "blogposts/:id": "blog",
                 "trivia": "triviaList",
                 "trivia/:id" : "trivia",
                 "users/:username": "userprofile",
@@ -76,8 +78,19 @@ define([
                 }        
             },
 
-            blog: function(){
-                this.show(new blogPostContainerView());
+            blog: function(id){
+                console.log('Router','blog');
+                var self = this;
+                var collection = new BlogPostCollection();
+                collection.bind('reset', function () { 
+                    console.log('collection', collection);
+                    var model = collection.findWhere({id: id});
+                    console.log('Router', 'blog', 'model', model);
+                    var view = new BlogPostView({model: model});
+                    self.show(view);
+                });
+                collection.fetch({reset:true});
+                // this.show(new BlogPostContainerView());
             },
 
             admin: function(){
@@ -99,7 +112,6 @@ define([
                 var hasPushState = !!(window.history && history.pushState);
                 if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
                 else {
-                    console.log('Router','register','has push state');
                     this.show( new RegisterView({}) );
                 }
             },
@@ -147,10 +159,8 @@ define([
                     this.headerView.setElement($("header")).render();
                 }
 
-                console.log('Router', 'show', 'this.currentView', this.currentView);
                 if (this.currentView) this.currentView.close();
                 this.currentView = view;
-                console.log('Router','show', 'this.currentView', this.currentView);
 
                 // Need to be authenticated before rendering view.
                 // For cases like a user's settings page where we need to double check against the server.

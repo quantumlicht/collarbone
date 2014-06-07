@@ -102,11 +102,9 @@ require(["app", "utils", "hbar_helpers", "handlebars", "routers/Router","models/
 
          // Start the backbone routing once we have captured a user's auth status
          complete: function(){
-            console.log('Init','checkAuth', 'complete callback');
             // HTML5 pushState for URLs without hashbangs
             var hasPushstate = !!(window.history && history.pushState);
             if(hasPushstate){
-               console.log('Init','checkAuth','complete callback' ,' hasPushstate');
                // Backbone.history.start({ pushState: true, root: '/' } );
                Backbone.history.start(); 
             } 

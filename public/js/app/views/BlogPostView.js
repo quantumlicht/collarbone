@@ -2,12 +2,13 @@
 
 define(["app",
         "views/CommentView",
+        "views/BlogPostEditView",
         "models/BlogPostModel",
         "models/CommentModel",
         "collections/CommentCollection",
         "text!templates/BlogPost.html"],
 
-    function(app, CommentView, Model, commentModel, CommentCollection, BlogPostTemplate){
+    function(app, CommentView, BlogPostEditView, Model, commentModel, CommentCollection, BlogPostTemplate){
 
         var BlogPostView = Backbone.View.extend({
 
@@ -15,12 +16,17 @@ define(["app",
             tagName: 'div',
             className: 'blogPostContainer',
             template: Handlebars.compile(BlogPostTemplate),
-
+            renderForListView: false,
             // View constructor
             initialize: function(options) {
-                $('#' + Backbone.history.fragment).addClass('active');
+                console.log('BlogPostView', 'Fragment', Backbone.history.fragment);
+
+                // $('#' + Backbone.history.fragment.split('/')[0]).addClass('active');
                 // Calls the view's render method
                 this.admin = options.admin;
+                if (typeof options.renderForListView === 'boolean' ) {
+                    this.renderForListView = options.renderForListView;
+                }
                 _.bindAll(this);
                 this.commentCollection = new CommentCollection();
                 this.commentCollection.fetch({async:false, reset:true});
@@ -28,22 +34,24 @@ define(["app",
 
                 this.listenTo(this.commentCollection, 'reset', this.render);
                 this.listenTo(this.commentCollection, 'add', this.renderComment);
+                this.listenTo(this.model, 'blogpost-edit', this.render);
             },
 
             // View Event Handlers
             events: {
+                'click .edit-post': "editBlogPost",
                 'click .delete-post': 'deleteBlogPost',
                 'click #commentSubmit': "commentSubmit"
             },
 
             commentSubmit: function(e) {
-                console.log('BlogPostView', 'commentSubmit', 'author', app.session.get('user').username);
+                console.log('BlogPostView', 'commentSubmit', 'author', app.session.user.get('username'));
                 var $comment = this.$el.find('textarea');
                 if( $comment.val() !=='') {
 
                     var data = new commentModel({
                         content: this.$el.find('textarea').val(),
-                        username: app.session.get('user').username,
+                        username: app.session.user.get('username')  ,
                         modelId: this.model.id,
                         modelUrl: this.model.url()
                     });
@@ -54,21 +62,42 @@ define(["app",
             },
 
             deleteBlogPost: function(){
-                /*
-                * TODO: Delete comments linked to the blogpost
-                * BUG: it is probably not how its done right now.
-                */
-                this.comments.remove();
-                this.remove();
-                this.model.destroy();
+                console.log('deleteBlogPost','comments', this.comments);
+                this.remove();  
+                this.model.destroy({
+                    success:this.removeComments
+                });
+            },
+
+            removeComments: function(model) {
+                console.log('removing comments');
+                var collection = new CommentCollection();
+                collection.fetch({reset:true});
+                collection.on('reset', function(collection){
+                    comments = collection.where({modelId:model.get('_id')});
+                    _.each(comments, function(comment){
+                        comment.destroy();
+                    });
+                });
+
+            },
+
+            editBlogPost: function(){
+                console.log('BlogPostView', 'editBlogPost', 'content', this.model.get('content'));
+                var blogPostEditView = new BlogPostEditView({
+                    model: this.model
+                });
+                this.$el.find('.panel-body').html(blogPostEditView.render().el);
             },
 
             // Renders the view's template to the UI
             render: function() {
-                console.log('BlogPostView','render');
-                this.model.set({admin:this.admin});
-                this.$el.html( this.template( this.model.toJSON() ));
+                this.model.set({
+                    admin: this.admin,
+                    renderForListView: this.renderForListView
+                });
 
+                this.$el.html( this.template( this.model.toJSON() ));
 
                 if(this.comments) {
                     _.each(this.comments, function(item) {

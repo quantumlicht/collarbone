@@ -22,8 +22,9 @@
             <li id="loc-register"><a href="#register">Register</a></li>
             {{/if}}
           </ul> 
-          {{#if logged_in}}
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/quantumlicht/collarbone/issues">Found a bug ?</a></li>
+            {{#if logged_in}}
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user.username}}<b class="caret"></b></a>
               <ul class="dropdown-menu">

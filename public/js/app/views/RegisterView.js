@@ -34,8 +34,8 @@ define(["app", "utils", "collections/UserCollection", "text!templates/Register.h
             // Renders the view's template to the UI
             render: function() {
                 console.log('RegisterView', 'render','logged_in?', app.session.get('logged_in'));
-                if(app.session.get('logged_in')) this.template = Handlebars.compile(LoggedInTemplate);
-                else this.template = Handlebars.compile(template);
+                // if(app.session.get('logged_in')) this.template = Handlebars.compile(LoggedInTemplate);
+                this.template = Handlebars.compile(template);
                 // Setting the view's template property using the Underscore template method
                 // this.template = Handlebars.compile(template, {});
 
@@ -103,37 +103,29 @@ define(["app", "utils", "collections/UserCollection", "text!templates/Register.h
                 //     this.renderError($('#username'),'Username is empty');
                 //     this.hasErrors = true;
                 // }
+                // console.log(this.$('#password'));
+                // console.log(this.$('#password-confirm'));
 
-                app.session.signup({
-                    username: this.$("#username").val(),
-                    password: this.$("#password").val()
-                }, {    
-                    success: function(mod, res) {
-                        console.log('RegisterView','onRegisterAttempt','success callback');
-                        utils.showAlert('test','text','alert-success'); 
-                        if (DEBUG) console.log(mod, res);
-                    },
+                if (this.$('#password').val() !== this.$('#password-confirm').val()) {
+                    utils.showAlert('Error', "passwords don't match.", 'alert-danger');
+                }
+                else {
+                    app.session.signup({
+                        username: this.$("#username").val(),
+                        password: this.$("#password").val()
+                    }, {    
+                        success: function(mod, res) {
+                            console.log('RegisterView','onRegisterAttempt','success callback');
+                            utils.showAlert('test','text','alert-success'); 
+                        },
 
-                    error: function(mod, res) {
-                        console.log('RegisterView','onRegisterAttempt', 'error callback');
-                        if (DEBUG) console.log("ERROR", mod, res);
-                    }
-                });
-
-
-                //Error Message if validation not passed.
-                // else{
-                //     $('#registerForm .form-group').children('input').each(function(i, el) {
-                //         if ($(el).val() !== '') {
-                //             formData[el.id] = $(el).val();
-                //         }
-                //         $(el).val('');
-
-                        
-                //     });
-                //     console.log('creating User', formData);
-                //     this.collection.create(formData);
-                // }
+                        error: function(mod, res) {
+                            if (mod.status == 409) {
+                                utils.showAlert('Error','User already exists. Pick another name.', 'alert-danger');
+                            }
+                        }
+                    });        
+                }
             }
 
         });

@@ -17,7 +17,6 @@ define([
             // View constructor
             initialize: function() {
                 // Calls the view's render method
-                console.log('BlogPostContainerView', 'initialize');
                 _.bindAll(this);
                 this.collection = new BlogPostCollection();
                 this.collection.fetch({reset: true});
@@ -64,7 +63,8 @@ define([
             renderPost: function(post) {
                 var postView = new BlogPostView({
                     model: post,
-                    admin: false
+                    admin: false,
+                    renderForListView: true
                 });
                 this.$el.append(postView.render().el);
                 

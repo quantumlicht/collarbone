@@ -35,6 +35,7 @@ define(["app",
 
         // Fxn to update user attributes after recieving API response
         updateSessionUser: function( userData ){
+            console.log('SessionModel','updateSessionUser','userData',userData);
             this.user.set( _.pick( userData, _.keys(this.user.defaults) ) );
         },
 
@@ -91,7 +92,7 @@ define(["app",
                 },
                 data:  JSON.stringify( _.omit(opts, 'method') ),
                 success: function(res){
-
+                    console.log('SessionModel','postAuth','success','res',res);
                     if( !res.error ){
                         if(_.indexOf(['login', 'signup'], opts.method) !== -1){
                             console.log('SessionModel','postAuth','user', res.user, 'logged_in');
@@ -108,8 +109,8 @@ define(["app",
                     }
                 },
                 error: function(mod, res){
-                    console.log('SessionModel','postAuth','error callback');
-                    if(callback && 'error' in callback ) callback.error(res);
+                    console.log('SessionModel','postAuth','error callback',mod, res);
+                    if(callback && 'error' in callback ) callback.error(mod, res);
                 }
             }).complete( function(){
                 if(callback && 'complete' in callback ) callback.complete(res);

@@ -2,14 +2,13 @@
 
 define(["app",
         "views/BlogPostContainerView",
-        "text!templates/Index.html", "text!templates/LoggedIn.html"],
+        "text!templates/Index.html",
+        "text!templates/LoggedIn.html"],
 
     function(app, BlogPostContainerView, IndexTemplate, LoggedInTemplate){
 
         var IndexView = Backbone.View.extend({
 
-            // The DOM Element associated with this view
-            // el: ".magic",
             template: Handlebars.compile(IndexTemplate),
             // View constructor
             initialize: function() {
@@ -19,7 +18,6 @@ define(["app",
                 app.session.on("change:logged_in", this.render);
                 console.log('LoginView', 'initialize');
                 this.blogView = new BlogPostContainerView();
-                // this.render();
 
             },
 
@@ -52,8 +50,6 @@ define(["app",
                     user: app.session.user.toJSON()
                 }));
 
-
-                console.log('IndexView', 'render', 'adding blogview');
                 this.$el.append(this.blogView.$el);
                 this.blogView.render();
                 // Maintains chainability

@@ -1,27 +1,28 @@
 // IndexView.js
 
-define(["app", "collections/CommentCollection", "text!templates/CommentEdit.html"],
+define(["app", "collections/BlogPostCollection", "text!templates/BlogPostEdit.html"],
 
-    function(app, CommentCollection, template){
+    function(app, BlogPostCollection, template){
 
-        var CommentEditView = Backbone.View.extend({
+        var BlogPostEditView = Backbone.View.extend({
 
 
             template: Handlebars.compile(template),
             // View constructor
             initialize: function(options) {
                 _.bindAll(this);
-                this.collection = new CommentCollection();
+                this.collection = new BlogPostCollection();
             },
 
             // View Event Handlers
             events: {
-                "click #comment-edit-cancel": "removeEdit",
-                "click #comment-edit-save": "saveEdit"
+                "click #blogpost-edit-cancel": "removeEdit",
+                "click #blogpost-edit-save": "saveEdit"
             },
 
             removeEdit: function(){
-                this.model.trigger('comment-edit');
+                console.log('BlogPostEditView', 'removeEdit');
+                this.model.trigger('blogpost-edit');
             },
 
             // Renders the view's template to the UI
@@ -34,15 +35,16 @@ define(["app", "collections/CommentCollection", "text!templates/CommentEdit.html
             },
 
             saveEdit: function(){
-                this.model.set('content', $('.comment-edit').val());
+                console.log('BlogPostEditView', 'saveEdit');
+                this.model.set('content', $('.blogpost-edit').val());
                 this.collection.create(this.model);
-                this.model.trigger('comment-edit');
+                this.model.trigger('blogpost-edit');
             }
 
         });
 
         // Returns the View class
-        return CommentEditView;
+        return BlogPostEditView;
 
     }
 

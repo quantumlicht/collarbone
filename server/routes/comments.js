@@ -88,7 +88,7 @@ module.exports = function(server){
 			comment.remove(function(err){
 				if (!err) {
 					console.log ('DELETE /comments/:id', 'comment deleted');
-					return res.send('');
+					return res.send(comment);
 				}
 				else {
 					console.log(err);

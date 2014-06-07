@@ -54,6 +54,8 @@ define(["app",
             },
             // Renders the view's template to the UI
             render: function() {
+                console.log('CommentView', 'render', this.model.toJSON());
+                this.template = Handlebars.compile(CommentTemplate);
                 this.$el.html(this.template($.extend(this.model.toJSON(), {admin: this.admin, can_alter: app.session.user.get('username')==this.model.get('username')})));
 
                 // Maintains chainability

@@ -1,17 +1,15 @@
 [![Build Status](https://travis-ci.org/quantumlicht/collarbone.svg?branch=no-library)](https://travis-ci.org/quantumlicht/collarbone)
 # Movie Trivia project
--- This project used the yeoman stacked generator extensively.
+This project used the yeoman stacked generator extensively.
 https://www.npmjs.org/package/generator-stacked
 
 
 #Start Project
-node server.js
+- node server.js
 
-
-cd E:\PROGRAMS\MongoDB 2.6 Standard\bin
-E:
---  to launch service
-mongod --dbpath "E:\My Documents"
+- cd E:\PROGRAMS\MongoDB 2.6 Standard\bin
+- E:
+- mongod --dbpath "E:\My Documents"
 
 
 Once the DB is started, you can user mongo.exe to use command prompt

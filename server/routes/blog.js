@@ -60,8 +60,8 @@ module.exports = function(server) {
 		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
 			return blogPost.remove(function(err) {
 				if (!err) {
-					console.log( 'BlogPost updated');
-					return res.send('');
+					console.log( 'BlogPost deleted');
+					return res.send(new BlogPostModel({id:req.params.id}));
 				}
 				else {
 					console.log(err);

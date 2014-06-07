@@ -87,7 +87,7 @@ server.configure(function() {
 // API
 // ===
 
-require('./routes/api')(server);
+require('./routes/auth')(server);
 require('./routes/blog')(server);
 require('./routes/blog_admin')(server);
 require('./routes/comments')(server);

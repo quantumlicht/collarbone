@@ -14,11 +14,11 @@ define(["app",
 
             // The DOM Element associated with this view
             template: Handlebars.compile(template),
-            partialRender: false,
+            renderForListView: false,
             // View constructor
             initialize: function(options) {
-                if (typeof options.partialRender === 'boolean' ) {
-                    this.partialRender = options.partialRender;
+                if (typeof options.renderForListView === 'boolean' ) {
+                    this.renderForListView = options.renderForListView;
                 }
                 _.bindAll(this);
                 this.model.fetch();
@@ -41,7 +41,7 @@ define(["app",
             // Renders the view's template to the UI
             render: function() {
                 console.log('TriviaView','render');
-                this.model.set({partialRender:this.partialRender});
+                this.model.set({renderForListView:this.renderForListView});
                 // Setting the view's template property using the Underscore template method
                 this.$el.html( this.template(this.model.toJSON()));
                 this.$el.find('#tooltip-btn').popover();
@@ -68,7 +68,7 @@ define(["app",
                 e.preventDefault();
                 if (app.session.get('user') !== undefined) {
                     console.log('TriviaView', 'commentSubmit', 'author', app.session.get('user').username);
-                    var $comment = this.$el.find('textarea')
+                    var $comment = this.$el.find('textarea');
                     if( $comment.val() !== '') {
                         var data = new CommentModel({
                             content: this.$el.find('textarea').val(),

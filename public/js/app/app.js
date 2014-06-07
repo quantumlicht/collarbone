@@ -15,7 +15,7 @@ function($, _, Backbone, Handlebars, notifier) {
         root : "/",                     // The root path to run the application through.
         URL : "/",                      // Base application URL
         API : "/api",                   // Base API URL (used by models & collections)
-        maxTextLength: 100
+        maxTextLength: 95
     };
 
 

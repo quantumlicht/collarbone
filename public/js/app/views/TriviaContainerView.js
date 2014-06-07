@@ -127,7 +127,7 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
                 console.log('TriviaContainerView', 'renderTrivia','trivia', trivia);
                 var triviaView = new TriviaView({
                     model:trivia,
-                    partialRender: true
+                    renderForListView: true
                 });
                 this.$el.find('#triviaContainer').append(triviaView.render().el);
 
