@@ -9,7 +9,7 @@ module.exports = function(grunt) {
           args: ['dev'],
           ignoredFiles: ['README.md', 'node_modules/**'],
           watchedExtensions: ['js'],
-          watchedFolders: ['server/tests'],
+          watchedFolders: ['server/'],
           debug: false,
           delayTime: 1,
           env: {

@@ -4,14 +4,14 @@
 <div id="comment-container">
 	{{content}}
 	{{#if admin}}
-		<button class="btn btn-primary btn-xs edit-comment">edit</button>
-		<button class="btn btn-danger btn-xs delete-comment">delete</button>
+		<a class="edit-comment">edit</a>
+		<a class="delete-comment">delete</a>
 	{{/if}}
 	{{#unless admin}}
 	{{#if can_alter}}
 	<div>
-		<a  class="edit-comment">edit</a>
-		<a  class="delete-comment">delete</a>
+		<a class="edit-comment">edit</a>
+		<a class="delete-comment">delete</a>
 	</div>
 	{{/if}}
 	{{/unless}}

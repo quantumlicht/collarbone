@@ -16,7 +16,31 @@
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
-
+  <meta name="google-signin-clientid" content="355636032676-unrg13905pho0bji18tnmclunrume280.apps.googleusercontent.com" />
+  <meta name="google-signin-scope" content="profile" />
+  <meta name="google-signin-requestvisibleactions" content="http://schemas.google.com/AddActivity" />
+  <meta name="google-signin-cookiepolicy" content="collarbone.heroku.com" />
+  <meta name="cookiepolicy" content="collarbone.heroku.com" />
+  <meta name="google-signin-callback" content="signinCallback" />
+<script type="text/javascript">
+  console.log('Header', 'injected script');
+  function signinCallback(authResult) {
+    console.log('signinCallback');
+  if (authResult['status']['signed_in']) {
+    // Update the app to reflect a signed in user
+    // Hide the sign-in button now that the user is authorized, for example:
+    console.log('signinButton', document.getElementById('signinButton'));
+    document.getElementById('signinButton').setAttribute('style', 'display: none');
+  } else {
+    // Update the app to reflect a signed out user
+    // Possible error values:
+    //   "user_signed_out" - User is signed-out
+    //   "access_denied" - User denied access to your app
+    //   "immediate_failed" - Could not automatically log in the user
+    console.log('Sign-in state: ' + authResult['error']);
+  }
+}
+</script>
   <!--Detect if the browser is a mobile browser or a desktop browser and conditionally include your JavaScript -->
   <script>
       (function(ua, w, d, undefined) {

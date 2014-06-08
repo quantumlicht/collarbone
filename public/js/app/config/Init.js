@@ -28,6 +28,8 @@ require.config({
 
       "app": "app/app",
 
+      "google": "app/google",
+
       "utils": "app/utils",
 
       "hbar_helpers": "app/hbar_helpers",
@@ -85,7 +87,7 @@ require.config({
 });
 require(['newrelic']);
 // Includes Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(["app", "utils", "hbar_helpers", "handlebars", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll"],
+require(["app", "utils", "hbar_helpers", "handlebars", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll", "google"],
 
    function(app, utils, hbar_helpers, Handlebars, Router, sessionModel) {
     

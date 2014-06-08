@@ -1,4 +1,5 @@
 // TestInit.js
+if (typeof DEBUG === 'undefined') DEBUG = false;
 
 require.config({
 
@@ -27,6 +28,8 @@ require.config({
       "jasmine": "libs/jasmine/lib/jasmine-core/jasmine",
 
       "jasmine-html": "libs/jasmine/lib/jasmine-core/jasmine-html",
+
+      "hbar_helpers": "app/hbar_helpers",
       
       "boot": "libs/jasmine/lib/jasmine-core/boot",
 
@@ -113,16 +116,18 @@ require.config({
 var specs = [];
 
 specs.push('tests/specs/spec');
+specs.push('tests/specs/spec_view');
 // Include JavaScript files here (or inside of your router)
 require(["handlebars",
          "underscore",
          "backbone",
          "app",
          "utils",
+         "hbar_helpers",
          "boot",
          "events"],
 
-  function(Init, Handlebars, _, backbone, app, utils, boot) {
+  function(Handlebars, _, backbone, app, utils, hbar_helpers, boot) {
 
 
     require(specs, function() {

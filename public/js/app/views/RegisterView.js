@@ -116,7 +116,7 @@ define(["app", "utils", "collections/UserCollection", "text!templates/Register.h
                     }, {    
                         success: function(mod, res) {
                             console.log('RegisterView','onRegisterAttempt','success callback');
-                            utils.showAlert('test','text','alert-success'); 
+                            utils.showAlert('Registration complete!', 'Welcome ' + app.session.user.get('username') + '!','alert-success'); 
                         },
 
                         error: function(mod, res) {

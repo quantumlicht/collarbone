@@ -1,4 +1,25 @@
+
+<script type="text/javascript">
+  console.log('Header', 'injected script');
+  function signinCallback(authResult) {
+    console.log('signinCallback');
+  if (authResult['status']['signed_in']) {
+    // Update the app to reflect a signed in user
+    // Hide the sign-in button now that the user is authorized, for example:
+    console.log('signinButton', document.getElementById('signinButton'));
+    document.getElementById('signinButton').setAttribute('style', 'display: none');
+  } else {
+    // Update the app to reflect a signed out user
+    // Possible error values:
+    //   "user_signed_out" - User is signed-out
+    //   "access_denied" - User denied access to your app
+    //   "immediate_failed" - Could not automatically log in the user
+    console.log('Sign-in state: ' + authResult['error']);
+  }
+}
+</script>
 <nav class="navbar navbar-default" role="navigation">
+  </span>
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -20,10 +41,23 @@
             {{else}}
             <li id="loc-login"><a href="#login">Login</a></li>
             <li id="loc-register"><a href="#register">Register</a></li>
-            {{/if}}
+            {{/if}} 
           </ul> 
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://github.com/quantumlicht/collarbone/issues">Found a bug ?</a></li>
+            <li>
+              <span id="signinButton">
+                <span
+                  class="g-signin"
+                  data-callback="signinCallback"
+                  data-clientid="355636032676-unrg13905pho0bji18tnmclunrume280.apps.googleusercontent.com"
+                  data-cookiepolicy="single_host_origin"
+                  data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                  data-scope="https://www.googleapis.com/auth/plus.login">
+                </span>
+              </span>
+            </li>
+                
             {{#if logged_in}}
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user.username}}<b class="caret"></b></a>
