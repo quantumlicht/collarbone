@@ -100,7 +100,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['jshint', 'mochaTest' ]);
   grunt.registerTask('init', ['shell:copyBootstrapCSS', 'shell:copyFontAwesomeCSS', 'shell:copyFontAwesomeFonts','less:production', 'requirejs:mainJS', 'requirejs:mainCSS']);
   grunt.registerTask('build', ['less:production', 'requirejs:mainJS', 'requirejs:mainCSS']);
-  grunt.registerTask('server', ['nodemon:dev']);
+  grunt.registerTask('server', ['jshint', 'nodemon:dev']);
   grunt.registerTask('default', ['init', 'test', 'build']);
 
 };

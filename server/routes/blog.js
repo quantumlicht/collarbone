@@ -21,6 +21,7 @@ module.exports = function(server) {
 		var blogPost = new BlogPostModel({
 			title: req.body.title,
 			author: req.body.author,
+			userId:req.body.userId,
 			postDate: new Date(),
 			content: req.body.content
 		});

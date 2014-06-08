@@ -2,6 +2,7 @@
 // ============
 
 var newrelic = require('newrelic');
+// var setup_password = require('./setup_password');
 var Config =  global.Config = require('./config/config').config,
     express = require("express"),
     bcrypt = require("bcrypt-nodejs"),
@@ -17,8 +18,9 @@ var Config =  global.Config = require('./config/config').config,
 // ======================
 
 // Connect to Database
-mongoose.connect(Config.database.mongohq_url);
-// mongoose.connect('mongodb://' + Config.database.IP + ':' + Config.database.port + '/' + Config.database.name);
+dbUri = process.env.DB_URL || Config.database.db_connection;
+mongoose.connect(dbUri);
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB connection error:'));
@@ -42,6 +44,28 @@ server.configure('production', function(){
     server.use(express.errorHandler());
 });
 
+// server.configure (function () {
+//   // this.use(express.cookieParser());
+//   // this.use(express.session({secret: 'foo'}));
+//   server.use(passport.initialize());
+//   server.use(passport.session());
+
+//   server.use(server.router);
+// });
+
+// // Auth0 callback handler
+// server.get('/callback',
+//   passport.authenticate('auth0'),
+//   function(req, res) {
+//     res.redirect("/");
+//   });
+
+// server.get('/', function (req, res) {
+//   res.render('home', {
+//     user: req.user, //use this to display user information
+//     env: process.env
+//   })
+// });
 
 server.configure(function() {
   

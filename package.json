@@ -2,7 +2,7 @@
   "name": "collarbone",
   "description": "Built with theStack!",
   "version": "0.0.1",
-  "homepage": "https://github.com/quantumlicht/collarbone",
+  "homepage": "https://quantumlicht.github.io/collarbone",
   "author": {
     "name": "Philippe",
     "url": "https://github.com/quantumlicht"
@@ -11,7 +11,6 @@
     "type": "git",
     "url": "git@github.com:quantumlicht/collarbone.git"
   },
-  "homepage": "https://quantumlicht.github.io/collarbone",
   "keywords": [
     "generator-thestack"
   ],
@@ -20,7 +19,9 @@
   },
   "main": "./server/server",
   "dependencies": {
-    "express": "3.x"
+    "express": "3.x",
+    "passport": "^0.2.0",
+    "passport-auth0": "^0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
