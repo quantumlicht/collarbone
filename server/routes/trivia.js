@@ -18,7 +18,7 @@ module.exports = function(server) {
 		var trivia = new TriviaModel({
 			title: req.body.title,
 			userId: req.body.userId,
-			author: req.body.author,
+			username: req.body.username,
 			triviaDate: new Date(),
 			hints: req.body.hints
 		});

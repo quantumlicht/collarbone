@@ -2,13 +2,19 @@
 	<h3>
 		<a href="#trivia/{{id}}">{{normL title}}</a>
 	</h3>
-	<small>Submitted by <a href="#users/{{author}}">{{author}}</a> on {{formatDate triviaDate}}</small>	
+	<small>Submitted by <a href="#users/{{username}}">{{username}}</a> on {{formatDate triviaDate}}</small>	
 
 {{else}}
 
 <h3>
-	<small><a href="#/users/{{author}}">{{author}}</a></small> - <small>{{formatDate triviaDate}}</small>	
+	<small><a href="#/users/{{username}}">{{username}}</a></small> - <small>{{formatDate triviaDate}}</small>	
 	{{normL title}}
+  {{#if can_alter}}
+  <div class="pull-right">
+    <span class="glyphicon glyphicon-edit" id="edit-trivia" style="cursor:hand; cursor:pointer;"></span>
+    <span class="glyphicon glyphicon-remove" id="remove-trivia" style="cursor:hand;cursor:pointer;"></span>
+  </div>
+  {{/if}}
 </h3>
 <div class="panel panel-default">	
   	<div class="panel-body">

@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var BlogPostSchema = new mongoose.Schema({
   key: {type: String, default: null},
   title: String,
-  author: String,
+  username: String,
   userId: String,
   postDate: Date,
   content: String

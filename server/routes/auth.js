@@ -1,15 +1,15 @@
 var User = require('../models/user');
 var _ = require('underscore');
-var winston = require('winston');
 var bcrypt = require("bcrypt-nodejs");
 var Config = require('../config/config').config;
+var logger = require('../config/config').logger;
 
-var logger = new (winston.Logger)({
-    transports: [
-      new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: 'somefile.log' }, {colorize:true})
-    ]
-});
+	// var logger = new (winston.Logger)({
+//     transports: [
+//       new (winston.transports.Console)(),
+//       new (winston.transports.File)({ filename: 'somefile.log' }, {colorize:true})
+//     ]
+// });
 
 module.exports = function(app) {
 

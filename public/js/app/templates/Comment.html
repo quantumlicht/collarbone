@@ -3,18 +3,10 @@
 <small><a href="#users/{{username}}">{{username}}</a> - {{formatDate commentDate}}</small><br/>
 <div id="comment-container">
 	{{content}}
-	{{#if admin}}
-		<a class="edit-comment">edit</a>
-		<a class="delete-comment">delete</a>
-	{{/if}}
-	{{#unless admin}}
 	{{#if can_alter}}
-	<div>
 		<a class="edit-comment">edit</a>
 		<a class="delete-comment">delete</a>
-	</div>
 	{{/if}}
-	{{/unless}}
 </div>
 
 

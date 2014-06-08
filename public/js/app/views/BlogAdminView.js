@@ -12,7 +12,6 @@ define([
         var BlogAdminView = Backbone.View.extend({
 
             template: Handlebars.compile(template),
-            admin :true,
 
             // View constructor
             initialize: function() {
@@ -53,7 +52,7 @@ define([
                         }
                         $(el).val('');
                     });
-                    formData.author = app.session.user.get('username');
+                    formData.username = app.session.user.get('username');
                     this.collection.create(formData);
                 }
                 else {
@@ -63,9 +62,9 @@ define([
             },
 
             renderPost: function(post) {
+                post.set('can_alter', true);
                 var postView = new BlogPostView({
-                    model: post,
-                    admin:true
+                    model: post
                 });
                 this.$el.append(postView.render().el);
             }

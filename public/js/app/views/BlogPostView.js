@@ -23,7 +23,8 @@ define(["app",
 
                 // $('#' + Backbone.history.fragment.split('/')[0]).addClass('active');
                 // Calls the view's render method
-                this.admin = options.admin;
+
+                // this.admin = options.admin;
                 if (typeof options.renderForListView === 'boolean' ) {
                     this.renderForListView = options.renderForListView;
                 }
@@ -45,7 +46,7 @@ define(["app",
             },
 
             commentSubmit: function(e) {
-                console.log('BlogPostView', 'commentSubmit', 'author', app.session.user.get('username'));
+                console.log('BlogPostView', 'commentSubmit', 'username', app.session.user.get('username'));
                 var $comment = this.$el.find('textarea');
                 if( $comment.val() !=='') {
 
@@ -93,11 +94,9 @@ define(["app",
             // Renders the view's template to the UI
             render: function() {
                 this.model.set({
-                    admin: this.admin,
                     renderForListView: this.renderForListView
                 });
-
-                this.$el.html( this.template( this.model.toJSON() ));
+                this.$el.html( this.template(this.model.toJSON()));
 
                 if(this.comments) {
                     _.each(this.comments, function(item) {
@@ -111,8 +110,7 @@ define(["app",
 
             renderComment: function(comment) {
                 var commentView = new CommentView({
-                    model: comment,
-                    admin: this.admin
+                    model: comment
                 });
                 this.$el.find('#commentContainer').append(commentView.render().el);
             }

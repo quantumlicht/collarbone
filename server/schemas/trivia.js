@@ -4,7 +4,7 @@ var HintSchema = require('./hint');
 var TriviaSchema = new mongoose.Schema({
     title: {type: String, unique: true, required: true},
     hints: [HintSchema],
-    author: String,
+    username: String,
     userId: String,
     triviaDate: Date
 });

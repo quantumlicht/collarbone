@@ -19,12 +19,13 @@ define(["app"],
             // Model Constructor
 
             initialize: function() {
+                this.set({can_alter:app.session.user.get('username')==this.get('username')});
             },
             
             // Default values for all of the Model attributes
             defaults: {
                 title: "",
-                author: "Philippe Guay",
+                username: "Philippe Guay",
                 content: ""
             },
 
@@ -38,12 +39,12 @@ define(["app"],
             validate: function(attrs) {
                 var errors = this.errors = {};
 
-                if (this.validators.isEmptyString(attrs.author)) {
-                    this.errors.author = 'author cannot be empty';  
+                if (this.validators.isEmptyString(attrs.username)) {
+                    this.errors.username = 'username cannot be empty';  
                 }
 
-                if (attrs.author !== app.session.get('username')) {
-                    this.errors.author = 'author needs to match user session';
+                if (attrs.username !== app.session.get('username')) {
+                    this.errors.username = 'username needs to match user session';
                 }
 
             }

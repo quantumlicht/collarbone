@@ -17,6 +17,7 @@ define(["app",
             // View constructor
             initialize: function(options) {
                 this.admin = options.admin;
+                this.can_alter = app.session.user.get('username')==this.model.get('username');
                 this.render();
                 _.bindAll(this);
                 this.listenTo(this.model, 'comment-edit', this.render);
@@ -54,9 +55,9 @@ define(["app",
             },
             // Renders the view's template to the UI
             render: function() {
-                console.log('CommentView', 'render', this.model.toJSON());
+                console.log('CommentView', 'render', this.model.toJSON()); 
                 this.template = Handlebars.compile(CommentTemplate);
-                this.$el.html(this.template($.extend(this.model.toJSON(), {admin: this.admin, can_alter: app.session.user.get('username')==this.model.get('username')})));
+                this.$el.html(this.template(this.model.toJSON()));
 
                 // Maintains chainability
                 return this;

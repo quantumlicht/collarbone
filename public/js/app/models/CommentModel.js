@@ -9,7 +9,7 @@ define(["jquery", "backbone"],
 
             // Model Constructor
             initialize: function() {
-
+                this.set({can_alter:app.session.user.get('username')==this.get('username')});
             },
 
             // url: function(){

@@ -36,9 +36,11 @@ define([
                 // this.$el.empty();
                 // this.$el.html(this.template);
                 // Setting the view's template property using the Underscore template method
-                this.collection.each(function(item) {
-                    this.renderPost(item);
-                }, this);
+                if (this.collection.length) {
+                    this.collection.each(function(item) {
+                        this.renderPost(item);
+                    }, this);
+                }
 
                 // Dynamically updates the UI with the view's template
                 // this.$el.html(this.template);
@@ -61,9 +63,9 @@ define([
             // },
 
             renderPost: function(post) {
+                post.set('can_alter', false);
                 var postView = new BlogPostView({
                     model: post,
-                    admin: false,
                     renderForListView: true
                 });
                 this.$el.append(postView.render().el);

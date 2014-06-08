@@ -16,7 +16,7 @@ define(["app",
         describe("A blogPostModel", function() {
             it("can be created with default values", function(){
                 var post = new BlogPostModel();
-                expect(post.get('author')).toBe('Philippe Guay');
+                expect(post.get('username')).toBe('Philippe Guay');
                 expect(post.get('title')).toBe('');
                 expect(post.get('content')).toBe('');
             });
@@ -24,13 +24,13 @@ define(["app",
             it("can store various values", function(){
                 var post = new BlogPostModel({
                     title: 'This is a title',
-                    author: 'Author string',
+                    username: 'username string',
                     userId: '12345abcde',
                     postDate: new Date('2014-12-12'),
                     content: 'Content'
                 });
                 expect(post.get('title')).toBe('This is a title');
-                expect(post.get('author')).toBe('Author string');
+                expect(post.get('username')).toBe('username string');
                 expect(post.get('userId')).toBe('12345abcde');
                 expect(post.get('postDate')).toEqual(jasmine.any(Date)); 
                 expect(post.get('postDate')).toEqual(new Date('2014-12-12'));

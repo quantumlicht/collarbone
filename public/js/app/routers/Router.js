@@ -140,7 +140,9 @@ define([
                 var collection = new UserCollection();
 
                 collection.bind('reset', function () { 
+                    console.log('Router','userprofile','collection',collection);
                     var model = collection.findWhere({username: username});
+                    console.log('Router', 'userprofile','model', model);
                     var view = new UserView({model: model});
                     self.show(view);
                 });

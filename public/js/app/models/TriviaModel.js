@@ -1,8 +1,8 @@
 // IndexModel.js
 
-define(["jquery", "backbone"],
+define(["app"],
 
-    function($, Backbone) {
+    function(app) {
 
         // Creates a new Backbone Model class object
         var TriviaModel = Backbone.Model.extend({
@@ -10,7 +10,7 @@ define(["jquery", "backbone"],
 
             // Model Constructor
             initialize: function() {
-
+                this.set({can_alter:app.session.user.get('username')==this.get('username')});
             },
             
             // Default values for all of the Model attributes

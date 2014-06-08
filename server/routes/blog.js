@@ -2,25 +2,28 @@
 // ===
 var BlogPostModel = require('../models/blog_post');
 var CommentModel = require('../models/comment');
+var logger = require('../config/config').logger;
 module.exports = function(server) {
 
 	// Sample Rest Call
 
 	server.get('/blogposts', function(req, res){
+		logger.info('GET /blogposts');
 		return BlogPostModel.find( function(err, blogPosts) {
 			if (!err) {
 				return res.send(blogPosts);
 			}
 			else {
-				return console.log(err);
+				return logger.error(err);
 			}
 		});	
 	});
 
 	server.post('/blogposts', function(req, res) {
+		logger.info('POST /blogposts');
 		var blogPost = new BlogPostModel({
 			title: req.body.title,
-			author: req.body.author,
+			username: req.body.username,
 			userId:req.body.userId,
 			postDate: new Date(),
 			content: req.body.content
@@ -28,44 +31,44 @@ module.exports = function(server) {
 
 		return blogPost.save(function(err){
 			if (!err) {
-				console.log('blog post created');
+				logger.info('blog post created');
 				return res.send(blogPost);
 			}
 			else {
-				console.log(err);
+				logger.error(err);
 			}
 		});
 	});
 
 	server.put('/blogposts/:id', function(req, res) {
-		console.log('Updating BlogPost', req.body.title);
+		logger.info('PUT /blogposts/:id', req.body.title);
 		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
 			blogPost.title = req.body.title;
-			blogPost.author = req.body.author;
+			blogPost.username = req.body.username;
 			blogPost.postDate = new Date(req.body.postDate);
 			blogPost.content = req.body.content;
 			return blogPost.save(function(err) {
 				if (!err) {
-					console.log( 'BlogPost updated');
+					logger.info( 'BlogPost updated');
 					return res.send(blogPost);
 				}
 				else {
-					console.log(err);
+					logger.error(err);
 				}
 			})
 		});
 	});
 
 	server.delete('/blogposts/:id', function(req, res) {
-		console.log('Deleting BlogPost with id', req.params.id);
+		logger.info('Deleting BlogPost with id', req.params.id);
 		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
 			return blogPost.remove(function(err) {
 				if (!err) {
-					console.log( 'BlogPost deleted');
+					logger.info( 'BlogPost deleted');
 					return res.send(new BlogPostModel({id:req.params.id}));
 				}
 				else {
-					console.log(err);
+					logger.info(err);
 				}
 			});
 		});
@@ -80,7 +83,7 @@ module.exports = function(server) {
 	// 			return res.send(comments);
 	// 		}
 	// 		else {
-	// 			console.log(err);
+	// 			logger.info(err);
 	// 		}
 	// 	});
 	// });
@@ -95,17 +98,17 @@ module.exports = function(server) {
 
 	// 	return comment.save(function(err){
 	// 		if (!err) {
-	// 			console.log('comment created', comment);
+	// 			logger.info('comment created', comment);
 	// 			return res.send(comment);
 	// 		}
 	// 		else {
-	// 			console.log(err);
+	// 			logger.info(err);
 	// 		}
 	// 	});
 	// });
 
 	// server.delete('/blogposts/:id/comments/:commentId', function(req, res) {
-	// 	console.log('Deleting BlogPost with id', req.params.id, req.params.commentId);
+	// 	logger.info('Deleting BlogPost with id', req.params.id, req.params.commentId);
 	// });
 
 }

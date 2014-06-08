@@ -1,6 +1,6 @@
 {{#if renderForListView}}
   <div class="well well-sm">
-    <small>Submitted by <a href="#users/{{author}}">{{author}}</a> {{formatDate postDate}}</small> 
+    <small>Submitted by <a href="#users/{{username}}">{{username}}</a> {{formatDate postDate}}</small> 
     <h3>
       <a href="#blogposts/{{id}}">{{normL title}}</a>
     </h3>
@@ -9,18 +9,30 @@
 {{else}}
 <div class="panel panel-default">
 	<div class="panel-heading">
+    {{#if can_alter}}
+    <div class="pull-right">
+      <span class="glyphicon glyphicon-edit" id="edit-post-title" style="cursor:hand; cursor:pointer;"></span>
+      <span class="glyphicon glyphicon-remove" id="remove-post" style="cursor:hand;cursor:pointer;"></span>
+    </div>
+    {{/if}}
     <h4>
       <strong>{{title}}</strong>
     </h4>
     <h6>
-      <a href="#users/{{author}}">{{author}}</a> - {{formatDate postDate}}
+      <a href="#users/{{username}}">{{username}}</a> - {{formatDate postDate}}
     </h6>
-    	
+
 	</div>
   	<div class="panel-body">
   		{{content}}
-  	</div>
-  	<div class="panel-footer">
+      <div>
+      	{{#if can_alter}}
+      	<a class="edit-post">edit</a>
+        <a class="delete-post">delete</a>
+      	{{/if}}
+      </div>
+    </div>
+    <div class="panel-footer">
       <div id="commentContainer"></div>
       <div class="form-group"id="comment">
         <textarea  class="form-control" type="text" placeholder="Comment"></textarea>
@@ -28,9 +40,5 @@
         <button type="submit" id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>
       
     </div>
-	{{#if admin}}
-	<a class="edit-post">edit</a>
-  <a class="delete-post">delete</button>
-	{{/if}}
 </div>
 {{/if}}

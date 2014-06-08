@@ -1,6 +1,6 @@
 {
   "name": "collarbone",
-  "description": "Built with theStack!",
+  "description": "Movie trivia webapp",
   "version": "0.0.1",
   "homepage": "https://quantumlicht.github.io/collarbone",
   "author": {
@@ -12,7 +12,7 @@
     "url": "git@github.com:quantumlicht/collarbone.git"
   },
   "keywords": [
-    "generator-thestack"
+    "trivia-bootstrap-quantumlicht-collarbone"
   ],
   "bugs": {
     "url": "https://github.com/quantumlicht/collarbone/issues"

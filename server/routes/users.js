@@ -71,7 +71,7 @@ module.exports = function(server) {
 					Comment.find({username: req.params.username}).exec(next);
 				},
 				trivias: function(next) {
-					Trivia.find({author: req.params.username}).exec(next);
+					Trivia.find({username: req.params.username}).exec(next);
 				}	
 			},
 			function(err, results) {

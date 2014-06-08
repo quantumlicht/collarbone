@@ -17,7 +17,7 @@ before(function(){
 // AFTER HOOK
 after(function(done){
 	this.server.close(done);
-	
+
 });
 
 // TEST SUITES
@@ -76,27 +76,21 @@ describe('Blogposts Endpoint', function(){
 	});
 
 	describe(' POST /blogposts', function(){
-		it('Should return 200', function(done) {
-			request.post('localhost:2000/blogposts').end(function(res){
-				expect(res).to.exist;
-				expect(res.status).to.equal(200);
-				done();	
-			});
-		});
 		it('Should send the created post', function(done) {
 			blogpost = new BlogPostModel({
 			  	title: 'test-title',
-			  	author: 'test-author',
+			  	username: 'test-username',
     			userId: 'userId',
     			content: 'test-content',
     			postDate: new Date('2014-12-12 00:00:00')
 			});
 			request.post('localhost:2000/blogposts').send(blogpost).end(function(res){
 				expect(res).to.exist;
+				expect(res.status).to.equal(200);
 				expect(res.body).to.not.be.empty();
 				expect(res.body.title).to.be('test-title');
-				expect(res.body.author).not.to.be('wrong-author');
-				expect(res.body.author).to.be('test-author');
+				expect(res.body.username).not.to.be('wrong-username');
+				expect(res.body.username).to.be('test-username');
 				expect(res.body.userId).to.be('userId');
 				expect(res.body.content).to.be('test-content');
 				expect(res.body).to.have.key('postDate');
