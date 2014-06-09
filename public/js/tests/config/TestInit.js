@@ -118,17 +118,34 @@ var specs = [];
 specs.push('tests/specs/spec');
 specs.push('tests/specs/spec_view');
 // Include JavaScript files here (or inside of your router)
-require(["handlebars",
-         "underscore",
-         "backbone",
-         "app",
+require(["app",
          "utils",
          "hbar_helpers",
+         "routers/Router",
+         "models/SessionModel",
          "boot",
-         "events"],
+         "events",
+         "backbone.validateAll"],
 
-  function(Handlebars, _, backbone, app, utils, hbar_helpers, boot) {
+  function(app, utils, hbar_helpers, Router, SessionModel, boot) {
+     // Instantiates a new Desktop Router instance
+      app.router = new Router();
+      app.session = new SessionModel();
 
+      // Check the auth status upon initialization,
+      // before rendering anything or matching routes
+      app.session.checkAuth({
+         // Start the backbone routing once we have captured a user's auth status
+         complete: function(){
+            // HTML5 pushState for URLs without hashbangs
+            var hasPushstate = !!(window.history && history.pushState);
+            if(hasPushstate){
+               // Backbone.history.start({ pushState: true, root: '/' } );
+               Backbone.history.start(); 
+            } 
+            else Backbone.history.start();   
+         }
+      });   
 
     require(specs, function() {
       window.onload();  

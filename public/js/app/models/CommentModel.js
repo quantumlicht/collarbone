@@ -1,8 +1,8 @@
 // IndexModel.js
 
-define(["jquery", "backbone"],
+define(["app"],
 
-    function($, Backbone) {
+    function(app) {
 
         // Creates a new Backbone Model class object
         var CommentModel = Backbone.Model.extend({

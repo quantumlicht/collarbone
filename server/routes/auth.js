@@ -4,13 +4,6 @@ var bcrypt = require("bcrypt-nodejs");
 var Config = require('../config/config').config;
 var logger = require('../config/config').logger;
 
-	// var logger = new (winston.Logger)({
-//     transports: [
-//       new (winston.transports.Console)(),
-//       new (winston.transports.File)({ filename: 'somefile.log' }, {colorize:true})
-//     ]
-// });
-
 module.exports = function(app) {
 
 	app.get("/api/auth", function(req, res){

@@ -12,13 +12,15 @@ define(["app",
 
     function(app, template, View, BlogPostModel, CommentModel, Collection, Router) {
 
+
         // Test suite that includes all of the Jasmine unit tests   
         describe("A blogPostModel", function() {
+
             it("can be created with default values", function(){
                 var post = new BlogPostModel();
                 expect(post.get('username')).toBe('Philippe Guay');
-                expect(post.get('title')).toBe('');
-                expect(post.get('content')).toBe('');
+                expect(post.get('title')).toBe('Please enter title');
+                expect(post.get('content')).toBe('Please enter content');
             });
 
             it("can store various values", function(){
@@ -38,7 +40,26 @@ define(["app",
                 expect(post.get('content')).toBe('Content');
 
                 expect(post.get('invalid property')).not.toBeDefined();
+            });
 
+            it("has custom validation logic, and can trigger invalid event on failed validation.", function(){
+                var errorCallback = jasmine.createSpy('-invalid callback-');
+                var post = new BlogPostModel();
+
+                post.on('invalid', errorCallback);
+
+                // What would you need to set on the post properties to
+                // cause validation to fail?
+
+                post.set({username:'a'}, {validate:true});
+
+                var errorArgs = errorCallback.calls.mostRecent().args;
+                console.log('errorCallback',errorCallback.calls.mostRecent().args);
+                console.log('errorArgs', errorArgs);
+                expect(errorCallback).toHaveBeenCalled();
+                expect(errorArgs).toBeDefined();
+                expect(errorArgs[0]).toBe(post);
+                expect(errorArgs[1].username).toBe('Username should be at least 2 characters');
             });
         });
 

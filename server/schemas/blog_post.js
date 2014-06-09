@@ -1,21 +1,14 @@
-// DEPENDENCIES
-// ============
-
 var mongoose = require('mongoose');
 
-// USER ACCOUNT SCHEMA
-// ===================
 var BlogPostSchema = new mongoose.Schema({
   key: {type: String, default: null},
-  title: String,
-  username: String,
-  userId: String,
-  postDate: Date,
-  content: String
+  title: {type:String, required: true, unique:true},
+  username: {type:String, required: true},
+  userId: {type:String, required: true},
+  postDate: {type:Date, required: true, default: new Date()},
+  content: {type:String, required: true}
 });
 
-// CREATE DATABASE MODEL
-// =====================
 
 module.exports = BlogPostSchema;
 

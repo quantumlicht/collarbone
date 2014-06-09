@@ -1,5 +1,6 @@
 var TriviaModel = require('../models/trivia');
 var CommentModel = require('../models/comment');
+var logger = require('../config/config').logger;
 module.exports = function(server) {
 
 	server.get('/trivia', function(req, res){
@@ -45,6 +46,22 @@ module.exports = function(server) {
 				}
 		});
 	});
+
+	server.delete('/trivia/:id', function(req, res) {
+		logger.info('Deleting trivia with id', req.params.id);
+		return TriviaModel.findById(req.params.id, function(err, trivia) {
+			return trivia.remove(function(err) {
+				if (!err) {
+					logger.info( 'Trivia deleted');
+					return res.send(new TriviaModel({id:req.params.id}));
+				}
+				else {
+					logger.info(err);
+				}
+			});
+		});
+	});
+
 
 	// server.get('/trivia/:id/comments', function(req, res) {
 	// 	return CommentModel.find({modelId: req.params.id},function(err, comments) {
