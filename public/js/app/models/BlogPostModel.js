@@ -24,7 +24,7 @@ define(["app"],
 
             initialize: function() {
                 this.on("invalid", function(model, error){
-                    console.log('BlogPostModel error', error);
+                    console.log('BlogPostModel' ,'model', model, 'error', error);
                 });
                 this.set({can_alter:app.session.user.get('username') == this.get('username')});
             },
@@ -47,7 +47,7 @@ define(["app"],
                 console.log('BlogPostModel', 'validate');
                 var errors = this.errors = {};
 
-                if(attrs.username != null) {
+                if(attrs.username !== null) {
                     if (this.validators.isEmptyString(attrs.username)) {
                         errors.username = 'username cannot be empty';  
                     }
@@ -65,7 +65,7 @@ define(["app"],
                     errors.username = 'Username needs to be set';
                 }
 
-                if (attrs.content != null) {
+                if (attrs.content !== null) {
                     if (this.validators.isEmptyString(attrs.content)){
                         errors.content = 'Content cannot be empty';
                     }
@@ -74,7 +74,7 @@ define(["app"],
                     errors.content = 'Content needs to be set';
                 }
 
-                if (attrs.title != null) {
+                if (attrs.title !== null) {
                     if (this.validators.isEmptyString(attrs.title)){
                         errors.title = 'Title cannot be empty';
                     }
@@ -83,7 +83,6 @@ define(["app"],
                     errors.title = 'Title needs to be set';
                 }
                 
-                return errors;
             }
         });
 

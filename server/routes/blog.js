@@ -34,26 +34,38 @@ module.exports = function(server) {
 				logger.info('blog post created');
 				return res.send(blogPost);
 			}
-			else {
-				logger.error(err);
+			if (err.code === 11000) {
+				logger.info('POST /blogposts', 'Conflict', 409);
+				res.send('Conflict', 409);
 			}
+			else {
+				if (err.name === 'ValidationError') {
+					logger.info('POST /blogposts', 'ValidationError');
+					return res.send(Object.keys(err.errors).map(function(errField) {
+						return err.errors[errField].message;
+					}).join('. '), 406);
+				}
+			}
+			return;
 		});
 	});
 
 	server.put('/blogposts/:id', function(req, res) {
 		logger.info('PUT /blogposts/:id', req.body.title);
+
 		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
 			blogPost.title = req.body.title;
 			blogPost.username = req.body.username;
 			blogPost.postDate = new Date(req.body.postDate);
 			blogPost.content = req.body.content;
-			return blogPost.save(function(err) {
+			logger.info('PUT /blogposts:id', 'req.body', req.body);
+			return blogPost.update(req.body, function(err) {
 				if (!err) {
 					logger.info( 'BlogPost updated');
 					return res.send(blogPost);
 				}
 				else {
-					logger.error(err);
+					logger.error('/blogposts/:id','error', err);
 				}
 			})
 		});

@@ -43,6 +43,7 @@ define([
             },
 
             addBlogPost: function(e) {
+                console.log('BlogAdminView','addBlogPost');
                 e.preventDefault();
                 var formData = {};
                 if (app.session.user.get('username') !== undefined) {
