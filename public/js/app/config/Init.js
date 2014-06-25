@@ -16,6 +16,8 @@ require.config({
       // ==============
       "jquery": "libs/jquery/dist/jquery",
 
+      "jquery-cookie": "libs/jquery-cookie/jquery.cookie",
+
       "underscore": "libs/lodash/dist/lodash",
 
       "backbone": "libs/backbone/backbone",
@@ -33,6 +35,7 @@ require.config({
       "utils": "app/utils",
 
       "hbar_helpers": "app/hbar_helpers",
+
 
       // Plugins
       // =======
@@ -61,6 +64,9 @@ require.config({
    // Sets the configuration for your third party scripts that are not AMD compatible
    shim: {
 
+      "utils" : {
+         exports: 'utils'
+      },
       // Bootstrap
       "bootstrap": ["jquery"],
 
@@ -86,9 +92,9 @@ require.config({
 });
 // require(['newrelic']);
 // Includes Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(["app", "utils", "hbar_helpers", "handlebars", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll"],
+require(["app", "hbar_helpers", "routers/Router","models/SessionModel", "bootstrap", "backbone.validateAll","jquery-cookie"],
 
-   function(app, utils, hbar_helpers, Handlebars, Router, sessionModel) {
+   function(app, hbar_helpers, Router, sessionModel) {
     
       // Main
       // Backbone.emulateHTTP = true;

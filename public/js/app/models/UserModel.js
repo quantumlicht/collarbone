@@ -21,19 +21,25 @@ define(["app", "utils"],
             // Default values for all of the Model attributes
             defaults: {
                 id: 0,
-                username: ''
+                username: '',
+                name: '',
+                picture: '',
+                gender: 'male',
+                user_id: ''
+            },
 
+            parse: function(response) {
+               response.id = response._id;
+               return response;
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
             validate: function(attrs) {
+                var errors = this.errors = {};
 
-            },
+                if(!_.isEmpty(errors)) return errors;
+            }   
             
-            parse: function(response) {
-               response.id = response._id;
-               return response;
-            }
 
         });
 

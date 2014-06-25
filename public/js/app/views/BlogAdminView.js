@@ -53,6 +53,7 @@ define([
                         }
                         $(el).val('');
                     });
+                    formData.user_id = app.session.get('user')._id;
                     formData.username = app.session.user.get('username');
                     this.collection.create(formData);
                 }
@@ -63,7 +64,7 @@ define([
             },
 
             renderPost: function(post) {
-                post.set('can_alter', true);
+                post.set('alterable', true);
                 var postView = new BlogPostView({
                     model: post
                 });

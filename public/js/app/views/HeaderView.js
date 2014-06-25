@@ -35,7 +35,6 @@ define([
                 this.render();
                 if(app.session.get("logged_in")) utils.showAlert("Success!", "Logged in as "+app.session.user.get("username"), "alert-success");
                 else {
-                    utils.showAlert("See ya!", "Logged out successfully", "alert-success");
                     app.router.navigate('/', {trigger:true});
                 }
                     
@@ -43,8 +42,9 @@ define([
 
             onLogoutClick: function(evt) {
                 evt.preventDefault();
-                app.session.logout({success: function(){
-                    app.router.navigate('', {trigger:true});
+                app.session.logout({}, {success: function(msg){
+                    utils.showAlert(app.session.user.get('name'), msg.success, "alert-success");
+                    // app.router.navigate('', {trigger:true});
                 }});  // No callbacks needed b/c of session event listening
             },
 

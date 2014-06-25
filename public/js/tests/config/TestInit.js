@@ -115,8 +115,15 @@ require.config({
 
 var specs = [];
 
-specs.push('tests/specs/spec');
+specs.push('tests/specs/spec_BlogPostModel');
+specs.push('tests/specs/spec_CommentModel');
+specs.push('tests/specs/spec_SessionModel');
 specs.push('tests/specs/spec_view');
+specs.push('tests/specs/spec_BlogPostCollection');
+specs.push('tests/specs/spec_CommentCollection');
+specs.push('tests/specs/spec_TriviaCollection');
+specs.push('tests/specs/spec_UserCollection');
+specs.push('tests/specs/spec_router');
 // Include JavaScript files here (or inside of your router)
 require(["app",
          "utils",
@@ -140,8 +147,8 @@ require(["app",
             // HTML5 pushState for URLs without hashbangs
             var hasPushstate = !!(window.history && history.pushState);
             if(hasPushstate){
-               // Backbone.history.start({ pushState: true, root: '/' } );
-               Backbone.history.start(); 
+               Backbone.history.start({ pushState: true} );
+               // Backbone.history.start(); 
             } 
             else Backbone.history.start();   
          }

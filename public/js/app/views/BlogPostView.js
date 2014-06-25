@@ -8,7 +8,7 @@ define(["app",
         "collections/CommentCollection",
         "text!templates/BlogPost.html"],
 
-    function(app, CommentView, BlogPostEditView, Model, commentModel, CommentCollection, BlogPostTemplate){
+    function(app, CommentView, BlogPostEditView, Model, CommentModel, CommentCollection, BlogPostTemplate){
 
         var BlogPostView = Backbone.View.extend({
 
@@ -22,9 +22,7 @@ define(["app",
                 console.log('BlogPostView', 'Fragment', Backbone.history.fragment);
 
                 // $('#' + Backbone.history.fragment.split('/')[0]).addClass('active');
-                // Calls the view's render method
 
-                // this.admin = options.admin;
                 if (typeof options.renderForListView === 'boolean' ) {
                     this.renderForListView = options.renderForListView;
                 }
@@ -33,6 +31,8 @@ define(["app",
                 this.commentCollection.fetch({async:false, reset:true});
                 this.comments = this.commentCollection.where({modelId:this.model.id});
 
+                console.log('session', app.session);
+                // Events
                 this.listenTo(this.commentCollection, 'reset', this.render);
                 this.listenTo(this.commentCollection, 'add', this.renderComment);
                 this.listenTo(this.model, 'blogpost-edit', this.render);
@@ -46,27 +46,37 @@ define(["app",
             },
 
             commentSubmit: function(e) {
-                console.log('BlogPostView', 'commentSubmit', 'username', app.session.user.get('username'));
-                var $comment = this.$el.find('textarea');
-                if( $comment.val() !=='') {
-
-                    var data = new commentModel({
-                        content: this.$el.find('textarea').val(),
-                        username: app.session.user.get('username')  ,
-                        modelId: this.model.id,
-                        modelUrl: this.model.url()
-                    });
-                    console.log(this.comments);
-                    this.commentCollection.create(data);
-                    $comment.val('');
+                e.preventDefault();
+                if(app.session.get('user') !== undefined){
+                    var $comment = this.$el.find('textarea');
+                    if( $comment.val() !=='') {
+                        var formData = new CommentModel({
+                            content: this.$el.find('textarea').val(),
+                            username: app.session.get('user').username || app.session.get('user').name,
+                            modelId: this.model.id,
+                            modelUrl: this.model.url(),
+                            user_id: app.session.get('user')._id || app.session.get('user').user_id
+                        });
+                        console.log(this.comments);
+                        this.commentCollection.create(formData);
+                        $comment.val('');
+                    }
                 }
+                else {
+                    utils.showAlert("Error", "You need to be logged in to comment.", "alert-warning");
+                    app.router.navigate('#/login', {trigger:true});
+                }   
             },
 
             deleteBlogPost: function(){
                 console.log('deleteBlogPost','comments', this.comments);
-                this.remove();  
+                this.remove();
+                var self = this;  
                 this.model.destroy({
-                    success:this.removeComments
+                    success: function(){
+                        self.removeComments();
+                        utils.showAlert('Success', 'deleted blog post.' ,'alert-info');
+                    }
                 });
             },
 

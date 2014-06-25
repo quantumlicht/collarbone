@@ -11,6 +11,13 @@ exports.config = {
     name: "defaultDB",
     port: "27017",
   	db_connection:"mongodb://heroku:i05PaQ5XwgYcIHogtOWTdvsah4Z6Si6dV7CuMGLE1orno6EpFwqoo1-VqayM0uat48WKeVcXvgW39kfzBQfGnw@kahana.mongohq.com:10017/app25772746"
+  },
+  passport: {
+    domain: 'app25772746.auth0.com',
+    clientID: 'kJk7T528ulbkoiEHXt8GbM15DgegseXq',
+    clientSecret: 'HePR4GIGZp2R3gmnfSbjtaVgRqtn-nTY4T4XbDBPcEww-oyZKeB1wR5suHeBToda',
+    callbackURL: 'http://localhost:2000/',
+    redirectUri: 'http://localhost:2000/'
   }
 };
 

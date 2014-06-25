@@ -16,12 +16,12 @@ define(["app", "collections/BlogPostCollection", "text!templates/BlogPostEdit.ht
 
             // View Event Handlers
             events: {
-                "click #blogpost-edit-cancel": "removeEdit",
-                "click #blogpost-edit-save": "saveEdit"
+                "click #blogpost-edit-cancel": "removeEditionPane",
+                "click #blogpost-edit-save": "saveChanges"
             },
 
-            removeEdit: function(){
-                console.log('BlogPostEditView', 'removeEdit');
+            removeEditionPane: function(){
+                console.log('BlogPostEditView', 'removeEditionPane');
                 this.model.trigger('blogpost-edit');
             },
 
@@ -34,8 +34,8 @@ define(["app", "collections/BlogPostCollection", "text!templates/BlogPostEdit.ht
 
             },
 
-            saveEdit: function(){
-                console.log('BlogPostEditView', 'saveEdit');
+            saveChanges: function(){
+                console.log('BlogPostEditView', 'saveChanges');
                 this.model.set('content', $('.blogpost-edit').val());
                 this.collection.create(this.model);
                 this.model.trigger('blogpost-edit');

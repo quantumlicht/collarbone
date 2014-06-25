@@ -2,8 +2,11 @@
 // ============
 
 var newrelic = require('newrelic');
-// var setup_password = require('./setup_password');
+var setup_password = require('./setup_password');
+var passport = require('passport');
+var logger = require('./config/config').logger;
 var Config =  global.Config = require('./config/config').config,
+    url = require('url'),
     express = require("express"),
     bcrypt = require("bcrypt-nodejs"),
     _ = require("underscore"),
@@ -12,8 +15,8 @@ var Config =  global.Config = require('./config/config').config,
     path = require('path'),
     port =    ( process.env.PORT || Config.listenPort ),
     mongoose =     require('mongoose'),
-    server =  module.exports = express();
-
+    server =  module.exports = express(),
+    request = require('request');
 // DATABASE CONFIGURATION
 // ======================
 
@@ -47,25 +50,7 @@ server.configure('production', function(){
 // server.configure (function () {
 //   // this.use(express.cookieParser());
 //   // this.use(express.session({secret: 'foo'}));
-//   server.use(passport.initialize());
-//   server.use(passport.session());
 
-//   server.use(server.router);
-// });
-
-// // Auth0 callback handler
-// server.get('/callback',
-//   passport.authenticate('auth0'),
-//   function(req, res) {
-//     res.redirect("/");
-//   });
-
-// server.get('/', function (req, res) {
-//   res.render('home', {
-//     user: req.user, //use this to display user information
-//     env: process.env
-//   })
-// });
 
 server.configure(function() {
   
@@ -104,13 +89,24 @@ server.configure(function() {
   
   server.use( express.cookieSession( Config.sessionSecret ) );  
 
+  server.use(passport.initialize());
+  
+  server.use(passport.session());
+  
   server.use(server.router);
+
+  /* For passing environment variables inside the templates*/
+  // server.use(function(req, res, next) {
+  //   res.locals({
+  //     env: process.env  
+  //   });
+  //   next();
+  // });
 
 });
 
 // API
 // ===
-
 require('./routes/auth')(server);
 require('./routes/blog')(server);
 require('./routes/blog_admin')(server);

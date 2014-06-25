@@ -9,10 +9,10 @@
 {{else}}
 <div class="panel panel-default">
 	<div class="panel-heading">
-    {{#if can_alter}}
+    {{#if alterable}}
     <div class="pull-right">
-      <span class="glyphicon glyphicon-edit" id="edit-post-title" style="cursor:hand; cursor:pointer;"></span>
-      <span class="glyphicon glyphicon-remove" id="remove-post" style="cursor:hand;cursor:pointer;"></span>
+      <span class="glyphicon glyphicon-edit edit-post" style="cursor:hand; cursor:pointer;"></span>
+      <span class="glyphicon glyphicon-remove delete-post" style="cursor:hand;cursor:pointer;"></span>
     </div>
     {{/if}}
     <h4>
@@ -26,10 +26,10 @@
   	<div class="panel-body">
   		{{content}}
       <div>
-      	{{#if can_alter}}
+      	<!-- {{#if alterable}}
       	<a class="edit-post">edit</a>
         <a class="delete-post">delete</a>
-      	{{/if}}
+      	{{/if}} -->
       </div>
     </div>
     <div class="panel-footer">

@@ -3,6 +3,7 @@
 var BlogPostModel = require('../models/blog_post');
 var CommentModel = require('../models/comment');
 var logger = require('../config/config').logger;
+var _ = require('underscore');
 module.exports = function(server) {
 
 	// Sample Rest Call
@@ -24,7 +25,7 @@ module.exports = function(server) {
 		var blogPost = new BlogPostModel({
 			title: req.body.title,
 			username: req.body.username,
-			userId:req.body.userId,
+			user_id:req.body.user_id,
 			postDate: new Date(),
 			content: req.body.content
 		});
@@ -40,7 +41,7 @@ module.exports = function(server) {
 			}
 			else {
 				if (err.name === 'ValidationError') {
-					logger.info('POST /blogposts', 'ValidationError');
+					logger.info('POST /blogposts', 'ValidationError', err);
 					return res.send(Object.keys(err.errors).map(function(errField) {
 						return err.errors[errField].message;
 					}).join('. '), 406);
@@ -51,77 +52,38 @@ module.exports = function(server) {
 	});
 
 	server.put('/blogposts/:id', function(req, res) {
-		logger.info('PUT /blogposts/:id', req.body.title);
+		logger.info('PUT /blogposts/:id');
 
-		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
-			blogPost.title = req.body.title;
-			blogPost.username = req.body.username;
-			blogPost.postDate = new Date(req.body.postDate);
-			blogPost.content = req.body.content;
-			logger.info('PUT /blogposts:id', 'req.body', req.body);
-			return blogPost.update(req.body, function(err) {
-				if (!err) {
-					logger.info( 'BlogPost updated');
-					return res.send(blogPost);
-				}
-				else {
-					logger.error('/blogposts/:id','error', err);
-				}
-			})
+		var blogpost = _.omit(req.body,['_id']);
+		return BlogPostModel.findOneAndUpdate({}, blogpost, function(err, blogPost) {
+			if (!err) {
+				logger.info( 'BlogPost updated');
+				return res.send(blogPost);
+			}
+			else {
+				logger.error('/blogposts/:id','error', err);
+			}
 		});
 	});
 
 	server.delete('/blogposts/:id', function(req, res) {
 		logger.info('Deleting BlogPost with id', req.params.id);
 		return BlogPostModel.findById(req.params.id, function(err, blogPost) {
-			return blogPost.remove(function(err) {
-				if (!err) {
-					logger.info( 'BlogPost deleted');
-					return res.send(new BlogPostModel({id:req.params.id}));
-				}
-				else {
-					logger.info(err);
-				}
-			});
+			if (!err) {
+				return blogPost.remove(function(err) {
+					if (!err) {
+						logger.info( 'BlogPost deleted');
+						return res.send(new BlogPostModel({id:req.params.id}));
+					}
+					else {
+						logger.info(err);
+					}
+				});
+			}
+			else {
+				logger.info(err);
+			}
 		});
 	});
-
-
-	// COMMENTS
-
-	// server.get('/blogposts/:id/comments', function(req, res) {
-	// 	return CommentModel.find({modelId: req.params.id},function(err, comments) {
-	// 		if (!err) {
-	// 			return res.send(comments);
-	// 		}
-	// 		else {
-	// 			logger.info(err);
-	// 		}
-	// 	});
-	// });
-
-	// server.post('/blogposts/:id/comments', function(req, res) {
-	// 	var comment = new CommentModel({
-	// 		username: req.body.username,
-	// 		content: req.body.content,
-	// 		commentDate: new Date(),
-	// 		modelId: req.params.id
-	// 	});
-
-	// 	return comment.save(function(err){
-	// 		if (!err) {
-	// 			logger.info('comment created', comment);
-	// 			return res.send(comment);
-	// 		}
-	// 		else {
-	// 			logger.info(err);
-	// 		}
-	// 	});
-	// });
-
-	// server.delete('/blogposts/:id/comments/:commentId', function(req, res) {
-	// 	logger.info('Deleting BlogPost with id', req.params.id, req.params.commentId);
-	// });
-
 }
 

@@ -25,24 +25,16 @@
           </ul> 
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://github.com/quantumlicht/collarbone/issues">Found a bug ?</a></li>
-            <li>
-              <span id="signinButton">
-                <span
-                  class="g-signin"
-                  data-callback="signinCallback"
-                  data-clientid="355636032676-unrg13905pho0bji18tnmclunrume280.apps.googleusercontent.com"
-                  data-cookiepolicy="single_host_origin"
-                  data-requestvisibleactions="http://schemas.google.com/AddActivity"
-                  data-scope="https://www.googleapis.com/auth/plus.login">
-                </span>
-              </span>
-            </li>
-                
             {{#if logged_in}}
+            <li>
+              {{#if user.picture}}
+              <img src="{{user.picture}}" alt="..." class="img-circle">
+              {{/if}}
+            </li>
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user.username}}<b class="caret"></b></a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user.name}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a id="profile-link" href="#/users/{{user.username}}">Profile</a></li>
+                <li><a id="profile-link" href="#/users/{{user.name}}">Profile</a></li>
                 <li><a id="logout-link" href="#">Sign Out</a></li>
                 <li><a id="remove-account-link" href="#">Remove Account</a></li>
               </ul>

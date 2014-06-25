@@ -3,24 +3,37 @@ var _ = require('underscore');
 var bcrypt = require("bcrypt-nodejs");
 var Config = require('../config/config').config;
 var logger = require('../config/config').logger;
+var passport = require('passport');
+module.exports = function(server) {
 
-module.exports = function(app) {
+	server.get('/callback', 
+  		passport.authenticate('auth0', { failureRedirect: '/url-if-something-fails' }), 
+		function(req, res) {
+    		if (!req.user) {
+      			throw new Error('user null');
+    		}
+    		console.log('req.user', req.user);
+    		res.cookie('profile', req.user._json,  { signed: true, maxAge: Config.cookieMaxAge  });
+    		res.redirect("#");
+  		}
+	);
 
-	app.get("/api/auth", function(req, res){
-		logger.info('GET /api/auth', 'req.signedCookies', req.signedCookies);
-		logger.info('GET /api/auth', 'user_id', req.signedCookies.user_id);
-
-	    User.findOne({_id:req.signedCookies.user_id, auth_token: req.signedCookies.auth_token}, function(err, user){
-	        if(user){
-	            res.json({ user: _.pick(user, ['username', '_id']) });   
-	        } else {  
-	            res.json({ error: "Client has no valid login cookies."  });   
-	        }
-	    });
+	server.get("/api/auth", function(req, res){
+		// logger.info('GET /api/auth', 'req.signedCookies', req.signedCookies['connect.sess'].passport.user);
+		// var user = req.signedCookies['connect.sess'].passport.user;
+		// logger.info('GET /api/auth', 'user_id', req.signedCookies.user_id);
+		res.json({user: req.signedCookies.profile});
+	    // User.findOne({_id:req.signedCookies.user_id, auth_token: req.signedCookies.auth_token}, function(err, user){
+	    //     if(user){
+	    //         res.json({ user: _.pick(user, ['username', '_id']) });   
+	    //     } else {  
+	    //         res.json({ error: "Client has no valid login cookies."});   
+	    //     }
+	    // });
 	});
 
 
-	app.post("/api/auth/login", function(req, res){
+	server.post("/api/auth/login", function(req, res){
 	    User.findOne({username: req.body.username}, function(err, user){
 	        if(user){
 
@@ -45,7 +58,8 @@ module.exports = function(app) {
 
 	// POST /api/auth/signup
 	// @desc: creates a user
-	app.post("/api/auth/signup", function(req, res){
+	server.post("/api/auth/signup", function(req, res){
+		console.log('signup', req.body);
 		var user = {
 			username: req.body.username,
 			password: bcrypt.hashSync(req.body.password),
@@ -80,22 +94,23 @@ module.exports = function(app) {
 
 	// POST /api/auth/logout
 	// @desc: logs out a user, clearing the signed cookies
-	app.post("/api/auth/logout", function(req, res){
+	server.post("/api/auth/logout", function(req, res){
     	res.clearCookie('user_id');
     	res.clearCookie('auth_token');
-    	res.json({ success: "User successfully logged out." });
+    	res.clearCookie('profile');
+    	res.json({ success: " successfully logged out." });
 	});
 
 	// POST /api/auth/remove_account
 	// @desc: deletes a user
-	app.post("/api/auth/remove_account", function(req, res){
+	server.post("/api/auth/remove_account", function(req, res){
     User.remove({_id:req.signedCookies.user_id, auth_token:req.signedCookies.auth_token}, function(err){
         if(err){ 
             res.json({ error: "Error while trying to delete user." });
         } else {
             res.clearCookie('user_id');
             res.clearCookie('auth_token');
-            res.json({ success: "User successfully deleted." });
+            res.json({ success: " successfully deleted." });
         }
     });
 });

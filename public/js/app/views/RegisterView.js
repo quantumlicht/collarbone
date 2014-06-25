@@ -27,8 +27,8 @@ define(["app", "utils", "collections/UserCollection", "text!templates/Register.h
             events: {
                 "click #register": "onRegisterAttempt",
                 // "keyup #password": "onPasswordKeyup",
-                "keyup #password-confirm": "onConfirmPasswordKeyup",
-                "focus #registerForm": "cleanErrors"
+                "keyup #password-confirm": "onConfirmPasswordKeyup"
+                // "focus #registerForm": "cleanErrors"
             },
 
             // Renders the view's template to the UI
@@ -52,14 +52,14 @@ define(["app", "utils", "collections/UserCollection", "text!templates/Register.h
                 error.siblings('.error-field').text(errMsg);
             },
 
-            cleanErrors: function() {
-                console.log('RegisterView', 'cleanError');
-                if (this.hasErrors) {
-                    $('.form-group').removeClass('has-error');
-                    $('.error-field').html('');
-                    this.hasErrors = false;
-                }
-            },
+            // cleanErrors: function() {
+            //     console.log('RegisterView', 'cleanError');
+            //     if (this.hasErrors) {
+            //         $('.form-group').removeClass('has-error');
+            //         $('.error-field').html('');
+            //         this.hasErrors = false;
+            //     }
+            // },
 
             // Allow enter press to trigger signup
             onConfirmPasswordKeyup: function(evt){
@@ -110,13 +110,14 @@ define(["app", "utils", "collections/UserCollection", "text!templates/Register.h
                     utils.showAlert('Error', "passwords don't match.", 'alert-danger');
                 }
                 else {
+                    console.log(this.$('#username').val());
                     app.session.signup({
                         username: this.$("#username").val(),
                         password: this.$("#password").val()
                     }, {    
                         success: function(mod, res) {
                             console.log('RegisterView','onRegisterAttempt','success callback');
-                            utils.showAlert('Registration complete!', 'Welcome ' + app.session.user.get('username') + '!','alert-success'); 
+                            utils.showAlert('Registration complete!', 'Welcome ' + app.session.get('user'). username + '!','alert-success'); 
                         },
 
                         error: function(mod, res) {

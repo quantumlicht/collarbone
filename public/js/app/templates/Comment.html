@@ -3,7 +3,7 @@
 <small><a href="#users/{{username}}">{{username}}</a> - {{formatDate commentDate}}</small><br/>
 <div id="comment-container">
 	{{content}}
-	{{#if can_alter}}
+	{{#if alterable}}
 		<a class="edit-comment">edit</a>
 		<a class="delete-comment">delete</a>
 	{{/if}}

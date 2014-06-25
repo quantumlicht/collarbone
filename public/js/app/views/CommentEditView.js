@@ -1,8 +1,8 @@
 // IndexView.js
 
-define(["app", "collections/CommentCollection", "text!templates/CommentEdit.html"],
+define(["app", "utils", "collections/CommentCollection", "text!templates/CommentEdit.html"],
 
-    function(app, CommentCollection, template){
+    function(app, utils, CommentCollection, template){
 
         var CommentEditView = Backbone.View.extend({
 
@@ -12,12 +12,18 @@ define(["app", "collections/CommentCollection", "text!templates/CommentEdit.html
             initialize: function(options) {
                 _.bindAll(this);
                 this.collection = new CommentCollection();
+                this.collection.on('error', this.showError);
             },
 
             // View Event Handlers
             events: {
                 "click #comment-edit-cancel": "removeEdit",
                 "click #comment-edit-save": "saveEdit"
+            },
+
+            showError: function(err){
+                console.log('err',err);
+                utils.showAlert('test','test', 'alert-error');
             },
 
             removeEdit: function(){

@@ -17,8 +17,6 @@ define(["app",
             // View constructor
             initialize: function(options) {
                 this.admin = options.admin;
-                this.can_alter = app.session.user.get('username')==this.model.get('username');
-                this.render();
                 _.bindAll(this);
                 this.listenTo(this.model, 'comment-edit', this.render);
             },

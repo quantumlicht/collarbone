@@ -1,4 +1,4 @@
-define(["app", "handlebars"], function(app){
+define(["app"], function(app) {
 
 	Handlebars.registerHelper('formatDate', function(to_check) {
         var SECOND_IN_MS = 1 *1000,

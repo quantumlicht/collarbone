@@ -58,8 +58,7 @@ define(["app",
 
             renderComment: function(comment) {
                 var commentView = new CommentView({
-                    model: comment,
-                    admin: this.admin
+                    model: comment
                 });
                 this.$el.find('#commentContainer').append(commentView.render().el);
             },
@@ -67,28 +66,27 @@ define(["app",
             commentSubmit: function(e) {
                 e.preventDefault();
                 if (app.session.get('user') !== undefined) {
-                    console.log('TriviaView', 'commentSubmit', 'username', app.session.get('user').username);
                     var $comment = this.$el.find('textarea');
                     if( $comment.val() !== '') {
-                        var data = new CommentModel({
+                        var formData = new CommentModel({
                             content: this.$el.find('textarea').val(),
-                            username: app.session.get('user').username,
+                            username: app.session.get('user').username || app.session.get('user').name,
                             modelId: this.model.id,
-                            modelUrl: this.model.url()
+                            modelUrl: this.model.url(),
+                            user_id: app.session.get('user')._id || app.session.get('user').user_id
                         });
-                        this.commentCollection.create(data);
+                        this.commentCollection.create(formData);
                         $comment.val('');
                     }
                 }
                 else {
                     utils.showAlert("Error", "You need to be logged in to comment.", "alert-warning");
-                    app.router.navigate('#/login',{trigger:true});
+                    app.router.navigate('#/login', {trigger:true});
                 }
             },
 
             close: function(e) {
-                console.log('TriviaView', 'close');
-                this.$el.find('#tooltip-btn').popover('destroy');
+                this.$el.find('button#tooltip-btn').popover('destroy');
             }
 
         });

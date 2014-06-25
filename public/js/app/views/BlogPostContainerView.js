@@ -63,7 +63,7 @@ define([
             // },
 
             renderPost: function(post) {
-                post.set('can_alter', false);
+                post.set('alterable', false);
                 var postView = new BlogPostView({
                     model: post,
                     renderForListView: true

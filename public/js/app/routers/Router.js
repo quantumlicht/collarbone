@@ -68,14 +68,14 @@ define([
             index: function() {
                 console.log('Router', 'index');
                 // Instantiates a new view which will render the header text to the page
-                var hasPushState = !!(window.history && history.pushState);
-                if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
-                else {
-                    console.log('Router','index','has push state');
-                    this.show( new IndexView({}) );
+                // var hasPushState = !!(window.history && history.pushState);
+                // if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
+                // else {
+                    // console.log('Router','index','has push state');
+                this.show( new IndexView({}) );
                     //if(app.session.get('logged_in')) this.show( new LoginPageView({}) );
                     //else this.show( new LoggedInPageView({}) );
-                }        
+                // }        
             },
 
             blog: function(id){
@@ -98,10 +98,6 @@ define([
                 this.show(new blogAdminView());
             },
 
-            new_users: function() {
-                this.show(new userView());
-            },
-
             login: function() {
                 console.log('Router', 'login');
                 this.show(new LoginView());
@@ -109,11 +105,11 @@ define([
 
             register: function() {
                 console.log('Router', 'register');
-                var hasPushState = !!(window.history && history.pushState);
-                if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
-                else {
-                    this.show( new RegisterView({}) );
-                }
+                // var hasPushState = !!(window.history && history.pushState);
+                // if(!hasPushState) this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
+                // else {
+                this.show( new RegisterView({}) );
+                // }
             },
 
             triviaList: function(){
@@ -124,7 +120,6 @@ define([
                 var self = this;
                 var collection = new TriviaCollection();
 
-                console.log('Router','trivia','id', id);
                 collection.bind('reset', function(){
                     var model = collection.findWhere({id:id});
                     console.log('Router','trivia','collection', collection);
@@ -149,11 +144,12 @@ define([
                 collection.fetch({reset:true});
             },
 
-            loadView: function(view) {
-                if (this.view) this.view.close();
-                // this.view && this.view.remove();
-                this.view = view;
-            },
+            // loadView: function(view) {
+            //     console.log('Router', 'loadView');
+            //     if (this.view) this.view.close();
+            //     // this.view && this.view.remove();
+            //     this.view = view;
+            // },
 
             show: function(view, options) {
                 if (!this.headerView) {
@@ -170,7 +166,6 @@ define([
                     var self = this;
                     app.session.checkAuth({
                         success: function(res){
-                            console.log('Router','show', 'success callback');
                             // If auth successful, render inside the page wrapper
                             $('#content').html( self.currentView.render().$el);
                         }, error: function(res){
@@ -180,7 +175,6 @@ define([
 
                 } else {
                     // Render inside the page wrapper
-                    console.log('Router', 'show', 'no options or requiresAuth false');
                     $('#content').html(this.currentView.render().$el);
                     //this.currentView.delegateEvents(this.currentView.events);        // Re-delegate events (unbound when closed)
                 }

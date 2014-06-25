@@ -35,7 +35,7 @@ define(["app",
 
         // Fxn to update user attributes after recieving API response
         updateSessionUser: function( userData ){
-            console.log('SessionModel','updateSessionUser','userData',userData);
+            console.log('SessionModel', 'updateSessionUser', 'userData', userData);
             this.user.set( _.pick( userData, _.keys(this.user.defaults) ) );
         },
 
@@ -48,7 +48,6 @@ define(["app",
          */
         checkAuth: function(callback, args) {
             var self = this;
-            console.log('SessionModel', 'checkAuth', 'args', args);
             this.fetch({                                                                          // Check if there are tokens in localstorage
                 success: function(mod, res){
                     if(!res.error && res.user){
@@ -57,7 +56,6 @@ define(["app",
                         self.set({ logged_in : true });
                         if('success' in callback) callback.success(mod, res);    
                     } else {
-                        console.log('SessionModel', 'error or no user','logged_in: false');
                         self.set({ logged_in : false });
                         if('error' in callback) callback.error(mod, res);    
                     }
@@ -92,17 +90,14 @@ define(["app",
                 },
                 data:  JSON.stringify( _.omit(opts, 'method') ),
                 success: function(res){
-                    console.log('SessionModel','postAuth','success','res',res);
                     if( !res.error ){
                         if(_.indexOf(['login', 'signup'], opts.method) !== -1){
                             console.log('SessionModel','postAuth','user', res.user, 'logged_in');
                             self.updateSessionUser( res.user || {} );
                             self.set({ user_id: res.user._id, logged_in: true });
                         } else {
-
                             self.set({ logged_in: false });
                         }
-
                         if( callback && 'success' in callback ) callback.success(res);
                     } else {
                         if( callback && 'error' in callback ) callback.error(res);
@@ -134,7 +129,15 @@ define(["app",
 
         removeAccount: function(opts, callback, args){
             this.postAuth(_.extend(opts, { method: 'remove_account' }), callback);
-        }
+        },
+
+        validate: function(attrs) {
+            var errors = this.errors = {};
+
+            if(!_.isEmpty(errors)) return errors;
+        }   
+
+
 
     });
     

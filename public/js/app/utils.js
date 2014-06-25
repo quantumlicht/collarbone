@@ -3,7 +3,11 @@
  *              ex/ cookie helpers, alerting utils, localStorage support, etc
  */
 
-define(["app"], function(app){
+define([
+    "app"
+    ],
+
+    function(app) {
 
     var utils = utils || {  
         /*

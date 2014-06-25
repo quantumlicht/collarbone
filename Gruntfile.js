@@ -76,6 +76,9 @@ module.exports = function(grunt) {
       },
       copyFontAwesomeFonts: {
         command: 'cp -r ./public/js/libs/font-awesome/font/* ./public/font'
+      },
+      startDb: {
+        command: '"E:\\PROGRAMS\\MongoDB 2.6 Standard\\bin\\mongod" --dbpath "E:\\My Documents" &'
       }
     },
     less: {
@@ -101,6 +104,7 @@ module.exports = function(grunt) {
   grunt.registerTask('init', ['shell:copyBootstrapCSS', 'shell:copyFontAwesomeCSS', 'shell:copyFontAwesomeFonts','less:production', 'requirejs:mainJS', 'requirejs:mainCSS']);
   grunt.registerTask('build', ['less:production', 'requirejs:mainJS', 'requirejs:mainCSS']);
   grunt.registerTask('server', ['jshint', 'nodemon:dev']);
+  grunt.registerTask('start', ['shell:startDb']);
   grunt.registerTask('default', ['init', 'test', 'build']);
 
 };

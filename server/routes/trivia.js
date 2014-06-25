@@ -4,6 +4,7 @@ var logger = require('../config/config').logger;
 module.exports = function(server) {
 
 	server.get('/trivia', function(req, res){
+		logger.info('GET /trivia');
 		return TriviaModel.find( function(err, trivia) {
 			if (!err) {
 				return res.send(trivia);
@@ -18,7 +19,7 @@ module.exports = function(server) {
 		console.log('POST /trivia', 'req.body', req.body);
 		var trivia = new TriviaModel({
 			title: req.body.title,
-			userId: req.body.userId,
+			user_id: req.body.user_id,
 			username: req.body.username,
 			triviaDate: new Date(),
 			hints: req.body.hints
@@ -79,7 +80,7 @@ module.exports = function(server) {
 	// 	var comment = new CommentModel({
 	// 		username: req.body.username,
 	// 		content: req.body.content,
-	// 		userId: req.body.userId,
+	// 		user_id: req.body.user_id,
 	// 		commentDate: req.body.commentDate,
 	// 		modelId: req.params.id
 	// 	});
