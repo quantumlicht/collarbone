@@ -1,6 +1,6 @@
 {{#if renderForListView}}
   <div class="well well-sm">
-    <small>Submitted by <a href="#users/{{username}}">{{username}}</a> {{formatDate postDate}}</small> 
+    <small>Submitted by <a href="#users/{{user_id}}">{{username}}</a> {{formatDate postDate}}</small> 
     <h3>
       <a href="#blogposts/{{id}}">{{normL title}}</a>
     </h3>
@@ -19,7 +19,7 @@
       <strong>{{title}}</strong>
     </h4>
     <h6>
-      <a href="#users/{{username}}">{{username}}</a> - {{formatDate postDate}}
+      <a href="#users/{{user_id}}">{{username}}</a> - {{formatDate postDate}}
     </h6>
 
 	</div>

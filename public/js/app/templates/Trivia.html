@@ -2,12 +2,12 @@
 	<h3>
 		<a href="#trivia/{{id}}">{{normL title}}</a>
 	</h3>
-	<small>Submitted by <a href="#users/{{username}}">{{username}}</a> on {{formatDate triviaDate}}</small>	
+	<small>Submitted by <a href="#users/{{user_id}}">{{username}}</a> on {{formatDate triviaDate}}</small>	
 
 {{else}}
 
 <h3>
-	<small><a href="#/users/{{username}}">{{username}}</a></small> - <small>{{formatDate triviaDate}}</small>	
+	<small><a href="#/users/{{user_id}}">{{username}}</a></small> - <small>{{formatDate triviaDate}}</small>	
 	{{normL title}}
   {{#if alterable}}
   <div class="pull-right">

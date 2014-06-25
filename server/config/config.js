@@ -18,6 +18,12 @@ exports.config = {
     clientSecret: 'HePR4GIGZp2R3gmnfSbjtaVgRqtn-nTY4T4XbDBPcEww-oyZKeB1wR5suHeBToda',
     callbackURL: 'http://localhost:2000/',
     redirectUri: 'http://localhost:2000/'
+  },
+  auth0_api: {
+    api_secret: 'iS0iTkQqMxm9zN9nWM1dm04eghgunf4ZpZ6FrGWycYv4DdrpM88m3scMHDrdNbSU',
+    api_id: 'Y0T58gsOTMiApt0IMFtDw2Qg598vOCXN',
+    token_uri: 'https://app25772746.auth0.com/oauth/token',
+    users_uri: 'https://app25772746.auth0.com/api/users'
   }
 };
 

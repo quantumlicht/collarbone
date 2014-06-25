@@ -60,7 +60,7 @@ define([
                 "blogposts/:id": "blog",
                 "trivia": "triviaList",
                 "trivia/:id" : "trivia",
-                "users/:username": "userprofile",
+                "users/:user_id": "userprofile",
                 "admin": "admin",
                 "login": "login"    
             },  
@@ -127,29 +127,20 @@ define([
                     self.show(new TriviaView({model: model}));
                 });
                 collection.fetch({reset:true, async:false});
-                // var model = collection.get(id);
             },
 
-            userprofile: function(username) {
+            userprofile: function(user_id) {
                 var self = this;
                 var collection = new UserCollection();
 
                 collection.bind('reset', function () { 
-                    console.log('Router','userprofile','collection',collection);
-                    var model = collection.findWhere({username: username});
-                    console.log('Router', 'userprofile','model', model);
+                    var model = collection.findWhere({user_id: user_id});
                     var view = new UserView({model: model});
                     self.show(view);
                 });
                 collection.fetch({reset:true});
             },
 
-            // loadView: function(view) {
-            //     console.log('Router', 'loadView');
-            //     if (this.view) this.view.close();
-            //     // this.view && this.view.remove();
-            //     this.view = view;
-            // },
 
             show: function(view, options) {
                 if (!this.headerView) {

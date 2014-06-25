@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Comment = require('../models/comment');
+var Config = require('../config/config').config;
 var Trivia = require('../models/trivia');
 var notLoggedIn = require('./middleware/not_logged_in');
 var _ = require('underscore');
@@ -7,78 +8,67 @@ var loadUser = require('./middleware/load_users');
 var restrictUserToSelf = require('./middleware/restrict_user_to_self');
 var async = require('async');
 
+var request = require('superagent');
+
 module.exports = function(server) {
 
-	// var maxUsersPerPage = 5;
-	server.get('/users', function(req, res, next) {
-		return User.find(function(err, users) {
+	function getAccessToken(callback) {
+		return request.post(Config.auth0_api.token_uri)
+		.send({	
+			client_id : Config.auth0_api.api_id,
+			client_secret: Config.auth0_api.api_secret,
+			grant_type: 'client_credentials'
+		})
+		.set('Content-Type', 'application/json')
+		.end(function(err, res) {
+
 			if(!err) {
-
-				filtered_users = _.map(users, function(user) {
-					return _.pick(user, 'username', '_id');
-
-				});
-
-				console.log('GET /users', filtered_users);
-				res.send(filtered_users);
-			}
-			else {
-				console.log(err);
+				callback(res.body.access_token); 
 			}
 		});
-		// var page = req.query.page && parseInt(req.query.page, 10) || 0;
-		// async.parallel([
-		// 	function(next) {
-		// 		User.count(next);
-		// 	},
+	}
 
-		// 	function(next) {
-		// 		User.find({})
-		// 			.sort('name')
-		// 			.skip(page * maxUsersPerPage)
-		// 			.limit(maxUsersPerPage)
-		// 			.exec(next);	
-		// 	}
-		// ],
-		// 	function(err, results){
-		// 		if (err){
-		// 			return next(err);
-		// 		}
+	server.get('/users', function(req, resp, next) {
+		getAccessToken(function(token) {
+			request.get(Config.auth0_api.users_uri)
+			.set('Authorization', 'Bearer ' + token)
+			.end(function(err, res) {
+				if(!err) {
+					resp.json(res.body);
+				}
+				else {
+					console.error(err);
+				}
+			});
+		});
 
-		// 		var count = results[0];
-		// 		var users = results[1];
-
-		// 		var lastPage = (page + 1) * maxUsersPerPage >= count;
-
-		// 		res.render('users/index', {
-		// 			title: 'Users',
-		// 			users: users,
-		// 			page:page,
-		// 			lastPage: lastPage
-		// 		});
-		// 	}
-		// );
 	});
 
-	server.get('/users/:username', function(req, res, next) {
-		console.log('GET /users/:username', req.params);
+	server.get('/users/:user_id', function(req, res, next) {
 		async.parallel(
 			{
 				user: function(next) {
-					User.findOne({username: req.params.username}).exec(next);
+					getAccessToken(function(token) {
+						request.get(Config.auth0_api.users_uri + '/' + req.params.user_id)
+						.set('Authorization', 'Bearer ' + token)
+						.end(function(err, res) {
+							next(err, res.body);
+						});
+					});
+					// User.findOne({user_id: req.params.user_id}).exec(next);
 				},
 				comments: function(next) {
-					Comment.find({username: req.params.username}).exec(next);
+					Comment.find({user_id: req.params.user_id}).exec(next);
 				},
 				trivias: function(next) {
-					Trivia.find({username: req.params.username}).exec(next);
+					Trivia.find({user_id: req.params.user_id}).exec(next);
 				}	
 			},
 			function(err, results) {
 				if(err){
 					return next(err);
 				}
-				console.log('/users/:username', 'results', results);
+				// console.log('/users/:user_id', 'results', results);
 
 				var data = {
 					users: results.user,
