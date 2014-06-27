@@ -1,11 +1,11 @@
 var passport = require('passport');
-var config = require('./config/config').config;
+var config = require('./config/config').env_config();
 var Auth0Strategy  = require('passport-auth0');
 var strategy = new Auth0Strategy({
-    domain: config.passport.domain,
-    clientID: config.passport.clientID,
-    clientSecret: config.passport.clientSecret,
-    callbackURL: config.passport.callbackURL
+    domain: config.domain,
+    clientID: config.clientID,
+    clientSecret: config.clientSecret,
+    callbackURL: config.callbackURL
   }, function(accessToken, refreshToken, profile, done) {
     //Some tracing info
     // console.log('profile is', profile);
