@@ -16,8 +16,8 @@ exports.config = {
     domain: 'app25772746.auth0.com',
     clientID: 'kJk7T528ulbkoiEHXt8GbM15DgegseXq',
     clientSecret: 'HePR4GIGZp2R3gmnfSbjtaVgRqtn-nTY4T4XbDBPcEww-oyZKeB1wR5suHeBToda',
-    callbackURL: 'http://localhost:2000/',
-    redirectUri: 'http://localhost:2000/'
+    callbackURL: 'http://localhost:2000/callback',
+    redirectUri: 'http://localhost:2000/callback'
   },
   auth0_api: {
     api_secret: 'iS0iTkQqMxm9zN9nWM1dm04eghgunf4ZpZ6FrGWycYv4DdrpM88m3scMHDrdNbSU',
@@ -34,4 +34,27 @@ exports.logger = new (winston.Logger)({
       new (winston.transports.File)({ filename: 'access.log', colorize:false, json:false})
     ]
 });
+
+exports.env_config = function(){
+    switch(process.env.NODE_ENV){
+        case 'development':
+            return {
+              domain: "app25772746.auth0.com",
+              clientID: "kJk7T528ulbkoiEHXt8GbM15DgegseXq",
+              callbackURL: "http://localhost:2000/callback",
+              redirectUri: "http://localhost:2000/callback"
+            };
+
+        case 'production':
+            return {
+              domain: "app25772746.auth0.com",
+              clientID: "kJk7T528ulbkoiEHXt8GbM15DgegseXq",
+              callbackURL: "http://collarbone.herokuapp.com/callback",
+              redirectUri: "http://collarbone.herokuapp.com/callback"
+            };
+
+        default:
+            return {error: 'Unknown or no environment specified'};
+    }
+};
 

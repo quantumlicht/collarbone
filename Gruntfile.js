@@ -13,6 +13,7 @@ module.exports = function(grunt) {
           debug: false,
           delayTime: 1,
           env: {
+            NODE_ENV: 'development'
             PORT: '2000'
           },
           cwd: __dirname

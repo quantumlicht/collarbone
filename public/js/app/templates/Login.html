@@ -35,17 +35,15 @@
 
   widget.signin({ container: 'root', chrome: true, scope: 'openid profile' });
 </script> -->
-
 <div id="root" style="width: 320px; margin: 40px auto; padding: 10px;">
     embeded area
 </div>
 <script src="https://cdn.auth0.com/w2/auth0-widget-4.0.min.js"></script>
 <script>
-	
   var widget = new Auth0Widget({
-        domain:         'app25772746.auth0.com',
-        clientID:       'kJk7T528ulbkoiEHXt8GbM15DgegseXq',
-        callbackURL:    'http://localhost:2000/callback',
+        domain:         env.domain,
+        clientID:       env.clientID,
+        callbackURL:    env.callbackURL,
         showSignUp: true,
         enableReturnUserExperience: true
   });

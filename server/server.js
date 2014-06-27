@@ -5,7 +5,9 @@ var newrelic = require('newrelic');
 var setup_password = require('./setup_password');
 var passport = require('passport');
 var logger = require('./config/config').logger;
+var env_vars = require('./config_local.json');
 var Config =  global.Config = require('./config/config').config,
+    env_config = require('./config/config').env_config(),
     url = require('url'),
     express = require("express"),
     bcrypt = require("bcrypt-nodejs"),
@@ -19,10 +21,11 @@ var Config =  global.Config = require('./config/config').config,
     request = require('request');
 // DATABASE CONFIGURATION
 // ======================
-
+  
 // Connect to Database
 dbUri = process.env.DB_URL || Config.database.db_connection;
 mongoose.connect(dbUri);
+
 
 
 var db = mongoose.connection;
@@ -94,14 +97,11 @@ server.configure(function() {
   server.use(passport.session());
   
   server.use(server.router);
-
+  console.log(env_config);
   /* For passing environment variables inside the templates*/
-  // server.use(function(req, res, next) {
-  //   res.locals({
-  //     env: process.env  
-  //   });
-  //   next();
-  // });
+  // server.locals.env = {loco:'motive'};
+  // process.env['passport'] = JSON.stringify(env_vars.passport);
+  server.set('env', JSON.stringify(env_config));
 
 });
 
