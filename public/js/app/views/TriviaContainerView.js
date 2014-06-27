@@ -93,8 +93,8 @@ define(["app", "utils", "models/TriviaModel","collections/TriviaCollection", "vi
 
                     if (!hasErrors) {
                         console.log('TriviaContainerView', 'user session', app.session.get('user'));
-                        formData.username = app.session.get('user').username;
-                        formData.user_id = app.session.get('user')._id;
+                        formData.username = app.session.get('user').name;
+                        formData.user_id = app.session.get('user').user_id;
                         $("#add-trivia-form")[0].reset();   
                         this.triviaCollection.create(formData);
                         utils.showAlert('Trivia question added!', 'Thanks', 'alert-success');

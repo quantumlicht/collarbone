@@ -10,7 +10,7 @@ define(["app"],
 
             // Model Constructor
             initialize: function() {
-                this.set({alterable:app.session.user.get('username')==this.get('username')});
+                this.set({alterable:app.session.get('user').name == this.get('username')});
             },
             
             // Default values for all of the Model attributes

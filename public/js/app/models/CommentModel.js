@@ -23,7 +23,11 @@ define(["app"],
 
             // Model Constructor
             initialize: function() {
-                this.set({alterable:app.session.user.get('username')==this.get('username')});
+                this.set({alterable:app.session.get('user').name == this.get('username')});
+                console.log(this.get('username'));
+                console.log(app.session);
+                console.log(app.session.user.get('username'));
+                console.log('CommentModel', 'initialize', this.get('alterable'));
             },
 
             defaults: {
