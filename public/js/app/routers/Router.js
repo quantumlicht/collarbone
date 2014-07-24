@@ -96,6 +96,7 @@ define([
             admin: function(){
                 console.log('Router','admin');
                 this.show(new blogAdminView());
+                // also need to add management portal for trivias
             },
 
             login: function() {

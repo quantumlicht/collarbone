@@ -8,18 +8,21 @@
 			<button type="button" data-comment-id="{{_id}}" class="btn btn-default btn-xs accept-answer">Accept
 			</button>
 			{{/if}}
+		{{else}}
+			{{#if accepted_answer}}
+			<span class="glyphicon glyphicon-ok"></span>
+			{{/if}}
 		{{/if}}
 	</div>
 	<div class="col-md-11">
 		<small><a href="#users/{{user_id}}">{{username}}</a> - {{formatDate commentDate}}</small><br/>
 		<div id="comment-container">
-			
-			{{content}}
-			{{#if alterable}}
-				<a class="edit-comment">edit</a>
-				<a class="delete-comment">delete</a>
-			{{/if}}
+			{{{content}}}
 		</div>
+		{{#if alterable}}
+			<a class="edit-comment">edit</a>
+			<a class="delete-comment">delete</a>
+		{{/if}}
 		
 	</div>
 </div>

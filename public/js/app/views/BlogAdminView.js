@@ -53,8 +53,9 @@ define([
                         }
                         $(el).val('');
                     });
-                    formData.user_id = app.session.get('user')._id;
-                    formData.username = app.session.user.get('username');
+                    formData.user_id = app.session.user.get('user_id');
+                    formData.username = app.session.user.get('name');
+                    console.log('BlogAdminView','addBlogPost','formData',formData);
                     this.collection.create(formData);
                 }
                 else {

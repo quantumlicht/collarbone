@@ -57,10 +57,13 @@ define(["app",
             },
             // Renders the view's template to the UI
             render: function() {
-                console.log(this.model);
                 console.log('CommentView', 'render', this.model.toJSON()); 
                 this.template = Handlebars.compile(CommentTemplate);
                 this.$el.html(this.template(this.model.toJSON()));
+
+                var $commentText = this.$el.find('#comment-container');
+                $commentText.html(utils.applyHyperLinks($commentText.text()));
+
 
                 // Maintains chainability
                 return this;
