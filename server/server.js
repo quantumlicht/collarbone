@@ -97,7 +97,7 @@ server.configure(function() {
   server.use(passport.session());
   
   server.use(server.router);
-  console.log(env_config);
+  console.log('env_config', env_config);
   /* For passing environment variables inside the templates*/
   // server.locals.env = {loco:'motive'};
   // process.env['passport'] = JSON.stringify(env_vars.passport);

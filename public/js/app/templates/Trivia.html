@@ -5,17 +5,16 @@
 	<small>Submitted by <a href="#users/{{user_id}}">{{username}}</a> on {{formatDate triviaDate}}</small>	
 
 {{else}}
-
-<h3>
-	<small><a href="#/users/{{user_id}}">{{username}}</a></small> - <small>{{formatDate triviaDate}}</small>	
-	{{normL title}}
-  {{#if alterable}}
-  <div class="pull-right">
-    <span class="glyphicon glyphicon-edit" id="edit-trivia" style="cursor:hand; cursor:pointer;"></span>
-    <span class="glyphicon glyphicon-remove" id="remove-trivia" style="cursor:hand;cursor:pointer;"></span>
-  </div>
-  {{/if}}
-</h3>
+  <h3>
+    <small><a href="#/users/{{user_id}}">{{username}}</a></small> - <small>{{formatDate triviaDate}}</small>  
+      {{normL title}}
+      {{#if alterable}}
+      <div class="pull-right">
+        <span class="glyphicon glyphicon-edit" id="edit-trivia" style="cursor:hand; cursor:pointer;"></span>
+        <span class="glyphicon glyphicon-remove" id="remove-trivia" style="cursor:hand;cursor:pointer;"></span>
+      </div>
+      {{/if}}
+  </h3>
 <div class="panel panel-default">	
   	<div class="panel-body">
   		{{#each hints}}
@@ -27,7 +26,7 @@
   	</div>
   	<div class="panel-footer">
       <div id="commentContainer"></div>
-      <div id="comment">
+      <div id="new-comment">
         <textarea placeholder="Comment" style="resize:none; width:100%;"></textarea>
       </div>
       <button id="commentSubmit" class="btn btn-xs btn-primary">Comment</button>

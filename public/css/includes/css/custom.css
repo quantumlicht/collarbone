@@ -1,7 +1,6 @@
 .comment {
-	margin: 10px 0;
+  margin: 10px 0;
 }
-
-img {
-	margin: 10px 10px;
+#accept-answer :hover {
+  background-color: grey;
 }

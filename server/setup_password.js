@@ -1,5 +1,7 @@
 var passport = require('passport');
 var config = require('./config/config').env_config();
+console.log(config);
+console.log(process.env);
 var Auth0Strategy  = require('passport-auth0');
 var strategy = new Auth0Strategy({
     domain: config.domain,

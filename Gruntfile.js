@@ -13,7 +13,8 @@ module.exports = function(grunt) {
           debug: false,
           delayTime: 1,
           env: {
-            PORT: '2000'
+            PORT: '2000',
+            NODE_ENV:'development'
           },
           cwd: __dirname
         }
@@ -78,7 +79,7 @@ module.exports = function(grunt) {
         command: 'cp -r ./public/js/libs/font-awesome/font/* ./public/font'
       },
       startDb: {
-        command: '"E:\\PROGRAMS\\MongoDB 2.6 Standard\\bin\\mongod" --dbpath "E:\\My Documents" &'
+        command: '"E:\\PROGRAMS\\MongoDB 2.6 Standard\\bin\\mongod" --dbpath "E:\\My Documents"'
       }
     },
     less: {
@@ -100,7 +101,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-mocha-test');
 
-  grunt.registerTask('test', ['jshint', 'mochaTest' ]);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
   grunt.registerTask('init', ['shell:copyBootstrapCSS', 'shell:copyFontAwesomeCSS', 'shell:copyFontAwesomeFonts','less:production', 'requirejs:mainJS', 'requirejs:mainCSS']);
   grunt.registerTask('build', ['less:production', 'requirejs:mainJS', 'requirejs:mainCSS']);
   grunt.registerTask('server', ['jshint', 'nodemon:dev']);

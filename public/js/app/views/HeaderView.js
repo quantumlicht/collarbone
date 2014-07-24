@@ -17,7 +17,7 @@ define([
                 app.session.on("change:logged_in", this.onLoginStatusChange);
 
                 // // Calls the view's render method
-                // this.render();
+                this.render();
 
             },
 
@@ -56,7 +56,7 @@ define([
 
             // Renders the view's template to the UI
             render: function() {
-                if(DEBUG) console.log("RENDER::", app.session.user.toJSON(), app.session.toJSON());
+                console.log("RENDER::", app.session.user.toJSON(), app.session.toJSON());
                 // Setting the view's template property using the Underscore template method
                 // this.template = _.template(template, {});
 

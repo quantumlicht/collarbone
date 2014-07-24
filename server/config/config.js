@@ -55,6 +55,15 @@ exports.env_config = function(){
               redirectUri: "http://collarbone.herokuapp.com/callback"
             };
 
+        case 'test': 
+          return {
+            domain: "app25772746.auth0.com",
+            clientID: "kJk7T528ulbkoiEHXt8GbM15DgegseXq",
+            callbackURL: "http://localhost:2000/callback",
+            clientSecret: 'HePR4GIGZp2R3gmnfSbjtaVgRqtn-nTY4T4XbDBPcEww-oyZKeB1wR5suHeBToda',
+            redirectUri: "http://localhost:2000/callback"
+          }
+
         default:
             return {error: 'Unknown or no environment specified'};
     }

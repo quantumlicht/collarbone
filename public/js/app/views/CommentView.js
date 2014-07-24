@@ -23,10 +23,14 @@ define(["app",
 
             // View Event Handlers
             events: {
+                "click .accept-answer": "acceptAnswer",
                 "click .delete-comment": "deleteComment",
                 "click .edit-comment": "editComment"
             },
 
+            // acceptAnswer: function(e){
+            //     this.model.save({'accepted_answer': true});
+            // },
 
             deleteComment: function(evt){
                 this.remove();
@@ -53,6 +57,7 @@ define(["app",
             },
             // Renders the view's template to the UI
             render: function() {
+                console.log(this.model);
                 console.log('CommentView', 'render', this.model.toJSON()); 
                 this.template = Handlebars.compile(CommentTemplate);
                 this.$el.html(this.template(this.model.toJSON()));

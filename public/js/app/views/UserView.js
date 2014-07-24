@@ -11,11 +11,16 @@ define(["app", "models/UserModel", "text!templates/User.html"],
             initialize: function() {
 
                 // Calls the view's render method
-                // this.render();
                 _.bindAll(this);
-                this.model.fetch();
+                var self = this;
+                this.model.fetch({
+                    success: function(model) {
+                        self.render();
+                    }
+                },
+                {reset:true});
 
-                this.listenTo(this.model, 'change', this.render);
+                // this.listenTo(this.model, 'change', this.render);
             
             },
 
@@ -24,7 +29,6 @@ define(["app", "models/UserModel", "text!templates/User.html"],
 
             },
 
-            // Renders the view's template to the UI
             render: function() {
 
                 // Setting the view's template property using the Underscore template method
@@ -41,7 +45,6 @@ define(["app", "models/UserModel", "text!templates/User.html"],
 
         });
 
-        // Returns the View class
         return UserView;
 
     }

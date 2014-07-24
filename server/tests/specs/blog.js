@@ -121,7 +121,6 @@ describe(' POST /blogposts', function() {
 			postDate: new Date('2014-12-12 00:00:00')
 		});
 
-		//TODO: refactor with async module
 		request.post('localhost:2000/blogposts').send(blogpost).end(function(){
 			request.post('localhost:2000/blogposts').send(blogpost).end(function(res) {
 				expect(res.statusCode).to.be(409);

@@ -30,12 +30,26 @@ define(["app",
                 this.comments = this.commentCollection.where({modelId:this.model.id});
             
                 this.listenTo(this.commentCollection, 'reset', this.render);
-                this.listenTo(this.commentCollection, 'add', this.renderComment);
+                this.listenTo(this.commentCollection, 'add',this.renderComment);
+                this.listenTo(this.commentCollection, 'change', function(model){
+                    model.save();
+                });
             },
 
             // View Event Handlers
             events: {
-                'click #commentSubmit': "commentSubmit"
+                'click #commentSubmit': "commentSubmit",
+                "click .accept-answer": "acceptAnswer"
+            },
+
+            acceptAnswer: function(e){
+                e.preventDefault();
+                accepted_models = this.commentCollection.where({accepted_answer:true});
+                console.log('accepted_models', accepted_models);
+                _.invoke(accepted_models, 'set', {accepted_answer:false});
+                commentId = $(e.currentTarget).data('commentId');
+                this.commentCollection.get(commentId).set({accepted_answer:true});
+                this.render();
             },
 
             // Renders the view's template to the UI
@@ -47,16 +61,19 @@ define(["app",
                 this.$el.find('#tooltip-btn').popover();
                 if(this.comments) {
                     _.each(this.comments, function(item) {
+                        item.set('acceptableAsAnswer',this.model.get('alterable'));
                         this.renderComment(item);
                         }, this);
                 }
-                // Dynamically updates the UI with the view's template
+
+
                 // Maintains chainability
                 return this;
 
             },
 
             renderComment: function(comment) {
+                console.log('TriviaView', 'renderComment', 'comment', comment);
                 var commentView = new CommentView({
                     model: comment
                 });

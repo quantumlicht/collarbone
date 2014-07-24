@@ -133,12 +133,16 @@ define([
                 var self = this;
                 var collection = new UserCollection();
 
-                collection.bind('reset', function () { 
-                    var model = collection.findWhere({user_id: user_id});
-                    var view = new UserView({model: model});
-                    self.show(view);
-                });
-                collection.fetch({reset:true});
+                model = new UserModel({user_id: user_id});
+                this.show(new UserView({
+                    model:model
+                }));
+                // collection.bind('reset', function () { 
+                //     var model = collection.findWhere({user_id: user_id});
+                //     var view = new UserView({model: model});
+                //     self.show(view);
+                // });
+                // collection.fetch({reset:true});
             },
 
 
