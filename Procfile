@@ -1,1 +1,1 @@
-web: NODE_END production node server/server.js
+web: node server/server.js
